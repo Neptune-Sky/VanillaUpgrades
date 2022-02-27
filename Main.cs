@@ -7,21 +7,18 @@ using UnityEngine.SceneManagement;
 
 namespace ASoD_s_VanillaUpgrades
 {
-    public class Main
+    public class Main : SFSMod
     {
-		// Token: 0x06000001 RID: 1 RVA: 0x00002050 File Offset: 0x00000250
 		public string getModAuthor()
 		{
 			return "ASoD";
 		}
 
-		// Token: 0x06000002 RID: 2 RVA: 0x00002057 File Offset: 0x00000257
 		public string getModName()
 		{
 			return "VanillaUpgrades";
 		}
 
-		// Token: 0x06000003 RID: 3 RVA: 0x0000205E File Offset: 0x0000025E
 		public void load()
 		{
 			Main.patcher = new Harmony("mods.ASoD.VanUp");
@@ -29,19 +26,28 @@ namespace ASoD_s_VanillaUpgrades
 			Loader.modLoader.suscribeOnChangeScene(new UnityAction<Scene, LoadSceneMode>(this.OnSceneLoaded));
 		}
 
-		// Token: 0x06000004 RID: 4 RVA: 0x00002090 File Offset: 0x00000290
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 		{
 			if (scene.name == "Build_PC")
 			{
 				GameObject gameObject = new GameObject("ASoDBuildObject");
-				gameObject.AddComponent<Menu>();
+				gameObject.AddComponent<BuildMenuFunctions>();
 				UnityEngine.Object.DontDestroyOnLoad(gameObject);
 				gameObject.SetActive(true);
-				Main.menuObject = gameObject;
+				Main.buildMenuObject = gameObject;
 				return;
 			}
-			UnityEngine.Object.Destroy(Main.menuObject);
+			if (scene.name == "World_PC")
+			{
+				GameObject gameObject = new GameObject("ASoDWorldObject");
+				gameObject.AddComponent<WorldFunctions>();
+				UnityEngine.Object.DontDestroyOnLoad(gameObject);
+				gameObject.SetActive(true);
+				Main.worldViewObject = gameObject;
+				return;
+			}
+			UnityEngine.Object.Destroy(Main.buildMenuObject);
+			UnityEngine.Object.Destroy(Main.worldViewObject);
 		}
 
 		public void unload()
@@ -49,10 +55,10 @@ namespace ASoD_s_VanillaUpgrades
 			throw new NotImplementedException();
 		}
 
-		// Token: 0x04000001 RID: 1
-		public static GameObject menuObject;
+		public static GameObject buildMenuObject;
 
-		// Token: 0x04000002 RID: 2
+		public static GameObject worldViewObject;
+
 		public static Harmony patcher;
 	}
 }
