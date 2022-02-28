@@ -9,6 +9,10 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - Toggles for disabling adaptation and snapping in the build grid.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
 
+**New Unit Displays:**
+- Re-implements megameters (`Mm`) as a distance unit
+- Adds `km/s` as a velocity unit
+
 **New Keybinds:**
 - L to launch and skip warnings in build space
 - Slash to instantly stop timewarp
