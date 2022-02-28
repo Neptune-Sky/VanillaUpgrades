@@ -27,15 +27,15 @@ namespace ASoD_s_VanillaUpgrades
             }
             if (value < 10000)
             {
-                return value.ToString() + "m";
+                return value.ToString(1, true) + "m";
             }
             else
             {
                 if (value > 10000000)
                 {
-                    return (value / 1000000).Round(0.1).ToString() + "Mm";
+                    return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
                 }
-                return (value / 1000).Round(0.1).ToString() + "km";
+                return (value / 1000).Round(0.1).ToString(1, true) + "km";
             }
         }
 
@@ -46,9 +46,9 @@ namespace ASoD_s_VanillaUpgrades
             GUI.Label(new Rect(20f, 70f, 160f, 20f), "Periapsis:");
             GUI.Label(new Rect(20f, 90f, 160f, 20f), displayify(periapsis));
             GUI.Label(new Rect(20f, 120f, 160f, 25f), "Eccentricity:");
-            GUI.Label(new Rect(20f, 140f, 160f, 25f), displayEcc.ToString());
+            GUI.Label(new Rect(20f, 140f, 160f, 25f), displayEcc.ToString(3, true));
             GUI.Label(new Rect(20f, 170f, 160f, 25f), "Angle:");
-            GUI.Label(new Rect(20f, 190f, 160f, 20f), angle.Round(0.1).ToString() + "°");
+            GUI.Label(new Rect(20f, 190f, 160f, 20f), angle.Round(0.1).ToString(1, true) + "°");
             
             GUI.DragWindow();
         }
@@ -87,6 +87,7 @@ namespace ASoD_s_VanillaUpgrades
             Event current = Event.current;
             if (current.keyCode == KeyCode.Slash)
             {
+                WorldTime.main.timewarpIndex.timewarpIndex = 0;
                 WorldTime.main.SetState(1, true, true);
             }
             if (current.keyCode == KeyCode.BackQuote)
