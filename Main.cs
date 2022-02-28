@@ -4,6 +4,7 @@ using ModLoader;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using SFS.World;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -37,16 +38,19 @@ namespace ASoD_s_VanillaUpgrades
 				Main.buildMenuObject = gameObject;
 				return;
 			}
+
+			UnityEngine.Object.Destroy(Main.buildMenuObject);
+
 			if (scene.name == "World_PC")
 			{
-				GameObject gameObject = new GameObject("ASoDWorldObject");
-				gameObject.AddComponent<WorldFunctions>();
-				UnityEngine.Object.DontDestroyOnLoad(gameObject);
-				gameObject.SetActive(true);
-				Main.worldViewObject = gameObject;
+				worldViewObject = new GameObject("ASoDWorldObject");
+				worldViewObject.AddComponent<WorldFunctions>();
+				worldViewObject.AddComponent<Throttle>();
+				UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
+				worldViewObject.SetActive(true);
 				return;
 			}
-			UnityEngine.Object.Destroy(Main.buildMenuObject);
+			
 			UnityEngine.Object.Destroy(Main.worldViewObject);
 		}
 
