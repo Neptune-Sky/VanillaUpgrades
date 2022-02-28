@@ -80,9 +80,10 @@ namespace ASoD_s_VanillaUpgrades
             if (periapsis < 0) { periapsis = 0; }
 
 
-            angle = currentRocket.partHolder.transform.eulerAngles.z;
+            var trueAngle = currentRocket.partHolder.transform.eulerAngles.z;
 
-            if (angle > 180) { angle = 360 - angle; }
+            if (trueAngle > 180) { angle = 360 - trueAngle; }
+            if (trueAngle < 180) { angle = -trueAngle; }
             
             Event current = Event.current;
             if (current.keyCode == KeyCode.Slash)
