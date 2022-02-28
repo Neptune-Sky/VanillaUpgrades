@@ -27,7 +27,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public void OnGUI()
         {
-            windowRect = GUI.Window(0, windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
+            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
             Event current = Event.current;
             bool flag = current.keyCode == KeyCode.L;
             if (flag)

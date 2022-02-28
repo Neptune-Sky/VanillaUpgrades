@@ -95,7 +95,7 @@ namespace ASoD_s_VanillaUpgrades
             {
                 currentRocket.throttle.throttlePercent.Value = 0.0005f;
             }
-            windowRect = GUI.Window(0, windowRect, new GUI.WindowFunction(windowFunc), "Advanced Info");
+            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Advanced Info");
             
         }
     }
