@@ -13,3 +13,8 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - New HUD window in world view that shows apoapsis, periapsis, and angle of your rocket.
 
 Tons more will be added in the future.
+
+# Installation
+This mod uses SFS Modloader made by dani0105, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
+
+Download the DLL file from the release of your choosing then place it in `Spaceflight Simulator_Data\MODS`.
