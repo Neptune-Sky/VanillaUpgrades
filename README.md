@@ -7,7 +7,7 @@ If you use any of my code for your mods, all I ask is that you give credit for t
 The goal of this mod is to upgrade the vanilla experience with tons of quality of life stuff. Current features are:
 
 - Toggles for disabling adaptation and snapping in the build grid.
-- New HUD window in world view that shows apoapsis, periapsis, and angle of your rocket.
+- New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
 
 **New Keybinds:**
 - L to launch and skip warnings in build space
