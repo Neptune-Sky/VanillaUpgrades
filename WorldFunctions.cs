@@ -7,7 +7,7 @@ namespace ASoD_s_VanillaUpgrades
 {
     public class WorldFunctions : MonoBehaviour
     {
-        public static Rect windowRect = new Rect(Screen.width * 0.7f, 0f, 200f, 170f);
+        public static Rect windowRect = new Rect(0f, Screen.height * 0.05f, 150f, 230f);
 
         public static Rocket currentRocket;
 
@@ -17,14 +17,24 @@ namespace ASoD_s_VanillaUpgrades
 
         public double angle;
 
+        public double displayEcc;
+
         public static string displayify(double value)
         {
+            if (double.IsNegativeInfinity(value))
+            {
+                return "Escape";
+            }
             if (value < 10000)
             {
                 return value.ToString() + "m";
             }
             else
             {
+                if (value > 10000000)
+                {
+                    return (value / 1000000).Round(0.1).ToString() + "Mm";
+                }
                 return (value / 1000).Round(0.1).ToString() + "km";
             }
         }
@@ -35,8 +45,11 @@ namespace ASoD_s_VanillaUpgrades
             GUI.Label(new Rect(20f, 40f, 160f, 20f), displayify(apoapsis));
             GUI.Label(new Rect(20f, 70f, 160f, 20f), "Periapsis:");
             GUI.Label(new Rect(20f, 90f, 160f, 20f), displayify(periapsis));
-            GUI.Label(new Rect(20f, 120f, 160f, 25f), "Angle:");
-            GUI.Label(new Rect(20f, 140f, 160f, 20f), angle.Round(0.1).ToString() + "°");
+            GUI.Label(new Rect(20f, 120f, 160f, 25f), "Eccentricity:");
+            GUI.Label(new Rect(20f, 140f, 160f, 25f), displayEcc.ToString());
+            GUI.Label(new Rect(20f, 170f, 160f, 25f), "Angle:");
+            GUI.Label(new Rect(20f, 190f, 160f, 20f), angle.Round(0.1).ToString() + "°");
+            
             GUI.DragWindow();
         }
 
@@ -50,11 +63,22 @@ namespace ASoD_s_VanillaUpgrades
             Double3 @double = Double3.Cross(currentRocket.location.position, currentRocket.location.velocity);
             Double2 double2 = (Double2)(Double3.Cross((Double3)currentRocket.location.velocity.Value, @double) / currentRocket.location.planet.Value.mass) - currentRocket.location.position.Value.normalized;
             var ecc = double2.magnitude;
+            displayEcc = ecc.Round(0.001);
 
             apoapsis = (Kepler.GetApoapsis(sma, ecc) - currentRocket.location.planet.Value.Radius).Round(0.1);
             periapsis = (Kepler.GetPeriapsis(sma, ecc) - currentRocket.location.planet.Value.Radius).Round(0.1);
-            if (apoapsis == double.PositiveInfinity) { apoapsis = 0; }
-            if (periapsis == double.PositiveInfinity || periapsis < 0) { periapsis = 0; }
+            if (apoapsis == double.PositiveInfinity) { 
+                if (currentRocket.physics.location.Value.velocity.magnitude > 0)
+                {
+                    apoapsis = double.NegativeInfinity;
+                } else
+                {
+                    apoapsis = 0;
+                }
+                
+            }
+            if (periapsis < 0) { periapsis = 0; }
+
 
             angle = currentRocket.partHolder.transform.eulerAngles.z;
 
