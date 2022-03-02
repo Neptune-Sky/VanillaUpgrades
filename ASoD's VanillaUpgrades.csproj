@@ -66,6 +66,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MoreUnits.cs" />
+    <Compile Include="StopKeyDetection.cs" />
     <Compile Include="WorldFunctions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

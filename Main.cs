@@ -64,5 +64,10 @@ namespace ASoD_s_VanillaUpgrades
 		public static GameObject worldViewObject;
 
 		public static Harmony patcher;
+
+		public static class KeyBool
+		{
+			public static bool StopKeys = false;
+		}
 	}
 }

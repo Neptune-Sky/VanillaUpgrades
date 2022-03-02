@@ -7,7 +7,7 @@ namespace ASoD_s_VanillaUpgrades
     public class BuildMenuFunctions : MonoBehaviour
     {
         // Token: 0x0400136C RID: 4972
-        public static Rect windowRect = new Rect((float)Screen.width * 0.05f, (float)Screen.height * 0.92f, 200f, 200f);
+        public static Rect windowRect = new Rect((float)Screen.width * 0.05f, (float)Screen.height * 0.94f, 180f, 70f);
 
         // Token: 0x0400136D RID: 4973
         public static bool snapping;
@@ -19,22 +19,31 @@ namespace ASoD_s_VanillaUpgrades
 
         public static bool noAdaptOverride;
 
+       
+
         public void windowFunc(int windowID)
         {
-            snapping = GUI.Toggle(new Rect(30f, 20f, 160f, 20f), snapping, " Disable Snapping");
-            noAdaptation = GUI.Toggle(new Rect(30f, 40f, 160f, 20f), noAdaptation, " Disable Adapting");
+            snapping = GUI.Toggle(new Rect(10f, 20f, 120f, 20f), snapping, " Disable Snapping");
+            noAdaptation = GUI.Toggle(new Rect(10f, 40f, 120f, 20f), noAdaptation, " Disable Adapting");
+            
+
+            GUI.DragWindow();
         }
 
         public void OnGUI()
         {
             windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
-            Event current = Event.current;
-            bool flag = current.keyCode == KeyCode.L;
-            if (flag)
+            if(!Main.KeyBool.StopKeys)
             {
-                BuildState.main.SaveLaunchData(updatePersistent: true);
-                Base.sceneLoader.LoadWorldScene(launch: true);
+                Event current = Event.current;
+                bool flag = current.keyCode == KeyCode.L;
+                if (flag)
+                {
+                    BuildState.main.SaveLaunchData(updatePersistent: true);
+                    Base.sceneLoader.LoadWorldScene(launch: true);
+                }
             }
+            
         }
     }
 }

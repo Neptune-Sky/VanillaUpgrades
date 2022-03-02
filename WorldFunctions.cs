@@ -7,7 +7,7 @@ namespace ASoD_s_VanillaUpgrades
 {
     public class WorldFunctions : MonoBehaviour
     {
-        public static Rect windowRect = new Rect(0f, Screen.height * 0.05f, 150f, 230f);
+        public static Rect windowRect = new Rect(0f, Screen.height * 0.05f, 150f, 250f);
 
         public static Rocket currentRocket;
 
@@ -18,6 +18,8 @@ namespace ASoD_s_VanillaUpgrades
         public double angle;
 
         public double displayEcc;
+
+        public static bool disableKt;
 
         public static string displayify(double value)
         {
@@ -41,15 +43,16 @@ namespace ASoD_s_VanillaUpgrades
 
         public void windowFunc(int windowID)
         {
-            GUI.Label(new Rect(20f, 20f, 160f, 20f), "Apoapsis:");
-            GUI.Label(new Rect(20f, 40f, 160f, 20f), displayify(apoapsis));
-            GUI.Label(new Rect(20f, 70f, 160f, 20f), "Periapsis:");
-            GUI.Label(new Rect(20f, 90f, 160f, 20f), displayify(periapsis));
-            GUI.Label(new Rect(20f, 120f, 160f, 25f), "Eccentricity:");
-            GUI.Label(new Rect(20f, 140f, 160f, 25f), displayEcc.ToString(3, true));
-            GUI.Label(new Rect(20f, 170f, 160f, 25f), "Angle:");
-            GUI.Label(new Rect(20f, 190f, 160f, 20f), angle.Round(0.1).ToString(1, true) + "°");
-            
+            GUI.Label(new Rect(10f, 20f, 160f, 20f), "Apoapsis:");
+            GUI.Label(new Rect(10f, 40f, 160f, 20f), displayify(apoapsis));
+            GUI.Label(new Rect(10f, 70f, 160f, 20f), "Periapsis:");
+            GUI.Label(new Rect(10f, 90f, 160f, 20f), displayify(periapsis));
+            GUI.Label(new Rect(10f, 120f, 160f, 25f), "Eccentricity:");
+            GUI.Label(new Rect(10f, 140f, 160f, 25f), displayEcc.ToString(3, true));
+            GUI.Label(new Rect(10f, 170f, 160f, 25f), "Angle:");
+            GUI.Label(new Rect(10f, 190f, 160f, 20f), angle.Round(0.1).ToString(1, true) + "°");
+            disableKt = GUI.Toggle(new Rect(20f, 220f, 120f, 20f), disableKt, " Disable kt Units");
+
             GUI.DragWindow();
         }
 
@@ -84,19 +87,21 @@ namespace ASoD_s_VanillaUpgrades
 
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
-            
-            Event current = Event.current;
-            if (current.keyCode == KeyCode.Slash)
+
+            if (!Main.KeyBool.StopKeys)
             {
-                WorldTime.main.timewarpIndex.timewarpIndex = 0;
-                WorldTime.main.SetState(1, true, true);
+                Event current = Event.current;
+                if (current.keyCode == KeyCode.Slash)
+                {
+                    WorldTime.main.timewarpIndex.timewarpIndex = 0;
+                    WorldTime.main.SetState(1, true, true);
+                }
+                if (current.keyCode == KeyCode.BackQuote)
+                {
+                    currentRocket.throttle.throttlePercent.Value = 0.0005f;
+                }
+                windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
             }
-            if (current.keyCode == KeyCode.BackQuote)
-            {
-                currentRocket.throttle.throttlePercent.Value = 0.0005f;
-            }
-            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Advanced Info");
-            
         }
     }
 }
