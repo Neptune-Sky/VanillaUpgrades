@@ -19,7 +19,11 @@ namespace ASoD_s_VanillaUpgrades
 
         public static bool noAdaptOverride;
 
-       
+        public static void Launch()
+        {
+            BuildState.main.SaveLaunchData(updatePersistent: true);
+            Base.sceneLoader.LoadWorldScene(launch: true);
+        }
 
         public void windowFunc(int windowID)
         {
@@ -32,17 +36,9 @@ namespace ASoD_s_VanillaUpgrades
 
         public void OnGUI()
         {
+            if (Main.menuOpen || !Config.showBuildGUI) return;
+
             windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
-            if(!Main.KeyBool.StopKeys)
-            {
-                Event current = Event.current;
-                bool flag = current.keyCode == KeyCode.L;
-                if (flag)
-                {
-                    BuildState.main.SaveLaunchData(updatePersistent: true);
-                    Base.sceneLoader.LoadWorldScene(launch: true);
-                }
-            }
             
         }
     }

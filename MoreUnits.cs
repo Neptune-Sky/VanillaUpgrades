@@ -15,6 +15,8 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this double a, ref string __result)
         {
+            if (!Config.mmUnits) return true;
+
             if (a >= 10000000 && !double.IsInfinity(a))
             {
                 __result = (a / 1000000).Round(0.1).ToString(1, true) + "Mm";
@@ -30,6 +32,11 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this double a, ref string __result)
         {
+            if (!Config.kmsUnits)
+            {
+                return true;
+            }
+
             if (a >= 10000 && !double.IsInfinity(a))
             {
                 __result = (a / 1000).Round(0.1).ToString(1, true) + "km/s";
@@ -45,6 +52,8 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, bool forceDecimal, ref string __result)
         {
+            if (!Config.ktUnits) return false;
+
             if (a >= 5000 && !float.IsInfinity(a) && !WorldFunctions.disableKt)
             {
                 var newVar = (a / 1000).Round(0.01f).ToString(2, forceDecimal) + "k";
@@ -63,6 +72,8 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, ref string __result)
         {
+            if (!Config.ktUnits) return false;
+
             if (a >= 10000 && !float.IsInfinity(a) && !WorldFunctions.disableKt)
             {
                 var newVar = (a / 1000).Round(0.01f).ToString(2, false) + "k";

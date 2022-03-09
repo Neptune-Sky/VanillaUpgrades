@@ -1,10 +1,10 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using ModLoader;
+using SFS.World;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using SFS.World;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -25,39 +25,50 @@ namespace ASoD_s_VanillaUpgrades
 			Main.patcher = new Harmony("mods.ASoD.VanUp");
 			Main.patcher.PatchAll();
 			Loader.modLoader.suscribeOnChangeScene(new UnityAction<Scene, LoadSceneMode>(this.OnSceneLoaded));
+
+			mainObject = new GameObject("ASoDMainObject");
+			mainObject.AddComponent<Config>();
+			UnityEngine.Object.DontDestroyOnLoad(mainObject);
+			mainObject.SetActive(true);
+			return;
 		}
 
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 		{
-			if (scene.name == "Build_PC")
-			{
-				GameObject gameObject = new GameObject("ASoDBuildObject");
-				gameObject.AddComponent<BuildMenuFunctions>();
-				UnityEngine.Object.DontDestroyOnLoad(gameObject);
-				gameObject.SetActive(true);
-				Main.buildMenuObject = gameObject;
-				return;
-			}
+			switch (scene.name)
+            {
+				case "Build_PC":
+					GameObject gameObject = new GameObject("ASoDBuildObject");
+					gameObject.AddComponent<BuildMenuFunctions>();
+					UnityEngine.Object.DontDestroyOnLoad(gameObject);
+					gameObject.SetActive(true);
+					Main.buildMenuObject = gameObject;
+					UnityEngine.Object.Destroy(Main.worldViewObject);
+					return;
 
-			UnityEngine.Object.Destroy(Main.buildMenuObject);
-
-			if (scene.name == "World_PC")
-			{
-				worldViewObject = new GameObject("ASoDWorldObject");
-				worldViewObject.AddComponent<WorldFunctions>();
-				worldViewObject.AddComponent<Throttle>();
-				UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
-				worldViewObject.SetActive(true);
-				return;
+				case "World_PC":
+					worldViewObject = new GameObject("ASoDWorldObject");
+					worldViewObject.AddComponent<WorldFunctions>();
+					worldViewObject.AddComponent<Throttle>();
+					UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
+					worldViewObject.SetActive(true);
+					UnityEngine.Object.Destroy(Main.buildMenuObject);
+					return;
+					
+				default:
+					UnityEngine.Object.Destroy(Main.buildMenuObject);
+					UnityEngine.Object.Destroy(Main.worldViewObject);
+					break;
 			}
-			
-			UnityEngine.Object.Destroy(Main.worldViewObject);
 		}
 
 		public void unload()
 		{
 			throw new NotImplementedException();
 		}
+		public static bool menuOpen;
+
+		public static GameObject mainObject;
 
 		public static GameObject buildMenuObject;
 

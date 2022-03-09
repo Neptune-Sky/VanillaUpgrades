@@ -7,7 +7,7 @@ namespace ASoD_s_VanillaUpgrades
 {
     public class WorldFunctions : MonoBehaviour
     {
-        public static Rect windowRect = new Rect(0f, Screen.height * 0.05f, 150f, 250f);
+        public static Rect windowRect = new Rect(0f, Screen.height * 0.05f, 150f, 220f);
 
         public static Rocket currentRocket;
 
@@ -33,7 +33,7 @@ namespace ASoD_s_VanillaUpgrades
             }
             else
             {
-                if (value > 10000000)
+                if (value > 10000000 && Config.mmUnits)
                 {
                     return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
                 }
@@ -51,15 +51,26 @@ namespace ASoD_s_VanillaUpgrades
             GUI.Label(new Rect(10f, 140f, 160f, 25f), displayEcc.ToString(3, true));
             GUI.Label(new Rect(10f, 170f, 160f, 25f), "Angle:");
             GUI.Label(new Rect(10f, 190f, 160f, 20f), angle.Round(0.1).ToString(1, true) + "°");
-            disableKt = GUI.Toggle(new Rect(20f, 220f, 120f, 20f), disableKt, " Disable kt Units");
 
             GUI.DragWindow();
         }
 
+        public static void StopTimewarp()
+        {
+            WorldTime.main.timewarpIndex.timewarpIndex = 0;
+            WorldTime.main.SetState(1, true, true);
+        }
+
+        public static void Throttle01()
+        {
+            currentRocket.throttle.throttlePercent.Value = 0.0005f;
+        }
 
         
         public void OnGUI()
         {
+            if (Main.menuOpen || !Config.showAdvanced) return;
+
             var player = (PlayerController.main.player.Value as Rocket);
             currentRocket = GameManager.main.rockets[GameManager.main.rockets.IndexOf(player)];
             var sma = currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - currentRocket.location.planet.Value.mass / currentRocket.location.Value.Radius));
@@ -71,7 +82,8 @@ namespace ASoD_s_VanillaUpgrades
             apoapsis = (Kepler.GetApoapsis(sma, ecc) - currentRocket.location.planet.Value.Radius).Round(0.1);
             periapsis = (Kepler.GetPeriapsis(sma, ecc) - currentRocket.location.planet.Value.Radius).Round(0.1);
             if (apoapsis == double.PositiveInfinity) { 
-                if (currentRocket.physics.location.Value.velocity.magnitude > 0)
+                
+                if (currentRocket.physics.location.velocity.Value.normalized.magnitude > 0)
                 {
                     apoapsis = double.NegativeInfinity;
                 } else
@@ -88,20 +100,8 @@ namespace ASoD_s_VanillaUpgrades
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
 
-            if (!Main.KeyBool.StopKeys)
-            {
-                Event current = Event.current;
-                if (current.keyCode == KeyCode.Slash)
-                {
-                    WorldTime.main.timewarpIndex.timewarpIndex = 0;
-                    WorldTime.main.SetState(1, true, true);
-                }
-                if (current.keyCode == KeyCode.BackQuote)
-                {
-                    currentRocket.throttle.throttlePercent.Value = 0.0005f;
-                }
-                windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
-            }
+            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
+            
         }
     }
 }
