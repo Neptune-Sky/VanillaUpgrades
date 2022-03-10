@@ -35,4 +35,9 @@ Tons more will be added in the future.
 
 This mod uses SFS Modloader version 1.1.2 made by dani0105, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
 
-Download the DLL file from the release of your choosing then place it in `Spaceflight Simulator_Data\MODS`.
+1. Install the modloader.
+2. Download the latest ZIP.
+3. Extract the root folder to `Spaceflight Simulator_Data\MODS`. Do not rename it or take the DLL out.
+
+
+**This mod is untested on Mac.** Use at your own risk.
