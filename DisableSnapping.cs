@@ -1,6 +1,5 @@
-﻿using System;
+﻿using HarmonyLib;
 using SFS.Builds;
-using HarmonyLib;
 using SFS.Parts.Modules;
 
 namespace ASoD_s_VanillaUpgrades

@@ -1,15 +1,12 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using SFS.Builds;
-using SFS.Parts.Modules;
-using SFS.Parts;
 
 namespace ASoD_s_VanillaUpgrades
 {
     [HarmonyPatch(typeof(PartGrid), "UpdateAdaptation")]
     class StopAdaptation
     {
-        
+
         [HarmonyPrefix]
         static bool Prefix()
         {

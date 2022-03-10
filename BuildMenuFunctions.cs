@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using SFS;
 using SFS.Builds;
-using SFS;
+using UnityEngine;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -29,7 +29,7 @@ namespace ASoD_s_VanillaUpgrades
         {
             snapping = GUI.Toggle(new Rect(10f, 20f, 120f, 20f), snapping, " Disable Snapping");
             noAdaptation = GUI.Toggle(new Rect(10f, 40f, 120f, 20f), noAdaptation, " Disable Adapting");
-            
+
 
             GUI.DragWindow();
         }
@@ -39,7 +39,7 @@ namespace ASoD_s_VanillaUpgrades
             if (Main.menuOpen || !Config.showBuildGUI) return;
 
             windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
-            
+
         }
     }
 }

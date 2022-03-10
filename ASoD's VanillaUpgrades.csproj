@@ -67,7 +67,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="ModLoader">
+    <Reference Include="ModLoader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\ModLoader.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
@@ -200,6 +201,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MoreUnits.cs" />
+    <Compile Include="TimewarpTo.cs" />
     <Compile Include="WorldFunctions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

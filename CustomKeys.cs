@@ -29,6 +29,8 @@ namespace ASoD_s_VanillaUpgrades
 
             public Key Stop_Timewarp = KeyCode.Slash;
 
+            public Key Timewarp_To = KeyCode.Semicolon;
+
         }
 
         // Loads automatically(?), no need for a hook here
@@ -52,6 +54,7 @@ namespace ASoD_s_VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
             createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
+            createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
@@ -108,8 +111,12 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix()
         {
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Stop_Timewarp, new Action(WorldFunctions.StopTimewarp));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Stop_Timewarp, delegate
+            {
+                WorldFunctions.StopTimewarp(true);
+            });
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(WorldFunctions.Throttle01));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
         }
     }
 }

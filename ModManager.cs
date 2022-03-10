@@ -44,9 +44,11 @@ namespace ASoD_s_VanillaUpgrades
         public static bool kmsUnits = true;
         public static bool ktUnits = true;
 
+        public static bool stopTimewarpOnEncounter = true;
 
 
-        static float windowHeight = 210f;
+
+        static float windowHeight = 260f;
         public Rect windowRect = new Rect(10f, (float)Screen.height - windowHeight, 230f, windowHeight);
 
         public static GUIStyle title = new GUIStyle();
@@ -54,9 +56,15 @@ namespace ASoD_s_VanillaUpgrades
         {
             if (!PlayerPrefs.HasKey("ASoDVanUpConfig"))
             {
-                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True");
+                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True");
             }
             prefs = PlayerPrefs.GetString("ASoDVanUpConfig").Split(char.Parse("|"));
+            if (prefs.Length < 6)
+            {
+                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True");
+                prefs = PlayerPrefs.GetString("ASoDVanUpConfig").Split(char.Parse("|"));
+            }
+
 
         }
 
@@ -83,11 +91,16 @@ namespace ASoD_s_VanillaUpgrades
             prefs[4] = GUI.Toggle(new Rect(20f, 150f, 210f, 20f), bool.Parse(prefs[4]), " Kilotonnes (kt)").ToString();
             ktUnits = bool.Parse(prefs[4]);
 
+            GUI.Label(new Rect(20f, 180f, 210f, 20f), "Functions:");
+
+            prefs[5] = GUI.Toggle(new Rect(20f, 200f, 210f, 20f), bool.Parse(prefs[5]), " Stop Timewarp on Encounter").ToString();
+            stopTimewarpOnEncounter = bool.Parse(prefs[5]);
+
             PlayerPrefs.SetString("ASoDVanUpConfig", String.Join("|", prefs));
 
-            if (GUI.Button(new Rect(25f, 180f, 180f, 20f), "Defaults"))
+            if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 20f), "Defaults"))
             {
-                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True");
+                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True");
                 prefs = PlayerPrefs.GetString("ASoDVanUpConfig").Split(char.Parse("|"));
             }
 
