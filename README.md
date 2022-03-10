@@ -10,6 +10,7 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 - Toggles for disabling adaptation and snapping in the build grid.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
+- Timewarp now stops when entering a planet's SoI.*
 
 **New Unit Displays:**
 
@@ -22,13 +23,16 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - L to launch and skip warnings in build space
 - Slash to instantly stop timewarp
 - Backtick to set thrust to 0.1%
+- Semicolon to timewarp to periapsis/apoapsis/escape*
 
-Mod units and mod windows can be individually disabled in the config window in the game's settings menu.
+Mod features can be individually disabled in the config window in the game's settings menu.
 
 Tons more will be added in the future.
 
+\*Timewarp stuff is inconsistent due to floating point errors and me being bad at math. If I find a better implementation I will use it.
+
 # Installation
 
-This mod uses SFS Modloader made by dani0105, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
+This mod uses SFS Modloader version 1.1.2 made by dani0105, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
 
 Download the DLL file from the release of your choosing then place it in `Spaceflight Simulator_Data\MODS`.
