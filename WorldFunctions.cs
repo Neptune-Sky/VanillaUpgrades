@@ -2,6 +2,7 @@
 using SFS.World;
 using System;
 using UnityEngine;
+using SFS;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -63,13 +64,22 @@ namespace ASoD_s_VanillaUpgrades
 
             GUI.DragWindow();
         }
+        public void Update()
+        {
+            if (!Config.allowTimeSlowdown && TimeDecelMain.timeDecelIndex != 0)
+            {
+                WorldTime.main.SetState(1, true, false);
+                TimeDecelMain.timeDecelIndex = 0;
+            }
+        }
 
         public static void StopTimewarp(bool showmsg)
         {
-            if (WorldTime.main.timewarpIndex.timewarpIndex == 0) return;
+            if (WorldTime.main.timewarpIndex.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
 
             WorldTime.main.timewarpIndex.timewarpIndex = 0;
             WorldTime.main.SetState(1, true, false);
+            TimeDecelMain.timeDecelIndex = 0;
             TimewarpToClass.timewarpTo = false;
             if (showmsg)
             {
@@ -83,13 +93,14 @@ namespace ASoD_s_VanillaUpgrades
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 
+        
 
         public void OnGUI()
         {
 
 
 
-            if (Main.menuOpen || !Config.showAdvanced) return;
+            if (Main.menuOpen || !Config.showAdvanced || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
 
             var player = (PlayerController.main.player.Value as Rocket);
             currentRocket = GameManager.main.rockets[GameManager.main.rockets.IndexOf(player)];

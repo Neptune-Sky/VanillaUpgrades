@@ -31,6 +31,8 @@ namespace ASoD_s_VanillaUpgrades
 
             public Key Timewarp_To = KeyCode.Semicolon;
 
+            public Key Hide_UI = KeyCode.F2;
+
         }
 
         // Loads automatically(?), no need for a hook here
@@ -55,6 +57,7 @@ namespace ASoD_s_VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
             createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
+            createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
@@ -102,6 +105,7 @@ namespace ASoD_s_VanillaUpgrades
             KeysNode keysNode = BuildManager.main.build_Input.keysNode;
 
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildMenuFunctions.Launch());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, () => OpacityChanger.HideUI());
         }
     }
 
@@ -117,6 +121,7 @@ namespace ASoD_s_VanillaUpgrades
             });
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(WorldFunctions.Throttle01));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
         }
     }
 }

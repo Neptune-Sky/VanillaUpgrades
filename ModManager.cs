@@ -46,9 +46,12 @@ namespace ASoD_s_VanillaUpgrades
 
         public static bool stopTimewarpOnEncounter = true;
 
+        public static bool allowTimeSlowdown = false;
+        public static bool higherPhysicsWarp = false;
 
 
-        static float windowHeight = 260f;
+
+        static float windowHeight = 330f;
         public Rect windowRect = new Rect(10f, (float)Screen.height - windowHeight, 230f, windowHeight);
 
         public static GUIStyle title = new GUIStyle();
@@ -56,12 +59,12 @@ namespace ASoD_s_VanillaUpgrades
         {
             if (!PlayerPrefs.HasKey("ASoDVanUpConfig"))
             {
-                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True");
+                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True|False|False");
             }
             prefs = PlayerPrefs.GetString("ASoDVanUpConfig").Split(char.Parse("|"));
-            if (prefs.Length < 6)
+            if (prefs.Length < 8)
             {
-                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True");
+                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True|False|False");
                 prefs = PlayerPrefs.GetString("ASoDVanUpConfig").Split(char.Parse("|"));
             }
 
@@ -96,11 +99,18 @@ namespace ASoD_s_VanillaUpgrades
             prefs[5] = GUI.Toggle(new Rect(20f, 200f, 210f, 20f), bool.Parse(prefs[5]), " Stop Timewarp on Encounter").ToString();
             stopTimewarpOnEncounter = bool.Parse(prefs[5]);
 
+            GUI.Label(new Rect(20f, 230f, 210f, 20f), "\"Cheaty\" Functions:");
+            prefs[6] = GUI.Toggle(new Rect(20f, 250f, 210f, 20f), bool.Parse(prefs[6]), " Allow Time Slowdown").ToString();
+            allowTimeSlowdown = bool.Parse(prefs[6]);
+
+            prefs[7] = GUI.Toggle(new Rect(20f, 270f, 210f, 20f), bool.Parse(prefs[7]), " Higher Physics Timewarps").ToString();
+            higherPhysicsWarp = bool.Parse(prefs[7]);
+
             PlayerPrefs.SetString("ASoDVanUpConfig", String.Join("|", prefs));
 
             if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 20f), "Defaults"))
             {
-                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True");
+                PlayerPrefs.SetString("ASoDVanUpConfig", "True|True|True|True|True|True|False|False");
                 prefs = PlayerPrefs.GetString("ASoDVanUpConfig").Split(char.Parse("|"));
             }
 
@@ -118,10 +128,13 @@ namespace ASoD_s_VanillaUpgrades
                 mmUnits = bool.Parse(prefs[2]);
                 kmsUnits = bool.Parse(prefs[3]);
                 ktUnits = bool.Parse(prefs[4]);
+                stopTimewarpOnEncounter = bool.Parse(prefs[5]);
+                allowTimeSlowdown = bool.Parse(prefs[6]);
+                higherPhysicsWarp = bool.Parse(prefs[7]);
                 return;
             }
 
-            GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, windowFunc, "VanillaUpgrades Config");
+            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, windowFunc, "VanillaUpgrades Config");
         }
     }
 }

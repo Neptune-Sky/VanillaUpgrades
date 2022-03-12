@@ -36,7 +36,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public void OnGUI()
         {
-            if (Main.menuOpen || !Config.showBuildGUI) return;
+            if (Main.menuOpen || !Config.showBuildGUI || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
 
             windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
 
