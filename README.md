@@ -11,6 +11,8 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - Toggles for disabling adaptation and snapping in the build grid.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
 - Timewarp now stops when entering a planet's SoI.*
+- Time slowdown, you can now use decimal timewarps and even freeze time completely. (Off by default, due to cheaty nature.)
+- Physics timewarp up to 25x on all difficulties (Off by default, due to cheaty nature.)
 
 **New Unit Displays:**
 
@@ -24,12 +26,13 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - Slash to instantly stop timewarp
 - Backtick to set thrust to 0.1%
 - Semicolon to timewarp to periapsis/apoapsis/escape*
+- F2 to hide the UI
 
-Mod features can be individually disabled in the config window in the game's settings menu.
+Mod features can be individually disabled in the config window in the game's settings menu. 
 
 Tons more will be added in the future.
 
-\*Timewarp stuff is inconsistent due to floating point errors and me being bad at math. If I find a better implementation I will use it.
+\*Inconsistent due to floating point errors and me being bad at math. If I find a better implementation I will use it.
 
 # Installation
 
