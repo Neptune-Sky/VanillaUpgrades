@@ -42,7 +42,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public static void SlowTime()
         {
-            if (!Config.allowTimeSlowdown) return;
+            if (!(bool)Config.settings["allowTimeSlowdown"]) return;
             if (timeDecelIndex <= 5) timeDecelIndex++; else return;
             double speed;
             bool defaultMessage = true;

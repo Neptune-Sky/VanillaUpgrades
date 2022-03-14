@@ -9,7 +9,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         public static bool Prefix(ref double __result, int timewarpIndex_Physics)
         {
-            if (Config.higherPhysicsWarp)
+            if ((bool)Config.settings["higherPhysicsWarp"])
             {
                 __result = new int[] { 1, 2, 5, 10, 25 }[timewarpIndex_Physics];
                 return false;
@@ -24,7 +24,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         public static bool Prefix(ref int __result)
         {
-            if (Config.higherPhysicsWarp)
+            if ((bool)Config.settings["higherPhysicsWarp"])
             {
                 __result = 4;
                 return false;

@@ -43,7 +43,7 @@ namespace ASoD_s_VanillaUpgrades
             }
             else
             {
-                if (value > 10000000 && Config.mmUnits)
+                if (value > 10000000 && (bool)Config.settings["mmUnits"])
                 {
                     return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
                 }
@@ -66,9 +66,14 @@ namespace ASoD_s_VanillaUpgrades
         }
         public void Update()
         {
-            if (!Config.allowTimeSlowdown && TimeDecelMain.timeDecelIndex != 0)
+            if (!(bool)Config.settings["allowTimeSlowdown"] && TimeDecelMain.timeDecelIndex != 0)
             {
                 WorldTime.main.SetState(1, true, false);
+                TimeDecelMain.timeDecelIndex = 0;
+            }
+
+            if (TimeDecelMain.timeDecelIndex != 0 && WorldTime.main.timewarpIndex.timewarpIndex != 0)
+            {
                 TimeDecelMain.timeDecelIndex = 0;
             }
         }
@@ -97,13 +102,19 @@ namespace ASoD_s_VanillaUpgrades
 
         public void OnGUI()
         {
+            if (PlayerController.main.player.Value == null)
+            {
+                currentRocket = null;
+                return;
+            }
+                
+
+            currentRocket = (PlayerController.main.player.Value as Rocket);
 
 
+            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
 
-            if (Main.menuOpen || !Config.showAdvanced || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
-
-            var player = (PlayerController.main.player.Value as Rocket);
-            currentRocket = GameManager.main.rockets[GameManager.main.rockets.IndexOf(player)];
+            
             var sma = currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - currentRocket.location.planet.Value.mass / currentRocket.location.Value.Radius));
             Double3 @double = Double3.Cross(currentRocket.location.position, currentRocket.location.velocity);
             Double2 double2 = (Double2)(Double3.Cross((Double3)currentRocket.location.velocity.Value, @double) / currentRocket.location.planet.Value.mass) - currentRocket.location.position.Value.normalized;

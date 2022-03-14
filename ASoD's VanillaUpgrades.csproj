@@ -83,6 +83,10 @@
     <Reference Include="Mono.WebBrowser">
       <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Mono.WebBrowser.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -204,6 +208,7 @@
     <Compile Include="DisableSnapping.cs" />
     <Compile Include="BuildMenuFunctions.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="MoreCameraMove.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MoreUnits.cs" />
     <Compile Include="RaisePhysicsMaxWarp.cs" />

@@ -24,7 +24,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix(Planet planet, Planet planet_Old)
         {
-            if (planet.parentBody == planet_Old && Config.stopTimewarpOnEncounter)
+            if (planet.parentBody == planet_Old && (bool)Config.settings["stopTimewarpOnEncounter"])
             {
                 WorldFunctions.StopTimewarp(false);
                 return;
@@ -66,6 +66,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public static void ChangeTimewarp(int amount, bool set)
         {
+            if (PlayerController.main.player.Value == null) return;
 
             if (set)
             {
@@ -94,6 +95,8 @@ namespace ASoD_s_VanillaUpgrades
 
         public static void TimewarpTo()
         {
+            if (PlayerController.main.player.Value == null) return;
+
             ChangeTimewarp(1, true);
 
             int maxIndex = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex() - 1;
@@ -125,6 +128,8 @@ namespace ASoD_s_VanillaUpgrades
 
         public void Update()
         {
+            if (PlayerController.main.player.Value == null || WorldFunctions.instance == null || WorldFunctions.currentRocket == null) return;
+
             bool forceIncreasing;
             bool forceDecreasing;
             if (Math.Abs(height - WorldFunctions.instance.periapsis) < threshold) { forceIncreasing = true; forceDecreasing = false; }

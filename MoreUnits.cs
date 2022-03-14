@@ -9,7 +9,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this double a, ref string __result)
         {
-            if (!Config.mmUnits) return true;
+            if (!(bool)Config.settings["mmUnits"]) return true;
 
             if (a >= 10000000 && !double.IsInfinity(a))
             {
@@ -26,7 +26,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this double a, ref string __result)
         {
-            if (!Config.kmsUnits)
+            if (!(bool)Config.settings["kmsUnits"])
             {
                 return true;
             }
@@ -46,7 +46,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, bool forceDecimal, ref string __result)
         {
-            if (!Config.ktUnits) return false;
+            if (!(bool)Config.settings["ktUnits"]) return false;
 
             if (a >= 5000 && !float.IsInfinity(a) && !WorldFunctions.disableKt)
             {
@@ -66,7 +66,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, ref string __result)
         {
-            if (!Config.ktUnits) return false;
+            if (!(bool)Config.settings["ktUnits"]) return false;
 
             if (a >= 10000 && !float.IsInfinity(a) && !WorldFunctions.disableKt)
             {

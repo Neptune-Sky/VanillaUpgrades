@@ -3,6 +3,8 @@ using ModLoader;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Reflection;
+using System.IO;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -78,5 +80,7 @@ namespace ASoD_s_VanillaUpgrades
         public static GameObject worldViewObject;
 
         public static Harmony patcher;
+
+        public static string modDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
     }
 }
