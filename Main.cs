@@ -18,18 +18,19 @@ namespace ASoD_s_VanillaUpgrades
            "v1.3" // Mod version
            )
         { }
-
         public override void early_load()
         {
             Main.patcher = new Harmony("mods.ASoD.VanUp");
             Main.patcher.PatchAll();
             SceneManager.sceneLoaded += OnSceneLoaded;
+            Application.quitting += OnQuit;
             return;
         }
 
         public override void load()
         {
             mainObject = new GameObject("ASoDMainObject");
+            mainObject.AddComponent<WindowManager>();
             mainObject.AddComponent<Config>();
             UnityEngine.Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
@@ -41,7 +42,7 @@ namespace ASoD_s_VanillaUpgrades
             {
                 case "Build_PC":
                     GameObject gameObject = new GameObject("ASoDBuildObject");
-                    gameObject.AddComponent<BuildMenuFunctions>();
+                    gameObject.AddComponent<BuildSettings>();
                     UnityEngine.Object.DontDestroyOnLoad(gameObject);
                     gameObject.SetActive(true);
                     Main.buildMenuObject = gameObject;
@@ -50,8 +51,9 @@ namespace ASoD_s_VanillaUpgrades
 
                 case "World_PC":
                     worldViewObject = new GameObject("ASoDWorldObject");
-                    worldViewObject.AddComponent<WorldFunctions>();
+                    worldViewObject.AddComponent<AdvancedInfo>();
                     worldViewObject.AddComponent<TimewarpToClass>();
+                    worldViewObject.AddComponent<FaceDirection>();
                     UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
                     worldViewObject.SetActive(true);
                     UnityEngine.Object.Destroy(Main.buildMenuObject);
@@ -62,6 +64,11 @@ namespace ASoD_s_VanillaUpgrades
                     UnityEngine.Object.Destroy(Main.worldViewObject);
                     break;
             }
+        }
+
+        private void OnQuit()
+        {
+            File.WriteAllText(WindowManager.inst.windowDir, WindowManager.settings.ToString());
         }
 
         public override void unload()

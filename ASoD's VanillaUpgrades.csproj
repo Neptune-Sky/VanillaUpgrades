@@ -120,6 +120,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.ClothModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Program Files\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
@@ -201,12 +205,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FaceDirection.cs" />
     <Compile Include="HideGUI.cs" />
     <Compile Include="ModManager.cs" />
     <Compile Include="CustomKeys.cs" />
-    <Compile Include="DisableAdaptation.cs" />
-    <Compile Include="DisableSnapping.cs" />
-    <Compile Include="BuildMenuFunctions.cs" />
+    <Compile Include="BuildSettings.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="MoreCameraMove.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,7 +217,8 @@
     <Compile Include="RaisePhysicsMaxWarp.cs" />
     <Compile Include="TimeDeceleration.cs" />
     <Compile Include="TimewarpTo.cs" />
-    <Compile Include="WorldFunctions.cs" />
+    <Compile Include="WindowManager.cs" />
+    <Compile Include="AdvancedInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

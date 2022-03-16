@@ -48,7 +48,7 @@ namespace ASoD_s_VanillaUpgrades
         {
             if (!(bool)Config.settings["ktUnits"]) return false;
 
-            if (a >= 5000 && !float.IsInfinity(a) && !WorldFunctions.disableKt)
+            if (a >= 5000 && !float.IsInfinity(a) && !AdvancedInfo.disableKt)
             {
                 var newVar = (a / 1000).Round(0.01f).ToString(2, forceDecimal) + "k";
                 __result = Loc.main.Mass.Inject(newVar, "value");
@@ -68,7 +68,7 @@ namespace ASoD_s_VanillaUpgrades
         {
             if (!(bool)Config.settings["ktUnits"]) return false;
 
-            if (a >= 10000 && !float.IsInfinity(a) && !WorldFunctions.disableKt)
+            if (a >= 10000 && !float.IsInfinity(a) && !AdvancedInfo.disableKt)
             {
                 var newVar = (a / 1000).Round(0.01f).ToString(2, false) + "k";
                 __result = Loc.main.Thrust.Inject(newVar, "value");

@@ -33,6 +33,14 @@ namespace ASoD_s_VanillaUpgrades
 
             public Key Hide_UI = KeyCode.F2;
 
+            public Key Prograde = KeyCode.Alpha1;
+
+            public Key Retrograde = KeyCode.Alpha2;
+
+            public Key Rad_In = KeyCode.Alpha3;
+
+            public Key Rad_Out = KeyCode.Alpha4;
+
         }
 
         // Loads automatically(?), no need for a hook here
@@ -60,6 +68,14 @@ namespace ASoD_s_VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
+
+            /* Pissed me off, will work on it later.
+            createTraverse.GetValue(new object[] { custom_keys.Prograde, defaultData.Prograde, "Face prograde" });
+            createTraverse.GetValue(new object[] { custom_keys.Retrograde, defaultData.Retrograde, "Face retrograde" });
+            createTraverse.GetValue(new object[] { custom_keys.Rad_In, defaultData.Rad_In, "Face radial in" });
+            createTraverse.GetValue(new object[] { custom_keys.Rad_Out, defaultData.Rad_Out, "Face radial out" });
+            */
+
             createSpaceTraverse.GetValue();
         }
 
@@ -104,7 +120,7 @@ namespace ASoD_s_VanillaUpgrades
         {
             KeysNode keysNode = BuildManager.main.build_Input.keysNode;
 
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildMenuFunctions.Launch());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildSettings.Launch());
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, () => OpacityChanger.HideUI());
         }
     }
@@ -117,11 +133,27 @@ namespace ASoD_s_VanillaUpgrades
         {
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Stop_Timewarp, delegate
             {
-                WorldFunctions.StopTimewarp(true);
+                AdvancedInfo.StopTimewarp(true);
             });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(WorldFunctions.Throttle01));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(AdvancedInfo.Throttle01));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
+            {
+                FaceDirection.Mode(1);
+            });
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Retrograde, delegate
+            {
+                FaceDirection.Mode(2);
+            });
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_In, delegate
+            {
+                FaceDirection.Mode(3);
+            });
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_Out, delegate
+            {
+                FaceDirection.Mode(4);
+            });
         }
     }
 }

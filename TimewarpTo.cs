@@ -26,12 +26,12 @@ namespace ASoD_s_VanillaUpgrades
         {
             if (planet.parentBody == planet_Old && (bool)Config.settings["stopTimewarpOnEncounter"])
             {
-                WorldFunctions.StopTimewarp(false);
+                AdvancedInfo.StopTimewarp(false);
                 return;
             }
             if (TimewarpToClass.timewarpTo == true)
             {
-                WorldFunctions.StopTimewarp(false);
+                AdvancedInfo.StopTimewarp(false);
             }
 
         }
@@ -101,7 +101,7 @@ namespace ASoD_s_VanillaUpgrades
 
             int maxIndex = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex() - 1;
 
-            double usedIndex = (WorldFunctions.instance.apoapsis.Round(1).ToString().Length + WorldFunctions.instance.periapsis.Round(1).ToString().Length) / 2.5;
+            double usedIndex = (AdvancedInfo.instance.apoapsis.Round(1).ToString().Length + AdvancedInfo.instance.periapsis.Round(1).ToString().Length) / 2.5;
             index = (int)usedIndex;
             if (usedIndex > maxIndex)
             {
@@ -112,7 +112,7 @@ namespace ASoD_s_VanillaUpgrades
             if (WorldTime.CanTimewarp(false, false))
             {
                 var name = heightIncreasing ? "apoapsis" : "periapsis";
-                if (WorldFunctions.displayify(WorldFunctions.instance.apoapsis) == "Escape" && heightIncreasing)
+                if (AdvancedInfo.displayify(AdvancedInfo.instance.apoapsis) == "Escape" && heightIncreasing)
                 {
                     name = "escape";
                 }
@@ -120,7 +120,7 @@ namespace ASoD_s_VanillaUpgrades
                 ChangeTimewarp((int)usedIndex, true);
                 MsgDrawer.main.Log("Timewarping to " + name + "...");
 
-                threshold = (target / Math.Pow(2, target.Round(1).ToString().Length)) * WorldFunctions.instance.displayEcc;
+                threshold = (target / Math.Pow(2, target.Round(1).ToString().Length)) * AdvancedInfo.instance.displayEcc;
                 TimewarpToClass.lastHeight = Math.Abs(height - target);
             }
 
@@ -128,22 +128,22 @@ namespace ASoD_s_VanillaUpgrades
 
         public void Update()
         {
-            if (PlayerController.main.player.Value == null || WorldFunctions.instance == null || WorldFunctions.currentRocket == null) return;
+            if (PlayerController.main.player.Value == null || AdvancedInfo.instance == null || AdvancedInfo.currentRocket == null) return;
 
             bool forceIncreasing;
             bool forceDecreasing;
-            if (Math.Abs(height - WorldFunctions.instance.periapsis) < threshold) { forceIncreasing = true; forceDecreasing = false; }
-            else if (Math.Abs(height - WorldFunctions.instance.apoapsis) < threshold) { forceIncreasing = false; forceDecreasing = true; } else { forceIncreasing = false; forceDecreasing = false; }
+            if (Math.Abs(height - AdvancedInfo.instance.periapsis) < threshold) { forceIncreasing = true; forceDecreasing = false; }
+            else if (Math.Abs(height - AdvancedInfo.instance.apoapsis) < threshold) { forceIncreasing = false; forceDecreasing = true; } else { forceIncreasing = false; forceDecreasing = false; }
 
             if (!forceIncreasing && !forceDecreasing)
             {
 
 
-                if (height.Round(0.01) < WorldFunctions.currentRocket.physics.location.position.Value.magnitude.Round(0.01) - WorldFunctions.currentRocket.physics.location.planet.Value.Radius)
+                if (height.Round(0.01) < AdvancedInfo.currentRocket.physics.location.position.Value.magnitude.Round(0.01) - AdvancedInfo.currentRocket.physics.location.planet.Value.Radius)
                 {
                     heightIncreasing = true;
                 }
-                if (height.Round(0.01) > WorldFunctions.currentRocket.physics.location.position.Value.magnitude.Round(0.01) - WorldFunctions.currentRocket.physics.location.planet.Value.Radius)
+                if (height.Round(0.01) > AdvancedInfo.currentRocket.physics.location.position.Value.magnitude.Round(0.01) - AdvancedInfo.currentRocket.physics.location.planet.Value.Radius)
                 {
                     heightIncreasing = false;
                 }
@@ -161,14 +161,14 @@ namespace ASoD_s_VanillaUpgrades
                 }
             }
 
-            height = WorldFunctions.currentRocket.physics.location.position.Value.magnitude - WorldFunctions.currentRocket.physics.location.planet.Value.Radius;
-            target = heightIncreasing ? WorldFunctions.instance.apoapsis : WorldFunctions.instance.periapsis;
+            height = AdvancedInfo.currentRocket.physics.location.position.Value.magnitude - AdvancedInfo.currentRocket.physics.location.planet.Value.Radius;
+            target = heightIncreasing ? AdvancedInfo.instance.apoapsis : AdvancedInfo.instance.periapsis;
 
             int minIndex;
-            double velocity = WorldFunctions.currentRocket.physics.location.velocity.Value.magnitude;
+            double velocity = AdvancedInfo.currentRocket.physics.location.velocity.Value.magnitude;
             if (velocity < 300)
             {
-                if (velocity < 50 && WorldFunctions.instance.displayEcc < 0.5)
+                if (velocity < 50 && AdvancedInfo.instance.displayEcc < 0.5)
                 {
                     minIndex = 7;
                 }
@@ -197,7 +197,7 @@ namespace ASoD_s_VanillaUpgrades
                 }
                 if (Math.Abs(height - target) < threshold)
                 {
-                    WorldFunctions.StopTimewarp(true);
+                    AdvancedInfo.StopTimewarp(true);
                 }
             }
 
@@ -215,7 +215,7 @@ namespace ASoD_s_VanillaUpgrades
             GUI.Label(new Rect(20f, 80f, 1000f, 20f), "heightIncreasing: " + heightIncreasing.ToString());
             GUI.Label(new Rect(20f, 100f, 1000f, 20f), "lastHeight: " + lastHeight.ToString());
             GUI.Label(new Rect(20f, 120f, 1000f, 20f), "index: " + index.ToString());
-            GUI.Label(new Rect(20f, 140f, 1000f, 20f), "timewarpTo: " + timewarpTo.ToString());
+            GUI.Label(new Rect(20f, 140f, 1000f, 20f), "e: " + FaceDirection.e.ToString());
         }
 
         public void OnGUI()

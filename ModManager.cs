@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using SFS.Audio;
+using SFS;
 using SFS.UI;
 using System;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace ASoD_s_VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix(BasicMenu __instance)
         {
-            if (__instance.GetComponent<AudioSettings>())
+            if (__instance.GetComponent<VideoSettingsPC>())
             {
                 Config.showSettings = true;
             }
@@ -46,8 +47,9 @@ namespace ASoD_s_VanillaUpgrades
 
         public static bool showSettings;
         
-        static float windowHeight = 370f;
-        public Rect windowRect = new Rect(10f, (float)Screen.height - windowHeight, 230f, windowHeight);
+        public static float windowHeight = 370f;
+
+        public Rect windowRect = new Rect((float)WindowManager.settings["config"]["x"], (float)WindowManager.settings["config"]["y"], 230f, windowHeight);
 
         public static GUIStyle title = new GUIStyle();
         public void Awake()
@@ -67,6 +69,7 @@ namespace ASoD_s_VanillaUpgrades
                 Debug.LogWarning("VanillaUpgrades config format found to be invalid, resetting to default.");
                 settings = defaultConfig;
             }
+
             if (settings["persistentVars"] == null) settings["persistentVars"] = defaultConfig["persistentVars"];
 
             if (settings["persistentVars"]["opacity"] == null) settings["persistentVars"]["opacity"] = defaultConfig["persistentVars"]["opacity"];
@@ -125,7 +128,9 @@ namespace ASoD_s_VanillaUpgrades
 
             settings["higherPhysicsWarp"] = GUI.Toggle(new Rect(20f, 310f, 210f, 20f), (bool)settings["higherPhysicsWarp"], " Higher Physics Timewarps");
 
-            if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 20f), "Defaults"))
+            
+
+            if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 20f), "Default Settings"))
             {
                 File.WriteAllText(configPath, defaultConfig.ToString());
                 settings = defaultConfig;
@@ -137,10 +142,12 @@ namespace ASoD_s_VanillaUpgrades
 
         public void OnGUI()
         {
-
+            if (WindowManager.inst == null) return;
             if (!showSettings) return;
-
-            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, windowFunc, "VanillaUpgrades Config");
+            Rect oldRect = windowRect;
+            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "VanillaUpgrades Config");
+            windowRect = WindowManager.ConfineRect(windowRect);
+            if (oldRect != windowRect) WindowManager.settings["config"]["x"] = windowRect.x; WindowManager.settings["config"]["y"] = windowRect.y;
         }
     }
 }

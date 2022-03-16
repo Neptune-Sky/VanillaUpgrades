@@ -3,13 +3,14 @@ using SFS.World;
 using System;
 using UnityEngine;
 using SFS;
+using SFS.Variables;
 
 namespace ASoD_s_VanillaUpgrades
 {
 
-    public class WorldFunctions : MonoBehaviour
+    public class AdvancedInfo : MonoBehaviour
     {
-        public static Rect windowRect = new Rect(0f, Screen.height * 0.05f, 150f, 220f);
+        public static Rect windowRect = new Rect((float)WindowManager.settings["advancedInfo"]["x"], (float)WindowManager.settings["advancedInfo"]["y"], 150f, 220f);
 
         public static Rocket currentRocket;
 
@@ -23,7 +24,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public static bool disableKt;
 
-        public static WorldFunctions instance;
+        public static AdvancedInfo instance;
 
 
         public void Awake()
@@ -64,8 +65,11 @@ namespace ASoD_s_VanillaUpgrades
 
             GUI.DragWindow();
         }
+
+        
         public void Update()
         {
+            
             if (!(bool)Config.settings["allowTimeSlowdown"] && TimeDecelMain.timeDecelIndex != 0)
             {
                 WorldTime.main.SetState(1, true, false);
@@ -97,8 +101,6 @@ namespace ASoD_s_VanillaUpgrades
         {
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
-
-        
 
         public void OnGUI()
         {
@@ -147,9 +149,10 @@ namespace ASoD_s_VanillaUpgrades
 
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
-
-            windowRect = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
-
+            Rect oldRect = windowRect;
+            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
+            windowRect = WindowManager.ConfineRect(windowRect);
+            if (oldRect != windowRect) WindowManager.settings["advancedInfo"]["x"] = windowRect.x; WindowManager.settings["advancedInfo"]["y"] = windowRect.y;
         }
     }
 }
