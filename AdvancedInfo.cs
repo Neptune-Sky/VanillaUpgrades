@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using SFS;
 using SFS.Variables;
+using UnityEngine.UI;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -150,6 +151,7 @@ namespace ASoD_s_VanillaUpgrades
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
             Rect oldRect = windowRect;
+            GUI.color = new Color((float)Config.settings["persistentVars"]["windowColor"]["r"], (float)Config.settings["persistentVars"]["windowColor"]["g"], (float)Config.settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
             windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
             windowRect = WindowManager.ConfineRect(windowRect);
             if (oldRect != windowRect) WindowManager.settings["advancedInfo"]["x"] = windowRect.x; WindowManager.settings["advancedInfo"]["y"] = windowRect.y;
