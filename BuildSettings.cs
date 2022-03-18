@@ -94,7 +94,18 @@ namespace ASoD_s_VanillaUpgrades
 
             GUI.DragWindow();
         }
-
+        public void Update()
+        {
+           if ((bool)Config.settings["moreCameraZoom"])
+            {
+                BuildManager.main.buildCamera.maxCameraDistance = 300;
+                BuildManager.main.buildCamera.minCameraDistance = 0.1f;
+            } else
+            {
+                BuildManager.main.buildCamera.maxCameraDistance = 60;
+                BuildManager.main.buildCamera.minCameraDistance = 10f;
+            }
+        }
         public void OnGUI()
         {
             if (Main.menuOpen || !(bool)Config.settings["showBuildGUI"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
