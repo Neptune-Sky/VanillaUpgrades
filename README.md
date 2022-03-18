@@ -10,7 +10,7 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 - Toggles for disabling adaptation and snapping in the build grid.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
-- Greatly increased zoom-in/movement limits of the camera in world view.
+- Greatly increased zoom-in/movement limits of the camera in world/build views.
 - Timewarp now stops when entering a planet's SoI.*
 - Time slowdown, you can now use decimal timewarps and even freeze time completely. (Off by default, due to cheaty nature.)
 - Physics timewarp up to 25x on all difficulties (Off by default, due to cheaty nature.)
