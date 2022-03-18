@@ -32,6 +32,7 @@ namespace ASoD_s_VanillaUpgrades
             mainObject = new GameObject("ASoDMainObject");
             mainObject.AddComponent<WindowManager>();
             mainObject.AddComponent<Config>();
+            mainObject.AddComponent<ErrorNotification>();
             UnityEngine.Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using SFS.World;
 using UnityEngine;
+using SFS.Builds;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -34,6 +35,21 @@ namespace ASoD_s_VanillaUpgrades
             if (PlayerController.main.player.Value == null) return true;
             __result = Mathf.Clamp(newValue, 0.05f, 2.5E+10f);
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(BuildManager), "Awake")]
+    public static class PatchZoomLimits
+    {
+        public static BuildManager inst;
+        [HarmonyPrefix]
+        public static void Prefix(ref BuildManager __instance)
+        {
+            if ((bool)Config.settings["moreCameraZoom"])
+            {
+                __instance.buildCamera.maxCameraDistance = 300;
+                __instance.buildCamera.minCameraDistance = 0.1f;
+            }
         }
     }
 }

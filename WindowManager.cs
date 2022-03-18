@@ -59,7 +59,7 @@ namespace ASoD_s_VanillaUpgrades
             catch (Exception e)
             {
                 File.WriteAllText(windowDir, defaults.ToString());
-                Debug.LogWarning("VanillaUpgrades WindowPositions format found to be invalid, resetting to default.");
+                ErrorNotification.Error("Window positions file was of an invalid format, and was reset to defaults.");
                 settings = defaults;
             }
 

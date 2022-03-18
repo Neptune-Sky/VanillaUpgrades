@@ -94,23 +94,11 @@ namespace ASoD_s_VanillaUpgrades
 
             GUI.DragWindow();
         }
-        public void Update()
-        {
-           if ((bool)Config.settings["moreCameraZoom"])
-            {
-                BuildManager.main.buildCamera.maxCameraDistance = 300;
-                BuildManager.main.buildCamera.minCameraDistance = 0.1f;
-            } else
-            {
-                BuildManager.main.buildCamera.maxCameraDistance = 60;
-                BuildManager.main.buildCamera.minCameraDistance = 10f;
-            }
-        }
         public void OnGUI()
         {
             if (Main.menuOpen || !(bool)Config.settings["showBuildGUI"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
             Rect oldRect = windowRect;
-            GUI.color = new Color((float)Config.settings["persistentVars"]["windowColor"]["r"], (float)Config.settings["persistentVars"]["windowColor"]["g"], (float)Config.settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
+            GUI.color = Config.windowColor;
             windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
             windowRect = WindowManager.ConfineRect(windowRect);
             if (oldRect != windowRect) WindowManager.settings["buildSettings"]["x"] = windowRect.x; WindowManager.settings["buildSettings"]["y"] = windowRect.y;

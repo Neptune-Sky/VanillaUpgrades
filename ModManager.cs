@@ -4,9 +4,11 @@ using SFS;
 using SFS.UI;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SFS.Builds;
 using System.Reflection;
 
 namespace ASoD_s_VanillaUpgrades
@@ -34,6 +36,22 @@ namespace ASoD_s_VanillaUpgrades
             Config.showSettings = false;
             Main.menuOpen = false;
             File.WriteAllText(Config.configPath, Config.settings.ToString());
+            if (Main.buildMenuObject != null)
+            {
+                if ((bool)Config.settings["moreCameraZoom"])
+                {
+                    if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
+                    BuildManager.main.buildCamera.maxCameraDistance = 300;
+                    BuildManager.main.buildCamera.minCameraDistance = 0.1f;
+                }
+                else
+                {
+                    if (BuildManager.main.buildCamera.maxCameraDistance == 60) return;
+                    BuildManager.main.buildCamera.maxCameraDistance = 60;
+                    BuildManager.main.buildCamera.minCameraDistance = 10f;
+                }
+            }
+            Config.windowColor = new Color((float)Config.settings["persistentVars"]["windowColor"]["r"], (float)Config.settings["persistentVars"]["windowColor"]["g"], (float)Config.settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
         }
 
     }
@@ -68,6 +86,8 @@ namespace ASoD_s_VanillaUpgrades
         
         public static float windowHeight = 300f;
 
+        public static Color windowColor;
+
         public Vector2 scroll = Vector2.zero;
 
         public Rect windowRect = new Rect((float)WindowManager.settings["config"]["x"], (float)WindowManager.settings["config"]["y"], 235f, windowHeight);
@@ -86,7 +106,7 @@ namespace ASoD_s_VanillaUpgrades
             catch (Exception e)
             {
                 File.WriteAllText(configPath, defaultConfig.ToString());
-                Debug.LogWarning("VanillaUpgrades config format found to be invalid, resetting to default.");
+                ErrorNotification.Error("Config file was of an invalid format, and was reset to defaults.");
                 settings = defaultConfig;
             }
 
@@ -101,6 +121,7 @@ namespace ASoD_s_VanillaUpgrades
                 Vector3 check = new Vector3((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
             } catch (Exception e)
             {
+                ErrorNotification.Error("Window color data was of an invalid format, and was reset to defaults.");
                 settings["persistentVars"]["windowColor"] = defaultConfig["persistentVars"]["windowColor"];
             }
 
@@ -123,6 +144,8 @@ namespace ASoD_s_VanillaUpgrades
             if (settings["allowTimeSlowdown"] == null) settings["allowTimeSlowdown"] = defaultConfig["allowTimeSlowdown"];
 
             if (settings["higherPhysicsWarp"] == null) settings["higherPhysicsWarp"] = defaultConfig["higherPhysicsWarp"];
+
+            windowColor = new Color((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
 
             File.WriteAllText(Config.configPath, Config.settings.ToString());
         }
@@ -191,9 +214,10 @@ namespace ASoD_s_VanillaUpgrades
             if (WindowManager.inst == null) return;
             if (!showSettings) return;
             Rect oldRect = windowRect;
-            GUI.color = new Color((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
+            windowColor.a = 1;
+            GUI.color = windowColor;
             windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "VanillaUpgrades Config");
-            
+            windowColor = new Color((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
             windowRect = WindowManager.ConfineRect(windowRect);
             if (oldRect != windowRect) WindowManager.settings["config"]["x"] = windowRect.x; WindowManager.settings["config"]["y"] = windowRect.y;
         }
