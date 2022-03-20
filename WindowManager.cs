@@ -14,7 +14,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public Vector2 defaultConfig = new Vector2(10f, Screen.height - Config.windowHeight);
 
-        public JObject defaults;
+        public JObject defaults = JObject.Parse("{buildSettings:{}, advancedInfo:{}, config:{}}");
 
         public static JObject settings;
 
@@ -38,11 +38,13 @@ namespace ASoD_s_VanillaUpgrades
 
         public void Awake()
         {
-            defaults = JObject.Parse($"{{ " +
-                $"buildSettings: {{ x: {defaultBuildSettings.x}, y: {defaultBuildSettings.y} }}, " +
-                $"advancedInfo: {{ x: {defaultAdvancedInfo.x}, y: {defaultAdvancedInfo.y} }}," +
-                $"config: {{ x: {defaultConfig.x}, y: {defaultConfig.y} }} " +
-                $"}}");
+            defaults["buildSettings"]["x"] = defaultBuildSettings.x;
+            defaults["buildSettings"]["y"] = defaultBuildSettings.y;
+            defaults["advancedInfo"]["x"] = defaultAdvancedInfo.x;
+            defaults["advancedInfo"]["y"] = defaultAdvancedInfo.y;
+            defaults["config"]["x"] = defaultConfig.x;
+            defaults["config"]["y"] = defaultConfig.y;
+
             if (!File.Exists(windowDir))
             {
                 File.WriteAllText(windowDir, defaults.ToString());
