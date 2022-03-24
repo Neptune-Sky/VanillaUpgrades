@@ -19,13 +19,14 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 - Re-implements megameters (`Mm`) as a distance unit
 - Adds `km/s` as a velocity unit
+- % speed of light (`c`) as a velocity unit
 - Adds `kt` as a mass and thrust unit
 
 **New Keybinds:**
 
 - L to launch and skip warnings in build space
 - Slash to instantly stop timewarp
-- Backtick to set thrust to 0.1%
+- C to set thrust to 0.1%
 - Semicolon to timewarp to periapsis/apoapsis/escape*
 - F2 to hide the UI
 
