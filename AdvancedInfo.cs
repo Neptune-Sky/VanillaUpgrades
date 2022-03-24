@@ -49,7 +49,7 @@ namespace ASoD_s_VanillaUpgrades
             }
             else
             {
-                if (value > 10000000 && (bool)Config.settings["mmUnits"])
+                if (value > 100000000 && (bool)Config.settings["mmUnits"])
                 {
                     return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
                 }
