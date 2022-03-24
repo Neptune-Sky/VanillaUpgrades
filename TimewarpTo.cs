@@ -26,7 +26,7 @@ namespace ASoD_s_VanillaUpgrades
         {
             if (planet.parentBody == planet_Old && (bool)Config.settings["stopTimewarpOnEncounter"])
             {
-                AdvancedInfo.StopTimewarp(false);
+                TimewarpToClass.ChangeTimewarp(1, true);
                 return;
             }
             if (TimewarpToClass.timewarpTo == true)

@@ -39,6 +39,10 @@ namespace ASoD_s_VanillaUpgrades
             {
                 return "Escape";
             }
+            if (double.IsNaN(value))
+            {
+                return "Error";
+            }
             if (value < 10000)
             {
                 return value.Round(0.1).ToString(1, true) + "m";
@@ -60,14 +64,18 @@ namespace ASoD_s_VanillaUpgrades
             GUI.Label(new Rect(10f, 70f, 160f, 20f), "Periapsis:");
             GUI.Label(new Rect(10f, 90f, 160f, 20f), displayify(periapsis));
             GUI.Label(new Rect(10f, 120f, 160f, 25f), "Eccentricity:");
-            GUI.Label(new Rect(10f, 140f, 160f, 25f), displayEcc.Round(0.001).ToString(3, true));
+            GUI.Label(new Rect(10f, 140f, 160f, 25f), displayifyEcc(displayEcc));
             GUI.Label(new Rect(10f, 170f, 160f, 25f), "Angle:");
             GUI.Label(new Rect(10f, 190f, 160f, 20f), angle.Round(0.1).ToString(1, true) + "°");
 
             GUI.DragWindow();
         }
 
-        
+        public string displayifyEcc(double value)
+        {
+            if (value > 1000000 || double.IsNaN(value)) return "Error";
+            return value.Round(0.001).ToString(3, true);
+        }
         public void Update()
         {
             
@@ -81,43 +89,20 @@ namespace ASoD_s_VanillaUpgrades
             {
                 TimeDecelMain.timeDecelIndex = 0;
             }
-        }
 
-        public static void StopTimewarp(bool showmsg)
-        {
-            if (WorldTime.main.timewarpIndex.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
-
-            WorldTime.main.timewarpIndex.timewarpIndex = 0;
-            WorldTime.main.SetState(1, true, false);
-            TimeDecelMain.timeDecelIndex = 0;
-            TimewarpToClass.timewarpTo = false;
-            if (showmsg)
-            {
-                MsgDrawer.main.Log("Time acceleration stopped");
-            }
-
-        }
-
-        public static void Throttle01()
-        {
-            currentRocket.throttle.throttlePercent.Value = 0.0005f;
-        }
-
-        public void OnGUI()
-        {
             if (PlayerController.main.player.Value == null)
             {
                 currentRocket = null;
                 return;
             }
-                
+
 
             currentRocket = (PlayerController.main.player.Value as Rocket);
 
 
             if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
 
-            
+
             var sma = currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - currentRocket.location.planet.Value.mass / currentRocket.location.Value.Radius));
             Double3 @double = Double3.Cross(currentRocket.location.position, currentRocket.location.velocity);
             Double2 double2 = (Double2)(Double3.Cross((Double3)currentRocket.location.velocity.Value, @double) / currentRocket.location.planet.Value.mass) - currentRocket.location.position.Value.normalized;
@@ -150,6 +135,38 @@ namespace ASoD_s_VanillaUpgrades
 
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
+        }
+
+        public static void StopTimewarp(bool showmsg)
+        {
+            if (WorldTime.main.timewarpIndex.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
+
+            WorldTime.main.timewarpIndex.timewarpIndex = 0;
+            WorldTime.main.SetState(1, true, false);
+            TimeDecelMain.timeDecelIndex = 0;
+            TimewarpToClass.timewarpTo = false;
+            if (showmsg)
+            {
+                MsgDrawer.main.Log("Time acceleration stopped");
+            }
+
+        }
+
+        public static void Throttle01()
+        {
+            if (currentRocket == null) return;
+            currentRocket.throttle.throttlePercent.Value = 0.0005f;
+        }
+
+        public void OnGUI()
+        {
+            if (PlayerController.main.player.Value == null)
+            {
+                currentRocket = null;
+                return;
+            }
+            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || currentRocket == null) return;
+
             Rect oldRect = windowRect;
             GUI.color = Config.windowColor;
             windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");

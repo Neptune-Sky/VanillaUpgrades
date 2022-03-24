@@ -22,16 +22,15 @@ namespace ASoD_s_VanillaUpgrades
         public static DefaultData custom_keys = new DefaultData();
         public class DefaultData
         {
+            public Key Hide_UI = KeyCode.F2;
 
             public Key Launch = KeyCode.L;
-
-            public Key Throttle01 = KeyCode.BackQuote;
 
             public Key Stop_Timewarp = KeyCode.Slash;
 
             public Key Timewarp_To = KeyCode.Semicolon;
 
-            public Key Hide_UI = KeyCode.F2;
+            public Key Throttle01 = KeyCode.C;
 
             public Key Prograde = KeyCode.Alpha1;
 
@@ -61,11 +60,13 @@ namespace ASoD_s_VanillaUpgrades
             Traverse createSpaceTraverse = Traverse.Create(__instance).Method("CreateSpace");
 
             // Finally actually call the code
+            createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
+            createSpaceTraverse.GetValue();
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
-            createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
+            createSpaceTraverse.GetValue();
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
             createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
-            createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
+            createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
 

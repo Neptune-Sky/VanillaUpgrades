@@ -73,6 +73,7 @@ namespace ASoD_s_VanillaUpgrades
             "showAdvanced: true, " +
             "mmUnits: true, " +
             "kmsUnits: true, " +
+            "cUnits: true, " +
             "ktUnits: true, " +
             "stopTimewarpOnEncounter: true, " +
             "moreCameraZoom: true, " +
@@ -133,6 +134,8 @@ namespace ASoD_s_VanillaUpgrades
 
             if (settings["kmsUnits"] == null) settings["kmsUnits"] = defaultConfig["kmsUnits"];
 
+            if (settings["cUnits"] == null) settings["cUnits"] = defaultConfig["cUnits"];
+
             if (settings["ktUnits"] == null) settings["ktUnits"] = defaultConfig["ktUnits"];
 
             if (settings["stopTimewarpOnEncounter"] == null) settings["stopTimewarpOnEncounter"] = defaultConfig["stopTimewarpOnEncounter"];
@@ -152,7 +155,7 @@ namespace ASoD_s_VanillaUpgrades
 
         public void windowFunc(int windowID)
         {
-            scroll = GUI.BeginScrollView(new Rect(0, 20, windowRect.width - 2, windowHeight - 50), scroll, new Rect(0, 0, windowRect.width - 20, 410));
+            scroll = GUI.BeginScrollView(new Rect(0, 20, windowRect.width - 2, windowHeight - 50), scroll, new Rect(0, 0, windowRect.width - 20, 430));
 
             GUI.Label(new Rect(15f, 0f, 110f, 20f), "GUI:");
 
@@ -166,40 +169,42 @@ namespace ASoD_s_VanillaUpgrades
 
             settings["kmsUnits"] = GUI.Toggle(new Rect(15f, 110f, 210f, 20f), (bool)settings["kmsUnits"], " Kilometers per Second (km/s)");
 
-            settings["ktUnits"] = GUI.Toggle(new Rect(15f, 130f, 210f, 20f), (bool)settings["ktUnits"], " Kilotonnes (kt)");
+            settings["cUnits"] = GUI.Toggle(new Rect(15f, 130f, 210f, 20f), (bool)settings["cUnits"], " % Speed of Light (c)");
 
-            GUI.Label(new Rect(15f, 160f, 210f, 20f), "Functions:");
+            settings["ktUnits"] = GUI.Toggle(new Rect(15f, 150f, 210f, 20f), (bool)settings["ktUnits"], " Kilotonnes (kt)");
 
-            settings["stopTimewarpOnEncounter"] = GUI.Toggle(new Rect(15f, 180f, 210f, 20f), (bool)settings["stopTimewarpOnEncounter"], " Stop Timewarp on Encounter");
+            GUI.Label(new Rect(15f, 180f, 210f, 20f), "Functions:");
 
-            settings["moreCameraZoom"] = GUI.Toggle(new Rect(15f, 200f, 210f, 20f), (bool)settings["moreCameraZoom"], " Camera Zoom Increase");
+            settings["stopTimewarpOnEncounter"] = GUI.Toggle(new Rect(15f, 200f, 210f, 20f), (bool)settings["stopTimewarpOnEncounter"], " Stop Timewarp on Encounter");
 
-            settings["moreCameraMove"] = GUI.Toggle(new Rect(15f, 220f, 210f, 20f), (bool)settings["moreCameraMove"], " Camera Movement Increase");
+            settings["moreCameraZoom"] = GUI.Toggle(new Rect(15f, 220f, 210f, 20f), (bool)settings["moreCameraZoom"], " Camera Zoom Increase");
 
-            GUI.Label(new Rect(15f, 250f, 210f, 20f), "\"Cheaty\" Functions:");
+            settings["moreCameraMove"] = GUI.Toggle(new Rect(15f, 240f, 210f, 20f), (bool)settings["moreCameraMove"], " Camera Movement Increase");
 
-            settings["allowTimeSlowdown"] = GUI.Toggle(new Rect(15f, 270f, 210f, 20f), (bool)settings["allowTimeSlowdown"], " Allow Time Slowdown");
+            GUI.Label(new Rect(15f, 270f, 210f, 20f), "\"Cheaty\" Functions:");
 
-            settings["higherPhysicsWarp"] = GUI.Toggle(new Rect(15f, 290f, 210f, 20f), (bool)settings["higherPhysicsWarp"], " Higher Physics Timewarps");
+            settings["allowTimeSlowdown"] = GUI.Toggle(new Rect(15f, 290f, 210f, 20f), (bool)settings["allowTimeSlowdown"], " Allow Time Slowdown");
 
-            GUI.Label(new Rect(15f, 320f, 210f, 20f), "Window Color:");
+            settings["higherPhysicsWarp"] = GUI.Toggle(new Rect(15f, 310f, 210f, 20f), (bool)settings["higherPhysicsWarp"], " Higher Physics Timewarps");
 
-            GUI.Label(new Rect(15f, 345f, 210f, 20f), "R");
-            settings["persistentVars"]["windowColor"]["r"] = GUI.HorizontalSlider(new Rect(30f, 350f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["r"], 0, 1);
-            GUI.Label(new Rect(175f, 345f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["r"] * 100).Round(1f)}%");
+            GUI.Label(new Rect(15f, 340f, 210f, 20f), "Window Color:");
 
-            GUI.Label(new Rect(15f, 365f, 210f, 20f), "G");
-            settings["persistentVars"]["windowColor"]["g"] = GUI.HorizontalSlider(new Rect(30f, 370f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["g"], 0, 1);
-            GUI.Label(new Rect(175f, 365f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["g"] * 100).Round(1f)}%");
+            GUI.Label(new Rect(15f, 365f, 210f, 20f), "R");
+            settings["persistentVars"]["windowColor"]["r"] = GUI.HorizontalSlider(new Rect(30f, 370f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["r"], 0, 1);
+            GUI.Label(new Rect(175f, 365f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["r"] * 100).Round(1f)}%");
 
-            GUI.Label(new Rect(15f, 385f, 210f, 20f), "B");
-            settings["persistentVars"]["windowColor"]["b"] = GUI.HorizontalSlider(new Rect(30f, 390f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["b"], 0, 1);
-            GUI.Label(new Rect(175f, 385f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["b"] * 100).Round(1f)}%");
+            GUI.Label(new Rect(15f, 385f, 210f, 20f), "G");
+            settings["persistentVars"]["windowColor"]["g"] = GUI.HorizontalSlider(new Rect(30f, 390f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["g"], 0, 1);
+            GUI.Label(new Rect(175f, 385f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["g"] * 100).Round(1f)}%");
+
+            GUI.Label(new Rect(15f, 405f, 210f, 20f), "B");
+            settings["persistentVars"]["windowColor"]["b"] = GUI.HorizontalSlider(new Rect(30f, 410f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["b"], 0, 1);
+            GUI.Label(new Rect(175f, 405f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["b"] * 100).Round(1f)}%");
 
 
             GUI.EndScrollView();
 
-            if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 20f), "Default Settings"))
+            if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 25f), "Default Settings"))
             {
                 File.WriteAllText(configPath, defaultConfig.ToString());
                 settings = defaultConfig;
