@@ -213,11 +213,13 @@
     <Compile Include="BuildSettings.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="MoreCameraMove.cs" />
+    <Compile Include="MoreTrajectories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MoreUnits.cs" />
     <Compile Include="RaisePhysicsMaxWarp.cs" />
     <Compile Include="TimeDeceleration.cs" />
     <Compile Include="TimewarpTo.cs" />
+    <Compile Include="AdditionalSettings.cs" />
     <Compile Include="WindowManager.cs" />
     <Compile Include="AdvancedInfo.cs" />
   </ItemGroup>

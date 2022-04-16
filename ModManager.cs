@@ -1,15 +1,11 @@
 ﻿using HarmonyLib;
-using SFS.Audio;
+using Newtonsoft.Json.Linq;
 using SFS;
+using SFS.Builds;
 using SFS.UI;
 using System;
-using UnityEngine;
-using UnityEngine.UI;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SFS.Builds;
-using System.Reflection;
+using UnityEngine;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -75,6 +71,8 @@ namespace ASoD_s_VanillaUpgrades
             "kmsUnits: true, " +
             "cUnits: true, " +
             "ktUnits: true, " +
+            "shakeEffects: true," +
+            "explosions: true," +
             "stopTimewarpOnEncounter: true, " +
             "moreCameraZoom: true, " +
             "moreCameraMove: true, " +
@@ -84,14 +82,16 @@ namespace ASoD_s_VanillaUpgrades
         public static JObject settings;
 
         public static bool showSettings;
-        
-        public static float windowHeight = 300f;
+
+        public static int test = 3;
+
+        public static float windowHeight = 350f;
 
         public static Color windowColor;
 
         public Vector2 scroll = Vector2.zero;
 
-        public Rect windowRect = new Rect((float)WindowManager.settings["config"]["x"], (float)WindowManager.settings["config"]["y"], 235f, windowHeight);
+        public Rect windowRect = new Rect((float)WindowManager.settings["config"]["x"], (float)WindowManager.settings["config"]["y"], 245f, windowHeight);
 
         public void Awake()
         {
@@ -120,7 +120,8 @@ namespace ASoD_s_VanillaUpgrades
             try
             {
                 Vector3 check = new Vector3((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 ErrorNotification.Error("Window color data was of an invalid format, and was reset to defaults.");
                 settings["persistentVars"]["windowColor"] = defaultConfig["persistentVars"]["windowColor"];
@@ -137,6 +138,10 @@ namespace ASoD_s_VanillaUpgrades
             if (settings["cUnits"] == null) settings["cUnits"] = defaultConfig["cUnits"];
 
             if (settings["ktUnits"] == null) settings["ktUnits"] = defaultConfig["ktUnits"];
+
+            if (settings["shakeEffects"] == null) settings["shakeEffects"] = defaultConfig["shakeEffects"];
+
+            if (settings["explosions"] == null) settings["explosions"] = defaultConfig["explosions"];
 
             if (settings["stopTimewarpOnEncounter"] == null) settings["stopTimewarpOnEncounter"] = defaultConfig["stopTimewarpOnEncounter"];
 
@@ -155,56 +160,88 @@ namespace ASoD_s_VanillaUpgrades
 
         public void windowFunc(int windowID)
         {
-            scroll = GUI.BeginScrollView(new Rect(0, 20, windowRect.width - 2, windowHeight - 50), scroll, new Rect(0, 0, windowRect.width - 20, 430));
+            scroll = GUILayout.BeginScrollView(scroll);
 
-            GUI.Label(new Rect(15f, 0f, 110f, 20f), "GUI:");
+            GUILayout.Label("GUI:");
 
-            settings["showBuildGUI"] = GUI.Toggle(new Rect(15f, 20f, 210f, 20f), (bool)settings["showBuildGUI"], " Show Build Settings");
+            settings["showBuildGUI"] = GUILayout.Toggle((bool)settings["showBuildGUI"], " Show Build Settings");
 
-            settings["showAdvanced"] = GUI.Toggle(new Rect(15f, 40f, 190f, 20f), (bool)settings["showAdvanced"], " Show Advanced Info");
-
-            GUI.Label(new Rect(15f, 70f, 210f, 20f), "Units:");
-
-            settings["mmUnits"] = GUI.Toggle(new Rect(15f, 90f, 210f, 20f), (bool)settings["mmUnits"], " Megameters (Mm)");
-
-            settings["kmsUnits"] = GUI.Toggle(new Rect(15f, 110f, 210f, 20f), (bool)settings["kmsUnits"], " Kilometers per Second (km/s)");
-
-            settings["cUnits"] = GUI.Toggle(new Rect(15f, 130f, 210f, 20f), (bool)settings["cUnits"], " % Speed of Light (c)");
-
-            settings["ktUnits"] = GUI.Toggle(new Rect(15f, 150f, 210f, 20f), (bool)settings["ktUnits"], " Kilotonnes (kt)");
-
-            GUI.Label(new Rect(15f, 180f, 210f, 20f), "Functions:");
-
-            settings["stopTimewarpOnEncounter"] = GUI.Toggle(new Rect(15f, 200f, 210f, 20f), (bool)settings["stopTimewarpOnEncounter"], " Stop Timewarp on Encounter");
-
-            settings["moreCameraZoom"] = GUI.Toggle(new Rect(15f, 220f, 210f, 20f), (bool)settings["moreCameraZoom"], " Camera Zoom Increase");
-
-            settings["moreCameraMove"] = GUI.Toggle(new Rect(15f, 240f, 210f, 20f), (bool)settings["moreCameraMove"], " Camera Movement Increase");
-
-            GUI.Label(new Rect(15f, 270f, 210f, 20f), "\"Cheaty\" Functions:");
-
-            settings["allowTimeSlowdown"] = GUI.Toggle(new Rect(15f, 290f, 210f, 20f), (bool)settings["allowTimeSlowdown"], " Allow Time Slowdown");
-
-            settings["higherPhysicsWarp"] = GUI.Toggle(new Rect(15f, 310f, 210f, 20f), (bool)settings["higherPhysicsWarp"], " Higher Physics Timewarps");
-
-            GUI.Label(new Rect(15f, 340f, 210f, 20f), "Window Color:");
-
-            GUI.Label(new Rect(15f, 365f, 210f, 20f), "R");
-            settings["persistentVars"]["windowColor"]["r"] = GUI.HorizontalSlider(new Rect(30f, 370f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["r"], 0, 1);
-            GUI.Label(new Rect(175f, 365f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["r"] * 100).Round(1f)}%");
-
-            GUI.Label(new Rect(15f, 385f, 210f, 20f), "G");
-            settings["persistentVars"]["windowColor"]["g"] = GUI.HorizontalSlider(new Rect(30f, 390f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["g"], 0, 1);
-            GUI.Label(new Rect(175f, 385f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["g"] * 100).Round(1f)}%");
-
-            GUI.Label(new Rect(15f, 405f, 210f, 20f), "B");
-            settings["persistentVars"]["windowColor"]["b"] = GUI.HorizontalSlider(new Rect(30f, 410f, 140f, 20f), (float)settings["persistentVars"]["windowColor"]["b"], 0, 1);
-            GUI.Label(new Rect(175f, 405f, 210f, 20f), $"{((float)settings["persistentVars"]["windowColor"]["b"] * 100).Round(1f)}%");
+            settings["showAdvanced"] = GUILayout.Toggle((bool)settings["showAdvanced"], " Show Advanced Info");
 
 
-            GUI.EndScrollView();
+            GUILayout.Label("\nUnits:");
 
-            if (GUI.Button(new Rect(25f, windowHeight - 30, 180f, 25f), "Default Settings"))
+            settings["mmUnits"] = GUILayout.Toggle((bool)settings["mmUnits"], " Megameters (Mm)");
+
+            settings["kmsUnits"] = GUILayout.Toggle((bool)settings["kmsUnits"], " Kilometers per Second (km/s)");
+
+            settings["cUnits"] = GUILayout.Toggle((bool)settings["cUnits"], " % Speed of Light (c)");
+
+            settings["ktUnits"] = GUILayout.Toggle((bool)settings["ktUnits"], " Kilotonnes (kt)");
+
+
+            GUILayout.Label("\nFunctions:");
+
+            settings["stopTimewarpOnEncounter"] = GUILayout.Toggle((bool)settings["stopTimewarpOnEncounter"], " Stop Timewarp on Encounter");
+
+            settings["moreCameraZoom"] = GUILayout.Toggle((bool)settings["moreCameraZoom"], " Camera Zoom Increase");
+
+            settings["moreCameraMove"] = GUILayout.Toggle((bool)settings["moreCameraMove"], " Camera Movement Increase");
+
+            GUILayout.Label("\n\"Cheaty\" Functions:");
+
+            settings["allowTimeSlowdown"] = GUILayout.Toggle((bool)settings["allowTimeSlowdown"], " Allow Time Slowdown");
+
+            settings["higherPhysicsWarp"] = GUILayout.Toggle((bool)settings["higherPhysicsWarp"], " Higher Physics Timewarps");
+
+
+            GUILayout.Label("\n Additional Settings:");
+
+            settings["shakeEffects"] = GUILayout.Toggle((bool)settings["shakeEffects"], " Toggle Explosion Shake");
+
+            settings["explosions"] = GUILayout.Toggle((bool)settings["explosions"], " Toggle Explosion Effects");
+
+
+            GUILayout.Label("\nWindow Color:");
+
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("R", GUILayout.MaxWidth(15));
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(9);
+            settings["persistentVars"]["windowColor"]["r"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["r"], 0, 1, GUILayout.Width(140));
+            GUILayout.EndVertical();
+            
+            GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["r"] * 100).Round(1f)}%");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("G", GUILayout.MaxWidth(15));
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(9);
+            settings["persistentVars"]["windowColor"]["g"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["g"], 0, 1, GUILayout.Width(140));
+            GUILayout.EndVertical();
+            
+            GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["g"] * 100).Round(1f)}%");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("B", GUILayout.MaxWidth(15));
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(9);
+            settings["persistentVars"]["windowColor"]["b"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["b"], 0, 1, GUILayout.Width(140)) ;
+            GUILayout.EndVertical();
+            
+            GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["b"] * 100).Round(1f)}%");
+            GUILayout.EndHorizontal();
+
+
+            GUILayout.EndScrollView();
+
+            if (GUILayout.Button("Default Settings"))
             {
                 File.WriteAllText(configPath, defaultConfig.ToString());
                 settings = defaultConfig;

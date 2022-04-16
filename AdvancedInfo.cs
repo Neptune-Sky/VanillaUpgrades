@@ -5,6 +5,7 @@ using UnityEngine;
 using SFS;
 using SFS.Variables;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -26,7 +27,6 @@ namespace ASoD_s_VanillaUpgrades
         public static bool disableKt;
 
         public static AdvancedInfo instance;
-
 
         public void Awake()
         {
@@ -158,6 +158,7 @@ namespace ASoD_s_VanillaUpgrades
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 
+        public string throttle = "0";
         public void OnGUI()
         {
             if (PlayerController.main.player.Value == null)
@@ -165,6 +166,7 @@ namespace ASoD_s_VanillaUpgrades
                 currentRocket = null;
                 return;
             }
+
             if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || currentRocket == null) return;
 
             Rect oldRect = windowRect;

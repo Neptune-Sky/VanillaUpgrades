@@ -58,8 +58,10 @@ namespace ASoD_s_VanillaUpgrades
             // Reflection needed since these are private
             Traverse createTraverse = Traverse.Create(__instance).Method("Create", new object[] {custom_keys.Launch, defaultData.Launch, "Launch"});
             Traverse createSpaceTraverse = Traverse.Create(__instance).Method("CreateSpace");
+            Traverse createTextTraverse = Traverse.Create(__instance).Method("CreateText", "VanillaUpgrades Keybinds");
 
             // Finally actually call the code
+            createTextTraverse.GetValue("VanillaUpgrades Keybinds");
             createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
             createSpaceTraverse.GetValue();
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
