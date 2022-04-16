@@ -14,6 +14,7 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - Timewarp now stops when entering a planet's SoI.*
 - Time slowdown, you can now use decimal timewarps and even freeze time completely. (Off by default, due to cheaty nature.)
 - Physics timewarp up to 25x on all difficulties (Off by default, due to cheaty nature.)
+- Toggles for explosion shake and effects.
 
 **New Unit Displays:**
 
