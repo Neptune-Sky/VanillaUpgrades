@@ -73,6 +73,7 @@ namespace ASoD_s_VanillaUpgrades
             "ktUnits: true, " +
             "shakeEffects: true," +
             "explosions: true," +
+            "explosionShake: true, " +
             "stopTimewarpOnEncounter: true, " +
             "moreCameraZoom: true, " +
             "moreCameraMove: true, " +
@@ -143,6 +144,8 @@ namespace ASoD_s_VanillaUpgrades
 
             if (settings["explosions"] == null) settings["explosions"] = defaultConfig["explosions"];
 
+            if (settings["explosionShake"] == null) settings["explosionShake"] = defaultConfig["explosionShake"];
+
             if (settings["stopTimewarpOnEncounter"] == null) settings["stopTimewarpOnEncounter"] = defaultConfig["stopTimewarpOnEncounter"];
 
             if (settings["moreCameraZoom"] == null) settings["moreCameraZoom"] = defaultConfig["moreCameraZoom"];
@@ -197,7 +200,19 @@ namespace ASoD_s_VanillaUpgrades
 
             GUILayout.Label("\n Additional Settings:");
 
-            settings["shakeEffects"] = GUILayout.Toggle((bool)settings["shakeEffects"], " Toggle Explosion Shake");
+            settings["shakeEffects"] = GUILayout.Toggle((bool)settings["shakeEffects"], " Toggle Shake Effects");
+
+            if (!(bool)settings["shakeEffects"])
+            {
+                settings["explosionShake"] = false;
+            }
+            else
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                settings["explosionShake"] = GUILayout.Toggle((bool)settings["explosionShake"], " Toggle Explosion Shake");
+                GUILayout.EndHorizontal();
+            }
 
             settings["explosions"] = GUILayout.Toggle((bool)settings["explosions"], " Toggle Explosion Effects");
 
