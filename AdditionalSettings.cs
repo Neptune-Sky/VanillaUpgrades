@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using HarmonyLib;
+﻿using HarmonyLib;
 using SFS.World;
 
 namespace ASoD_s_VanillaUpgrades
@@ -23,7 +17,7 @@ namespace ASoD_s_VanillaUpgrades
             {
                 return true;
             }
-            
+
         }
     }
 

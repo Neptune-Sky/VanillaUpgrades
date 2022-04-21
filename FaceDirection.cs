@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFS.UI;
-using UnityEngine;
-using SFS.World;
+﻿using SFS.UI;
 using SFS.Variables;
+using SFS.World;
+using UnityEngine;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -26,7 +21,8 @@ namespace ASoD_s_VanillaUpgrades
                 MsgDrawer.main.Log("Manual control restored");
                 arrowkeys.Value.turnAxis.Value = 0f;
                 return;
-            } else
+            }
+            else
             {
                 mode = toMode;
             }
@@ -73,8 +69,8 @@ namespace ASoD_s_VanillaUpgrades
                     break;
             }
             var angularVelo = AdvancedInfo.currentRocket.rb2d.angularVelocity;
-            
-            
+
+
             arrowkeys.Value = AdvancedInfo.currentRocket.arrowkeys;
             var angle = AdvancedInfo.instance.angle;
             if (angle > e + 1)
@@ -84,11 +80,12 @@ namespace ASoD_s_VanillaUpgrades
             else if (angle < e - 1)
             {
                 arrowkeys.Value.turnAxis.Value = 1f;
-            } else
+            }
+            else
             {
                 arrowkeys.Value.turnAxis.Value = 0f;
             }
-            
+
 
             if (angle < e + 1 && angle > e - 1)
             {

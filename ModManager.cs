@@ -227,7 +227,7 @@ namespace ASoD_s_VanillaUpgrades
             GUILayout.Space(9);
             settings["persistentVars"]["windowColor"]["r"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["r"], 0, 1, GUILayout.Width(140));
             GUILayout.EndVertical();
-            
+
             GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["r"] * 100).Round(1f)}%");
             GUILayout.EndHorizontal();
 
@@ -238,7 +238,7 @@ namespace ASoD_s_VanillaUpgrades
             GUILayout.Space(9);
             settings["persistentVars"]["windowColor"]["g"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["g"], 0, 1, GUILayout.Width(140));
             GUILayout.EndVertical();
-            
+
             GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["g"] * 100).Round(1f)}%");
             GUILayout.EndHorizontal();
 
@@ -247,9 +247,9 @@ namespace ASoD_s_VanillaUpgrades
 
             GUILayout.BeginVertical();
             GUILayout.Space(9);
-            settings["persistentVars"]["windowColor"]["b"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["b"], 0, 1, GUILayout.Width(140)) ;
+            settings["persistentVars"]["windowColor"]["b"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["b"], 0, 1, GUILayout.Width(140));
             GUILayout.EndVertical();
-            
+
             GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["b"] * 100).Round(1f)}%");
             GUILayout.EndHorizontal();
 

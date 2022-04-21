@@ -1,8 +1,7 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -25,8 +24,8 @@ namespace ASoD_s_VanillaUpgrades
         // Keeps windows from being moved off the screen.
         public static Rect ConfineRect(Rect window)
         {
-            window.x = Mathf.Clamp(window.x, 0 , Screen.width - window.width);
-            window.y = Mathf.Clamp(window.y, 0 , Screen.height - window.height);
+            window.x = Mathf.Clamp(window.x, 0, Screen.width - window.width);
+            window.y = Mathf.Clamp(window.y, 0, Screen.height - window.height);
             return window;
         }
 

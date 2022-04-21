@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
-using SFS.World;
-using System.IO;
-using System.Reflection.Emit;
-
-namespace ASoD_s_VanillaUpgrades
+﻿namespace ASoD_s_VanillaUpgrades
 {
     /*
     [HarmonyPatch(typeof(Trajectory), "CalculatePaths")]

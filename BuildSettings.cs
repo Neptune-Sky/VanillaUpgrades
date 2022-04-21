@@ -1,8 +1,8 @@
-﻿using SFS;
+﻿using HarmonyLib;
+using SFS;
 using SFS.Builds;
 using SFS.Parts.Modules;
 using UnityEngine;
-using HarmonyLib;
 
 namespace ASoD_s_VanillaUpgrades
 {

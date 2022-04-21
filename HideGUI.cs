@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using SFS;
-using UnityEngine;
 using System.IO;
 
 namespace ASoD_s_VanillaUpgrades

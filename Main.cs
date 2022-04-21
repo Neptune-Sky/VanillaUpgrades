@@ -1,10 +1,10 @@
 ﻿using HarmonyLib;
 using ModLoader;
 using System;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Reflection;
-using System.IO;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -36,7 +36,7 @@ namespace ASoD_s_VanillaUpgrades
             mainObject.AddComponent<ErrorNotification>();
             UnityEngine.Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
-            
+
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -57,6 +57,7 @@ namespace ASoD_s_VanillaUpgrades
                     worldViewObject.AddComponent<AdvancedInfo>();
                     worldViewObject.AddComponent<TimewarpToClass>();
                     worldViewObject.AddComponent<FaceDirection>();
+                    worldViewObject.AddComponent<WorldTimeDisplay>();
                     UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
                     worldViewObject.SetActive(true);
                     UnityEngine.Object.Destroy(Main.buildMenuObject);

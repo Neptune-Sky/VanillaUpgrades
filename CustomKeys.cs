@@ -1,15 +1,15 @@
-﻿using System;
+﻿using HarmonyLib;
 using SFS.Builds;
 using SFS.Input;
 using SFS.IO;
-using UnityEngine;
-using HarmonyLib;
-using static SFS.Input.KeybindingsPC;
 using SFS.World;
+using System;
+using UnityEngine;
+using static SFS.Input.KeybindingsPC;
 
 namespace ASoD_s_VanillaUpgrades
 {
-    
+
     public static class KeybindsHolder
     {
         public static CustomKeybinds keybinds = new CustomKeybinds();
@@ -56,7 +56,7 @@ namespace ASoD_s_VanillaUpgrades
             DefaultData defaultData = new DefaultData();
 
             // Reflection needed since these are private
-            Traverse createTraverse = Traverse.Create(__instance).Method("Create", new object[] {custom_keys.Launch, defaultData.Launch, "Launch"});
+            Traverse createTraverse = Traverse.Create(__instance).Method("Create", new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
             Traverse createSpaceTraverse = Traverse.Create(__instance).Method("CreateSpace");
             Traverse createTextTraverse = Traverse.Create(__instance).Method("CreateText", "VanillaUpgrades Keybinds");
 

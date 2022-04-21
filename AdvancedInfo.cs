@@ -1,11 +1,8 @@
-﻿using SFS.UI;
+﻿using SFS;
+using SFS.UI;
 using SFS.World;
 using System;
 using UnityEngine;
-using SFS;
-using SFS.Variables;
-using UnityEngine.UI;
-using System.Text.RegularExpressions;
 
 namespace ASoD_s_VanillaUpgrades
 {
@@ -25,6 +22,8 @@ namespace ASoD_s_VanillaUpgrades
         public double displayEcc;
 
         public static bool disableKt;
+
+
 
         public static AdvancedInfo instance;
 
@@ -78,7 +77,7 @@ namespace ASoD_s_VanillaUpgrades
         }
         public void Update()
         {
-            
+
             if (!(bool)Config.settings["allowTimeSlowdown"] && TimeDecelMain.timeDecelIndex != 0)
             {
                 WorldTime.main.SetState(1, true, false);
@@ -135,6 +134,8 @@ namespace ASoD_s_VanillaUpgrades
 
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
+
+
         }
 
         public static void StopTimewarp(bool showmsg)
@@ -166,7 +167,6 @@ namespace ASoD_s_VanillaUpgrades
                 currentRocket = null;
                 return;
             }
-
             if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || currentRocket == null) return;
 
             Rect oldRect = windowRect;

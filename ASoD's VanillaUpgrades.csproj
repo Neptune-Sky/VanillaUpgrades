@@ -222,6 +222,7 @@
     <Compile Include="AdditionalSettings.cs" />
     <Compile Include="WindowManager.cs" />
     <Compile Include="AdvancedInfo.cs" />
+    <Compile Include="WorldTimeDisplay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

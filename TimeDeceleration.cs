@@ -1,5 +1,5 @@
-﻿using SFS.UI;
-using HarmonyLib;
+﻿using HarmonyLib;
+using SFS.UI;
 using SFS.World;
 
 namespace ASoD_s_VanillaUpgrades
@@ -49,17 +49,22 @@ namespace ASoD_s_VanillaUpgrades
 
             switch (timeDecelIndex)
             {
-                case 1: speed = 0.75;
-                        break;
-                case 2: speed = 0.5;
-                        break;
-                case 3: speed = 0.25;
-                        break;
-                case 4: speed = 0.1;
-                        break;
-                case 5: speed = 0;
-                        defaultMessage = false;
-                        break;
+                case 1:
+                    speed = 0.75;
+                    break;
+                case 2:
+                    speed = 0.5;
+                    break;
+                case 3:
+                    speed = 0.25;
+                    break;
+                case 4:
+                    speed = 0.1;
+                    break;
+                case 5:
+                    speed = 0;
+                    defaultMessage = false;
+                    break;
                 default: return;
             }
 
