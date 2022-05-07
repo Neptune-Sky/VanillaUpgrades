@@ -43,7 +43,7 @@ Tons more will be added in the future.
 
 # Installation
 
-This mod uses SFS Modloader version 1.1.2 made by dani0105, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
+This mod is only compatible with SFS Modloader version 1.1.2 and up, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
 
 1. Install the modloader.
 2. Download the latest ZIP.
