@@ -15,7 +15,7 @@ namespace VanillaUpgrades
            "VanillaUpgrades", // Mod Name
            "ASoD", // Mod Author
            "v1.1.x", // Mod loader version
-           "v2.2.7", // Mod version
+           "v2.2.8", // Mod version
            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features."
            )
         { }
