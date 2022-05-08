@@ -57,7 +57,7 @@ namespace VanillaUpgrades
                     worldViewObject.AddComponent<AdvancedInfo>();
                     worldViewObject.AddComponent<TimewarpToClass>();
                     worldViewObject.AddComponent<FaceDirection>();
-                    worldViewObject.AddComponent<WorldTimeDisplay>();
+                    worldViewObject.AddComponent<WorldClockDisplay>();
                     UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
                     worldViewObject.SetActive(true);
                     UnityEngine.Object.Destroy(Main.buildMenuObject);

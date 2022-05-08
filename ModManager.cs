@@ -68,6 +68,7 @@ namespace VanillaUpgrades
             "showBuildGUI: true, " +
             "showAdvanced: true, " +
             "showTime: true, " +
+            "worldTime: true," +
             "alwaysShowTime: false," +
             "mmUnits: true, " +
             "kmsUnits: true, " +
@@ -136,6 +137,8 @@ namespace VanillaUpgrades
 
             if (settings["showTime"] == null) settings["showTime"] = defaultConfig["showTime"];
 
+            if (settings["worldTime"] == null) settings["worldTime"] = defaultConfig["worldTime"];
+
             if (settings["alwaysShowTime"] == null) settings["alwaysShowTime"] = defaultConfig["alwaysShowTime"];
 
             if (settings["mmUnits"] == null) settings["mmUnits"] = defaultConfig["mmUnits"];
@@ -177,9 +180,17 @@ namespace VanillaUpgrades
 
             settings["showAdvanced"] = GUILayout.Toggle((bool)settings["showAdvanced"], " Show Advanced Info");
 
-            settings["showTime"] = GUILayout.Toggle((bool)settings["showTime"], " World Time During Timewarp");
+            settings["showTime"] = GUILayout.Toggle((bool)settings["showTime"], " World Clock During Timewarp");
 
-            if (!(bool)settings["showTime"])
+            if ((bool)settings["showTime"])
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                settings["worldTime"] = GUILayout.Toggle((bool)settings["worldTime"], " World Time In World Clock");
+                GUILayout.EndHorizontal();
+            }
+
+            if (!(bool)settings["showTime"] || !(bool)settings["worldTime"])
             {
                 settings["alwaysShowTime"] = false;
             }
@@ -187,7 +198,7 @@ namespace VanillaUpgrades
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(20);
-                settings["alwaysShowTime"] = GUILayout.Toggle((bool)settings["alwaysShowTime"], "Always Show World Time");
+                settings["alwaysShowTime"] = GUILayout.Toggle((bool)settings["alwaysShowTime"], " Always Show World Time");
                 GUILayout.EndHorizontal();
             }
 
