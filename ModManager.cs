@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnOpen))]
     public class ShowSettings
@@ -67,6 +67,8 @@ namespace ASoD_s_VanillaUpgrades
             "}, " +
             "showBuildGUI: true, " +
             "showAdvanced: true, " +
+            "showTime: true, " +
+            "alwaysShowTime: false," +
             "mmUnits: true, " +
             "kmsUnits: true, " +
             "cUnits: true, " +
@@ -132,6 +134,10 @@ namespace ASoD_s_VanillaUpgrades
 
             if (settings["showAdvanced"] == null) settings["showAdvanced"] = defaultConfig["showAdvanced"];
 
+            if (settings["showTime"] == null) settings["showTime"] = defaultConfig["showTime"];
+
+            if (settings["alwaysShowTime"] == null) settings["alwaysShowTime"] = defaultConfig["alwaysShowTime"];
+
             if (settings["mmUnits"] == null) settings["mmUnits"] = defaultConfig["mmUnits"];
 
             if (settings["kmsUnits"] == null) settings["kmsUnits"] = defaultConfig["kmsUnits"];
@@ -171,6 +177,19 @@ namespace ASoD_s_VanillaUpgrades
 
             settings["showAdvanced"] = GUILayout.Toggle((bool)settings["showAdvanced"], " Show Advanced Info");
 
+            settings["showTime"] = GUILayout.Toggle((bool)settings["showTime"], " World Time During Timewarp");
+
+            if (!(bool)settings["showTime"])
+            {
+                settings["alwaysShowTime"] = false;
+            }
+            else
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                settings["alwaysShowTime"] = GUILayout.Toggle((bool)settings["alwaysShowTime"], "Always Show World Time");
+                GUILayout.EndHorizontal();
+            }
 
             GUILayout.Label("\nUnits:");
 

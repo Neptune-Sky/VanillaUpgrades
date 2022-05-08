@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     public class ErrorNotification : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using SFS.Builds;
 using SFS.World;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
     public class MoreCameraMove

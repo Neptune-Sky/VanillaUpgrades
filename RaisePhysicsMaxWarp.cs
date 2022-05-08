@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using SFS.World;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(TimewarpIndex), "GetTimewarpSpeed_Physics")]
     public class AddMoreIndexes

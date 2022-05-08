@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using SFS.World;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(PlayerController), "CreateShakeEffect")]
     public class RemoveShake

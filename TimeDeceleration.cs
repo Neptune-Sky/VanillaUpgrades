@@ -2,7 +2,7 @@
 using SFS.UI;
 using SFS.World;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(TimewarpIndex), nameof(TimewarpIndex.DecelerateTime))]
     public class TimeDecelerationPatch

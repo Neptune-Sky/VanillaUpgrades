@@ -4,7 +4,7 @@ using SFS.World;
 using System;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
 
     public class AdvancedInfo : MonoBehaviour

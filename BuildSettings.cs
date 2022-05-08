@@ -4,7 +4,7 @@ using SFS.Builds;
 using SFS.Parts.Modules;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(PartGrid), "UpdateAdaptation")]
     class StopAdaptation

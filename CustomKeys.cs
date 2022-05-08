@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
 
     public static class KeybindsHolder

@@ -6,7 +6,7 @@ using SFS.WorldBase;
 using System;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(TimewarpIndex), "ApplyState")]
     public class ResetVars

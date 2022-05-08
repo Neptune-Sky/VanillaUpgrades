@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     public class WindowManager : MonoBehaviour
     {
@@ -13,7 +13,9 @@ namespace ASoD_s_VanillaUpgrades
 
         public Vector2 defaultConfig = new Vector2(10f, Screen.height - Config.windowHeight);
 
-        public JObject defaults = JObject.Parse("{buildSettings:{}, advancedInfo:{}, config:{}}");
+        public Vector2 defaultWorldTime = new Vector2(Screen.width * 0.958f, Screen.height * 0.045f);
+
+        public JObject defaults = JObject.Parse("{buildSettings:{}, advancedInfo:{}, config:{}, worldTime:{}}");
 
         public static JObject settings;
 
@@ -43,6 +45,8 @@ namespace ASoD_s_VanillaUpgrades
             defaults["advancedInfo"]["y"] = defaultAdvancedInfo.y;
             defaults["config"]["x"] = defaultConfig.x;
             defaults["config"]["y"] = defaultConfig.y;
+            defaults["worldTime"]["x"] = defaultWorldTime.x;
+            defaults["worldTime"]["y"] = defaultWorldTime.y;
 
             if (!File.Exists(windowDir))
             {
@@ -56,6 +60,28 @@ namespace ASoD_s_VanillaUpgrades
                 check = new Vector2((float)settings["buildSettings"]["x"], (float)settings["buildSettings"]["y"]);
                 check = new Vector2((float)settings["advancedInfo"]["x"], (float)settings["advancedInfo"]["y"]);
                 check = new Vector2((float)settings["config"]["x"], (float)settings["config"]["y"]);
+                check = new Vector2((float)settings["worldTime"]["x"], (float)settings["worldTime"]["y"]);
+
+                if (settings["buildSettings"] == null)
+                {
+                    settings["buildSettings"]["x"] = defaultBuildSettings.x;
+                    settings["buildSettings"]["y"] = defaultBuildSettings.y;
+                }
+                if (settings["advancedInfo"] == null)
+                {
+                    settings["advancedInfo"]["x"] = defaultAdvancedInfo.x;
+                    settings["advancedInfo"]["y"] = defaultAdvancedInfo.y;
+                }
+                if (settings["config"] == null)
+                {
+                    settings["config"] = defaultConfig.x;
+                    settings["config"]["y"] = defaultConfig.y;
+                }
+                if (settings["worldTime"] == null)
+                {
+                    settings["worldTime"]["x"] = defaultWorldTime.x;
+                    settings["worldTime"]["y"] = defaultWorldTime.y;
+                }
             }
             catch (Exception e)
             {

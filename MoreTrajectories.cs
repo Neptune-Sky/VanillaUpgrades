@@ -1,4 +1,4 @@
-﻿namespace ASoD_s_VanillaUpgrades
+﻿namespace VanillaUpgrades
 {
     /*
     [HarmonyPatch(typeof(Trajectory), "CalculatePaths")]

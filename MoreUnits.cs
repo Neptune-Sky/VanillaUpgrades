@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using SFS.Translations;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(Units), nameof(Units.ToDistanceString))]
     public static class DistanceUnits

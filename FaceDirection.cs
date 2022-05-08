@@ -3,7 +3,7 @@ using SFS.Variables;
 using SFS.World;
 using UnityEngine;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     public class FaceDirection : MonoBehaviour
     {

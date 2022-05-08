@@ -6,7 +6,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     public class Main : SFSMod
     {

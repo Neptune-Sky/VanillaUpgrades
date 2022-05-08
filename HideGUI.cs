@@ -2,7 +2,7 @@
 using SFS;
 using System.IO;
 
-namespace ASoD_s_VanillaUpgrades
+namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(VideoSettingsPC), "UIOpacityChanged")]
     public class OpacityChangeListener
