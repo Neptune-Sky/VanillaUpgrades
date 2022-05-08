@@ -10,6 +10,7 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 - Toggles for disabling adaptation and snapping in the build grid.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
+- World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
 - Greatly increased zoom-in/movement limits of the camera in world/build views.
 - Timewarp now stops when entering a planet's SoI.*
 - Time slowdown, you can now use decimal timewarps and even freeze time completely. (Off by default, due to cheaty nature.)
