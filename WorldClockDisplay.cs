@@ -52,7 +52,7 @@ namespace VanillaUpgrades
                 GUILayout.Label(timestamp, guiStyle);
                 
             }
-            if (WorldTime.main.timewarpIndex.timewarpIndex != 0)
+            if (WorldTime.main.timewarpIndex != 0)
             {
                 GUILayout.Label("Timewarp Span:", midAlign);
                 GUILayout.Label(timewarpTime, guiStyle);
@@ -66,7 +66,7 @@ namespace VanillaUpgrades
         {
             if (Main.menuOpen) return;
 
-            if ((WorldTime.main.timewarpIndex.timewarpIndex != 0 && (bool)Config.settings["showTime"]) || (bool)Config.settings["alwaysShowTime"])
+            if ((WorldTime.main.timewarpIndex != 0 && (bool)Config.settings["showTime"]) || (bool)Config.settings["alwaysShowTime"])
             {
                 if (subtractor == 0) subtractor = WorldTime.main.worldTime * 10000000;
                 GUI.color = Config.windowColor;

@@ -82,7 +82,7 @@ namespace VanillaUpgrades
 
         public static void Launch()
         {
-            BuildState.main.SaveLaunchData(updatePersistent: true);
+            BuildState.main.UpdatePersistent();
             Base.sceneLoader.LoadWorldScene(launch: true);
         }
 

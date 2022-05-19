@@ -4,13 +4,13 @@ using SFS.World;
 
 namespace VanillaUpgrades
 {
-    [HarmonyPatch(typeof(TimewarpIndex), nameof(TimewarpIndex.DecelerateTime))]
+    [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.DecelerateTime))]
     public class TimeDecelerationPatch
     {
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (WorldTime.main.timewarpIndex.timewarpIndex == 0)
+            if (WorldTime.main.timewarpIndex == 0)
             {
                 TimeDecelMain.SlowTime();
                 return false;
@@ -19,7 +19,7 @@ namespace VanillaUpgrades
         }
     }
 
-    [HarmonyPatch(typeof(TimewarpIndex), nameof(TimewarpIndex.AccelerateTime))]
+    [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.AccelerateTime))]
     public class EndDeceleration
     {
         [HarmonyPrefix]

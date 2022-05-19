@@ -3,7 +3,7 @@ using SFS.World;
 
 namespace VanillaUpgrades
 {
-    [HarmonyPatch(typeof(TimewarpIndex), "GetTimewarpSpeed_Physics")]
+    [HarmonyPatch(typeof(WorldTime), "GetTimewarpSpeed_Physics")]
     public class AddMoreIndexes
     {
         [HarmonyPrefix]
@@ -17,8 +17,9 @@ namespace VanillaUpgrades
             return true;
         }
     }
-
-    [HarmonyPatch(typeof(TimewarpIndex), "get_MaxTimewarpIndex_Physics")]
+    
+    [HarmonyPatch(typeof(WorldTime))]
+    [HarmonyPatch("MaxPhysicsIndex", MethodType.Getter)]
     public class AllowUsingIndexes
     {
         [HarmonyPrefix]
@@ -32,4 +33,5 @@ namespace VanillaUpgrades
             return true;
         }
     }
+    
 }

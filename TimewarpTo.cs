@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace VanillaUpgrades
 {
-    [HarmonyPatch(typeof(TimewarpIndex), "ApplyState")]
+    /*
+    [HarmonyPatch(typeof(WorldTime), "ApplyState")]
     public class ResetVars
     {
         [HarmonyPostfix]
@@ -74,7 +75,7 @@ namespace VanillaUpgrades
             }
             else
             {
-                index = WorldTime.main.timewarpIndex.timewarpIndex + amount;
+                index = WorldTime.main.timewarpIndex + amount;
             }
 
             bool real;
@@ -89,7 +90,7 @@ namespace VanillaUpgrades
             }
             if (index > WorldTime.main.timewarpIndex.GetMaxTimewarpIndex()) index = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex();
 
-            WorldTime.main.timewarpIndex.timewarpIndex = index;
+            WorldTime.main.timewarpIndex = index;
             WorldTime.main.SetState(GetTimewarpSpeed_Rails(index), real, false);
         }
 
@@ -109,7 +110,7 @@ namespace VanillaUpgrades
             }
             if (usedIndex < 4) usedIndex = 4;
 
-            if (WorldTime.CanTimewarp(false, false))
+            if (WorldTime.main.CanTimewarp(false, false))
             {
                 var name = heightIncreasing ? "apoapsis" : "periapsis";
                 if (AdvancedInfo.displayify(AdvancedInfo.instance.apoapsis) == "Escape" && heightIncreasing)
@@ -226,4 +227,5 @@ namespace VanillaUpgrades
             }
         }
     }
+    */
 }

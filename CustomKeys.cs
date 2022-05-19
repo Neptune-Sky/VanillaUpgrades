@@ -139,7 +139,7 @@ namespace VanillaUpgrades
                 AdvancedInfo.StopTimewarp(true);
             });
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(AdvancedInfo.Throttle01));
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
+            // GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
             {

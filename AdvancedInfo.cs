@@ -84,7 +84,7 @@ namespace VanillaUpgrades
                 TimeDecelMain.timeDecelIndex = 0;
             }
 
-            if (TimeDecelMain.timeDecelIndex != 0 && WorldTime.main.timewarpIndex.timewarpIndex != 0)
+            if (TimeDecelMain.timeDecelIndex != 0 && WorldTime.main.timewarpIndex != 0)
             {
                 TimeDecelMain.timeDecelIndex = 0;
             }
@@ -140,12 +140,11 @@ namespace VanillaUpgrades
 
         public static void StopTimewarp(bool showmsg)
         {
-            if (WorldTime.main.timewarpIndex.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
+            if (WorldTime.main.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
 
-            WorldTime.main.timewarpIndex.timewarpIndex = 0;
+            WorldTime.main.timewarpIndex = 0;
             WorldTime.main.SetState(1, true, false);
             TimeDecelMain.timeDecelIndex = 0;
-            TimewarpToClass.timewarpTo = false;
             if (showmsg)
             {
                 MsgDrawer.main.Log("Time acceleration stopped");
