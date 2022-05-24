@@ -68,7 +68,7 @@ namespace VanillaUpgrades
     public class BuildSettings : MonoBehaviour
     {
         // Token: 0x0400136C RID: 4972
-        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f, 70f);
+        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f, 90f);
 
         // Token: 0x0400136D RID: 4973
         public static bool snapping;
@@ -88,8 +88,9 @@ namespace VanillaUpgrades
 
         public void windowFunc(int windowID)
         {
-            snapping = GUI.Toggle(new Rect(10f, 20f, 120f, 20f), snapping, " Disable Snapping");
-            noAdaptation = GUI.Toggle(new Rect(10f, 40f, 120f, 20f), noAdaptation, " Disable Adapting");
+            snapping = GUILayout.Toggle(snapping, " Disable Snapping");
+            noAdaptation = GUILayout.Toggle(noAdaptation, " Disable Adapting");
+            DVCalc.showCalc = GUILayout.Toggle(DVCalc.showCalc, " ΔV Calculator");
 
 
             GUI.DragWindow();

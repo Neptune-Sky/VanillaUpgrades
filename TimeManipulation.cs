@@ -15,29 +15,11 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix()
         {
-            TimewarpToClass.timewarpTo = false;
+            TimeManipulation.timewarpTo = false;
         }
     }
 
-    [HarmonyPatch(typeof(AchievementsModule), "Log_Planet")]
-    public class StopTimewarpOnEncounter
-    {
-        [HarmonyPostfix]
-        public static void Postfix(Planet planet, Planet planet_Old)
-        {
-            if (planet.parentBody == planet_Old && (bool)Config.settings["stopTimewarpOnEncounter"])
-            {
-                TimewarpToClass.ChangeTimewarp(1, true);
-                return;
-            }
-            if (TimewarpToClass.timewarpTo == true)
-            {
-                AdvancedInfo.StopTimewarp(false);
-            }
-
-        }
-    }
-    public class TimewarpToClass : MonoBehaviour
+    public class TimeManipulation : MonoBehaviour
     {
         public static bool timewarpTo;
 
@@ -88,12 +70,13 @@ namespace VanillaUpgrades
             {
                 real = false;
             }
-            if (index > WorldTime.main.timewarpIndex.GetMaxTimewarpIndex()) index = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex();
+            if (index > WorldTime.main.timewarpIndex.MaxIndex) index = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex();
 
             WorldTime.main.timewarpIndex = index;
             WorldTime.main.SetState(GetTimewarpSpeed_Rails(index), real, false);
         }
 
+        
         public static void TimewarpTo()
         {
             if (PlayerController.main.player.Value == null) return;
@@ -122,7 +105,7 @@ namespace VanillaUpgrades
                 MsgDrawer.main.Log("Timewarping to " + name + "...");
 
                 threshold = (target / Math.Pow(2, target.Round(1).ToString().Length)) * AdvancedInfo.instance.displayEcc;
-                TimewarpToClass.lastHeight = Math.Abs(height - target);
+                TimeManipulation.lastHeight = Math.Abs(height - target);
             }
 
         }
@@ -226,6 +209,7 @@ namespace VanillaUpgrades
                 debugWindow = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), debugWindow, debugWindowFunc, "VanUp Debug");
             }
         }
+        
     }
     */
 }

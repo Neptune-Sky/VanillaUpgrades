@@ -15,14 +15,14 @@ namespace VanillaUpgrades
            "VanillaUpgrades", // Mod Name
            "ASoD", // Mod Author
            "v1.3.2", // Mod loader version
-           "v2.3", // Mod version
+           "v2.3.2", // Mod version
            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features."
            )
         { }
         public override void early_load()
         {
-            Main.patcher = new Harmony("mods.ASoD.VanUp");
-            Main.patcher.PatchAll();
+            patcher = new Harmony("mods.ASoD.VanUp");
+            patcher.PatchAll();
             SceneManager.sceneLoaded += OnSceneLoaded;
             Application.quitting += OnQuit;
             return;
@@ -46,6 +46,7 @@ namespace VanillaUpgrades
                 case "Build_PC":
                     GameObject gameObject = new GameObject("ASoDBuildObject");
                     gameObject.AddComponent<BuildSettings>();
+                    gameObject.AddComponent<DVCalc>();
                     UnityEngine.Object.DontDestroyOnLoad(gameObject);
                     gameObject.SetActive(true);
                     Main.buildMenuObject = gameObject;

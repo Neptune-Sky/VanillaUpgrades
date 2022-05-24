@@ -11,7 +11,7 @@ namespace VanillaUpgrades
         {
             if ((bool)Config.settings["higherPhysicsWarp"])
             {
-                __result = new int[] { 1, 2, 5, 10, 25 }[timewarpIndex_Physics];
+                __result = new int[] { 1, 2, 3, 5, 10, 25 }[timewarpIndex_Physics];
                 return false;
             }
             return true;
@@ -27,7 +27,7 @@ namespace VanillaUpgrades
         {
             if ((bool)Config.settings["higherPhysicsWarp"])
             {
-                __result = 4;
+                __result = 5;
                 return false;
             }
             return true;

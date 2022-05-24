@@ -26,6 +26,8 @@ namespace VanillaUpgrades
 
             public Key Launch = KeyCode.L;
 
+            public Key CalcToggle = KeyCode.C;
+
             public Key Stop_Timewarp = KeyCode.Slash;
 
             public Key Timewarp_To = KeyCode.Semicolon;
@@ -65,9 +67,10 @@ namespace VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
             createSpaceTraverse.GetValue();
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
+            createTraverse.GetValue(new object[] { custom_keys.CalcToggle, defaultData.CalcToggle, "Toggle ΔV Calulator" });
             createSpaceTraverse.GetValue();
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
-            createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
+            //createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
             createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
@@ -125,6 +128,7 @@ namespace VanillaUpgrades
 
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildSettings.Launch());
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, () => OpacityChanger.HideUI());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.CalcToggle, () => DVCalc.toggleCalc());
         }
     }
 

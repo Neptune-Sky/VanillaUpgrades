@@ -67,6 +67,8 @@ namespace VanillaUpgrades
             "}, " +
             "showBuildGUI: true, " +
             "showAdvanced: true, " +
+            "showCalc: false, " +
+            "showAverager: false, " +
             "showTime: true, " +
             "worldTime: true," +
             "alwaysShowTime: false," +
@@ -135,6 +137,10 @@ namespace VanillaUpgrades
 
             if (settings["showAdvanced"] == null) settings["showAdvanced"] = defaultConfig["showAdvanced"];
 
+            if (settings["showCalc"] == null) settings["showCalc"] = defaultConfig["showCalc"];
+
+            if (settings["showAverager"] == null) settings["showAverager"] = defaultConfig["showAverager"];
+
             if (settings["showTime"] == null) settings["showTime"] = defaultConfig["showTime"];
 
             if (settings["worldTime"] == null) settings["worldTime"] = defaultConfig["worldTime"];
@@ -179,6 +185,20 @@ namespace VanillaUpgrades
             settings["showBuildGUI"] = GUILayout.Toggle((bool)settings["showBuildGUI"], " Show Build Settings");
 
             settings["showAdvanced"] = GUILayout.Toggle((bool)settings["showAdvanced"], " Show Advanced Info");
+
+            settings["showCalc"] = GUILayout.Toggle((bool)settings["showCalc"], " ΔV Calc Default");
+
+            if ((bool)settings["showCalc"])
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                settings["showAverager"] = GUILayout.Toggle((bool)settings["showAverager"], " ISP Averager Default");
+                GUILayout.EndHorizontal();
+            }
+            else
+            {
+                settings["showAverager"] = false;
+            }
 
             settings["showTime"] = GUILayout.Toggle((bool)settings["showTime"], " World Clock During Timewarp");
 

@@ -66,7 +66,7 @@ namespace VanillaUpgrades
         {
             if (Main.menuOpen) return;
 
-            if ((WorldTime.main.timewarpIndex != 0 && (bool)Config.settings["showTime"]) || (bool)Config.settings["alwaysShowTime"])
+            if (((WorldTime.main.timewarpIndex != 0 && (bool)Config.settings["showTime"]) || (bool)Config.settings["alwaysShowTime"]) && VideoSettingsPC.main.uiOpacitySlider.value != 0)
             {
                 if (subtractor == 0) subtractor = WorldTime.main.worldTime * 10000000;
                 GUI.color = Config.windowColor;
