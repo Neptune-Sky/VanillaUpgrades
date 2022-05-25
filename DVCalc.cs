@@ -11,8 +11,10 @@ namespace VanillaUpgrades
 {
     public class DVCalc : MonoBehaviour
     {
-        public Rect calcRect = new Rect(Screen.width - 175f, 50f, 175f, 200f);
-        public Rect ispRect = new Rect(Screen.width - 175f, 270f, 175f, 160f);
+        public Rect calcRect = new Rect((float)WindowManager.settings["dvCalc"]["x"], (float)WindowManager.settings["dvCalc"]["y"], 175f, 200f);
+        public Rect ispRect = new Rect((float)WindowManager.settings["ispAverager"]["x"], (float)WindowManager.settings["ispAverager"]["y"], 175f, 160f);
+
+        public int ispHeight = 160;
 
         public static bool showCalc = (bool)Config.settings["showCalc"];
 
@@ -138,7 +140,9 @@ namespace VanillaUpgrades
             }
             if (engines.Count > 0)
             {
-                scroll = GUILayout.BeginScrollView(scroll, GUILayout.MinHeight(minHeight));
+                ispRect.height = ispHeight + minHeight;
+                scroll = GUILayout.BeginScrollView(scroll, GUILayout.MinHeight(minHeight), GUILayout.MaxWidth(155));
+                
 
                 foreach (var e in engines)
                 {
@@ -178,15 +182,15 @@ namespace VanillaUpgrades
             
             GUILayout.BeginHorizontal();
             GUILayout.Label("Thrust:", GUILayout.MaxWidth(65));
-            thrust = GUILayout.TextArea(thrust);
+            thrust = GUILayout.TextArea(thrust, GUILayout.MaxWidth(85));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("ISP:", GUILayout.MaxWidth(65));
-            isp2 = GUILayout.TextArea(isp2);
+            isp2 = GUILayout.TextArea(isp2, GUILayout.MaxWidth(85));
             GUILayout.EndHorizontal();
             
-            if (GUILayout.Button("Add Engine", GUILayout.MaxWidth(155)))
+            if (GUILayout.Button("Add Engine"))
             {
                 bool valid = true;
                 try
@@ -245,13 +249,12 @@ namespace VanillaUpgrades
 
             if (ispResult != null)
             {
+                ispRect.height += 20;
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("Average ISP:");
-                GUILayout.Label(ispResult, "TextField", GUILayout.Width(90));
+                GUILayout.Label("Avg. ISP:");
+                GUILayout.Label(ispResult, "TextField", GUILayout.Width(85));
                 GUILayout.EndHorizontal();
             }
-
-
 
             GUI.DragWindow();
         }
@@ -261,12 +264,24 @@ namespace VanillaUpgrades
             if (showCalc && !Main.menuOpen && VideoSettingsPC.main.uiOpacitySlider.value != 0)
             {
                 GUI.color = Config.windowColor;
+                Rect oldCalc = calcRect;
                 calcRect = GUI.Window(WindowManager.GetValidID(), calcRect, calcFunc, "ΔV Calculator");
                 calcRect = WindowManager.ConfineRect(calcRect);
+                if (calcRect != oldCalc)
+                {
+                    WindowManager.settings["dvCalc"]["x"] = calcRect.x;
+                    WindowManager.settings["dvCalc"]["y"] = calcRect.y;
+                }
                 if (showIsp)
                 {
-                    ispRect = GUILayout.Window(WindowManager.GetValidID(), ispRect, ispFunc, "ISP Averager", GUILayout.MaxHeight(300), GUILayout.Width(175));
+                    Rect oldIsp = ispRect;
+                    ispRect = GUI.Window(WindowManager.GetValidID(), ispRect, ispFunc, "ISP Averager");
                     ispRect = WindowManager.ConfineRect(ispRect);
+                    if (ispRect != oldIsp)
+                    {
+                        WindowManager.settings["ispAverager"]["x"] = ispRect.x;
+                        WindowManager.settings["ispAverager"]["y"] = ispRect.y;
+                    }
                 }
             }
         }

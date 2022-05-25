@@ -3,6 +3,7 @@ using SFS.Builds;
 using SFS.Input;
 using SFS.IO;
 using SFS.World;
+using SFS;
 using System;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
@@ -23,6 +24,10 @@ namespace VanillaUpgrades
         public class DefaultData
         {
             public Key Hide_UI = KeyCode.F2;
+
+            public Key Toggle_Symmetry = KeyCode.J;
+
+            public Key Toggle_Interior = KeyCode.K;      
 
             public Key Launch = KeyCode.L;
 
@@ -66,12 +71,17 @@ namespace VanillaUpgrades
             createTextTraverse.GetValue("VanillaUpgrades Keybinds");
             createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
             createSpaceTraverse.GetValue();
+            createTextTraverse.GetValue("Build Mode");
+            createTraverse.GetValue(new object[] { custom_keys.Toggle_Symmetry, defaultData.Toggle_Symmetry, "Toggle symmetry mode" });
+            createTraverse.GetValue(new object[] { custom_keys.Toggle_Interior, defaultData.Toggle_Interior, "Toggle interior view" });
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
             createTraverse.GetValue(new object[] { custom_keys.CalcToggle, defaultData.CalcToggle, "Toggle ΔV Calulator" });
             createSpaceTraverse.GetValue();
+            createTextTraverse.GetValue("World View");
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
             //createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
             createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
+            createTextTraverse.GetValue("__________________________________________");
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
 
@@ -127,6 +137,9 @@ namespace VanillaUpgrades
             KeysNode keysNode = BuildManager.main.build_Input.keysNode;
 
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildSettings.Launch());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Symmetry, () => BuildManager.main.ToggleSymmetryMode());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Interior, () => InteriorManager.main.ToggleInteriorView());
+
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, () => OpacityChanger.HideUI());
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.CalcToggle, () => DVCalc.toggleCalc());
         }

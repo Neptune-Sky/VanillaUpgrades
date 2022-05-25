@@ -15,7 +15,11 @@ namespace VanillaUpgrades
 
         public Vector2 defaultWorldTime = new Vector2(Screen.width * 0.958f, Screen.height * 0.045f);
 
-        public JObject defaults = JObject.Parse("{buildSettings:{}, advancedInfo:{}, config:{}, worldTime:{}}");
+        public Vector2 defaultCalc = new Vector2(Screen.width - 175f, 50f);
+
+        public Vector2 defaultAverager = new Vector2(Screen.width - 175f, 270f);
+
+        public JObject defaults = JObject.Parse("{buildSettings:{}, advancedInfo:{}, config:{}, worldTime:{}, dvCalc: {}, ispAverager: {}}");
 
         public static JObject settings;
 
@@ -47,6 +51,10 @@ namespace VanillaUpgrades
             defaults["config"]["y"] = defaultConfig.y;
             defaults["worldTime"]["x"] = defaultWorldTime.x;
             defaults["worldTime"]["y"] = defaultWorldTime.y;
+            defaults["dvCalc"]["x"] = defaultCalc.x;
+            defaults["dvCalc"]["y"] = defaultCalc.y;
+            defaults["ispAverager"]["x"] = defaultAverager.x;
+            defaults["ispAverager"]["y"] = defaultAverager.y;
 
             if (!File.Exists(windowDir))
             {
@@ -61,7 +69,10 @@ namespace VanillaUpgrades
                 check = new Vector2((float)settings["advancedInfo"]["x"], (float)settings["advancedInfo"]["y"]);
                 check = new Vector2((float)settings["config"]["x"], (float)settings["config"]["y"]);
                 check = new Vector2((float)settings["worldTime"]["x"], (float)settings["worldTime"]["y"]);
+                check = new Vector2((float)settings["dvCalc"]["x"], (float)settings["dvCalc"]["y"]);
+                check = new Vector2((float)settings["ispAverager"]["x"], (float)settings["ispAverager"]["y"]);
 
+                /*
                 if (settings["buildSettings"] == null)
                 {
                     settings["buildSettings"]["x"] = defaultBuildSettings.x;
@@ -82,6 +93,7 @@ namespace VanillaUpgrades
                     settings["worldTime"]["x"] = defaultWorldTime.x;
                     settings["worldTime"]["y"] = defaultWorldTime.y;
                 }
+                */
             }
             catch (Exception e)
             {
