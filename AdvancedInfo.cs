@@ -9,9 +9,7 @@ namespace VanillaUpgrades
 
     public class AdvancedInfo : MonoBehaviour
     {
-        public static Rect windowRect = new Rect((float)WindowManager.settings["advancedInfo"]["x"], (float)WindowManager.settings["advancedInfo"]["y"], 150f, 220f);
-
-        public static Rocket currentRocket;
+        public static Rect windowRect = new Rect((float)WindowManager.settings["advancedInfo"]["x"], (float)WindowManager.settings["advancedInfo"]["y"], 10f, 10f);
 
         public double apoapsis;
 
@@ -21,8 +19,7 @@ namespace VanillaUpgrades
 
         public double displayEcc;
 
-        public static bool disableKt;
-
+        public bool maximized = true;
 
 
         public static AdvancedInfo instance;
@@ -58,14 +55,97 @@ namespace VanillaUpgrades
 
         public void windowFunc(int windowID)
         {
-            GUI.Label(new Rect(10f, 20f, 160f, 20f), "Apoapsis:");
-            GUI.Label(new Rect(10f, 40f, 160f, 20f), displayify(apoapsis));
-            GUI.Label(new Rect(10f, 70f, 160f, 20f), "Periapsis:");
-            GUI.Label(new Rect(10f, 90f, 160f, 20f), displayify(periapsis));
-            GUI.Label(new Rect(10f, 120f, 160f, 25f), "Eccentricity:");
-            GUI.Label(new Rect(10f, 140f, 160f, 25f), displayifyEcc(displayEcc));
-            GUI.Label(new Rect(10f, 170f, 160f, 25f), "Angle:");
-            GUI.Label(new Rect(10f, 190f, 160f, 20f), angle.Round(0.1).ToString(1, true) + "°");
+            bool oldMax = maximized;
+
+            maximized = GUI.Toggle(new Rect(1, -1, 30, 30), maximized, "");
+
+            if (maximized)
+            {
+                int height = 220;
+                int width = 150;
+
+                if (oldMax == false && maximized == true && windowRect.y >= Screen.height - 215)
+                {
+                    windowRect.y = windowRect.y - (115 - 42);
+                }
+                if (windowRect.y >= Screen.height - 215 || windowRect.y <= 10 || (bool)Config.settings["alwaysCompact"])
+                {
+                    height = 115;
+                    width = 200;
+
+                    windowRect.height = height;
+                    windowRect.width = width;
+
+                    GUIStyle rightAlign = new GUIStyle();
+                    rightAlign.alignment = TextAnchor.LowerRight;
+                    rightAlign.normal.textColor = Color.white;
+
+                    GUIStyle leftAlign = new GUIStyle();
+                    leftAlign.alignment = TextAnchor.LowerLeft;
+                    leftAlign.normal.textColor = Color.white;
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Apoapsis:", leftAlign);
+                    GUILayout.Label(displayify(apoapsis), rightAlign);
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(8);
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Periapsis:", leftAlign);
+                    GUILayout.Label(displayify(periapsis), rightAlign);
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(8);
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Eccentricity:", leftAlign);
+                    GUILayout.Label(displayifyEcc(displayEcc), rightAlign);
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(8);
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Angle:", leftAlign);
+                    GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°", rightAlign);
+                    GUILayout.EndHorizontal();
+                }
+                else
+                {
+                    windowRect.height = height;
+                    windowRect.width = width;
+
+                    GUILayout.Label("Apoapsis:");
+                    GUILayout.Space(-5);
+                    GUILayout.Label(displayify(apoapsis));
+                    GUILayout.Space(5);
+
+                    GUILayout.Label("Periapsis:");
+                    GUILayout.Space(-5);
+                    GUILayout.Label(displayify(periapsis));
+                    GUILayout.Space(5);
+
+                    GUILayout.Label("Eccentricity:");
+                    GUILayout.Space(-5);
+                    GUILayout.Label(displayifyEcc(displayEcc));
+                    GUILayout.Space(5);
+
+                    GUILayout.Label("Angle:");
+                    GUILayout.Space(-5);
+                    GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°");
+                }
+
+                
+
+                
+            }
+            else
+            {
+                if (oldMax == true && maximized == false && windowRect.y >= Screen.height - 215)
+                {
+                    windowRect.y = windowRect.y + (115 - 42);
+                }
+
+                windowRect.height = 42;
+                windowRect.width = 150;
+            }
 
             GUI.DragWindow();
         }
@@ -78,44 +158,23 @@ namespace VanillaUpgrades
         public void Update()
         {
 
-            if (!(bool)Config.settings["allowTimeSlowdown"] && TimeDecelMain.timeDecelIndex != 0)
-            {
-                WorldTime.main.SetState(1, true, false);
-                TimeDecelMain.timeDecelIndex = 0;
-            }
-
-            if (TimeDecelMain.timeDecelIndex != 0 && WorldTime.main.timewarpIndex != 0)
-            {
-                TimeDecelMain.timeDecelIndex = 0;
-            }
-
-            if (PlayerController.main.player.Value == null)
-            {
-                currentRocket = null;
-                return;
-            }
-
-
-            currentRocket = (PlayerController.main.player.Value as Rocket);
-
-
             if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
 
 
-            var sma = currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - currentRocket.location.planet.Value.mass / currentRocket.location.Value.Radius));
-            Double3 @double = Double3.Cross(currentRocket.location.position, currentRocket.location.velocity);
-            Double2 double2 = (Double2)(Double3.Cross((Double3)currentRocket.location.velocity.Value, @double) / currentRocket.location.planet.Value.mass) - currentRocket.location.position.Value.normalized;
+            var sma = WorldManager.currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(WorldManager.currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - WorldManager.currentRocket.location.planet.Value.mass / WorldManager.currentRocket.location.Value.Radius));
+            Double3 @double = Double3.Cross(WorldManager.currentRocket.location.position, WorldManager.currentRocket.location.velocity);
+            Double2 double2 = (Double2)(Double3.Cross((Double3)WorldManager.currentRocket.location.velocity.Value, @double) / WorldManager.currentRocket.location.planet.Value.mass) - WorldManager.currentRocket.location.position.Value.normalized;
             var ecc = double2.magnitude;
             displayEcc = ecc;
 
 
-            apoapsis = (Kepler.GetApoapsis(sma, ecc) - currentRocket.location.planet.Value.Radius);
-            periapsis = (Kepler.GetPeriapsis(sma, ecc) - currentRocket.location.planet.Value.Radius);
+            apoapsis = (Kepler.GetApoapsis(sma, ecc) - WorldManager.currentRocket.location.planet.Value.Radius);
+            periapsis = (Kepler.GetPeriapsis(sma, ecc) - WorldManager.currentRocket.location.planet.Value.Radius);
 
             if (apoapsis == double.PositiveInfinity)
             {
 
-                if (currentRocket.physics.location.velocity.Value.normalized.magnitude > 0)
+                if (WorldManager.currentRocket.physics.location.velocity.Value.normalized.magnitude > 0)
                 {
                     apoapsis = double.NegativeInfinity;
                 }
@@ -130,7 +189,7 @@ namespace VanillaUpgrades
 
 
 
-            var trueAngle = currentRocket.partHolder.transform.eulerAngles.z;
+            var trueAngle = WorldManager.currentRocket.partHolder.transform.eulerAngles.z;
 
             if (trueAngle > 180) { angle = 360 - trueAngle; }
             if (trueAngle < 180) { angle = -trueAngle; }
@@ -138,40 +197,14 @@ namespace VanillaUpgrades
 
         }
 
-        public static void StopTimewarp(bool showmsg)
-        {
-            if (WorldTime.main.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
-
-            WorldTime.main.timewarpIndex = 0;
-            WorldTime.main.SetState(1, true, false);
-            TimeDecelMain.timeDecelIndex = 0;
-            if (showmsg)
-            {
-                MsgDrawer.main.Log("Time acceleration stopped");
-            }
-
-        }
-
-        public static void Throttle01()
-        {
-            if (currentRocket == null) return;
-            currentRocket.throttle.throttlePercent.Value = 0.0005f;
-        }
-
-        public string throttle = "0";
         public void OnGUI()
         {
-            if (PlayerController.main.player.Value == null)
-            {
-                currentRocket = null;
-                return;
-            }
-            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || currentRocket == null) return;
+            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
 
             Rect oldRect = windowRect;
             GUI.color = Config.windowColor;
-            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, new GUI.WindowFunction(windowFunc), "Advanced");
             windowRect = WindowManager.ConfineRect(windowRect);
+            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "Advanced");
             if (oldRect != windowRect) WindowManager.settings["advancedInfo"]["x"] = windowRect.x; WindowManager.settings["advancedInfo"]["y"] = windowRect.y;
         }
     }

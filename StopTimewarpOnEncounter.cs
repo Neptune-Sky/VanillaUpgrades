@@ -18,7 +18,7 @@ namespace VanillaUpgrades
             {
                 WorldTime.main.SetState(2, false, false);
                 
-                AdvancedInfo.StopTimewarp(false);
+                TimeManipulation.StopTimewarp(false);
                 return;
             }
 

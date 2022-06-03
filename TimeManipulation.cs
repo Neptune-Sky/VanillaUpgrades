@@ -8,208 +8,88 @@ using UnityEngine;
 
 namespace VanillaUpgrades
 {
-    /*
-    [HarmonyPatch(typeof(WorldTime), "ApplyState")]
-    public class ResetVars
+    [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.DecelerateTime))]
+    public class TimeDecelerationPatch
     {
-        [HarmonyPostfix]
-        public static void Postfix()
+        [HarmonyPrefix]
+        public static bool Prefix()
         {
-            TimeManipulation.timewarpTo = false;
+            if (WorldTime.main.timewarpIndex == 0)
+            {
+                TimeDecelMain.SlowTime();
+                return false;
+            }
+            return true;
         }
     }
 
+    [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.AccelerateTime))]
+    public class EndDeceleration
+    {
+        [HarmonyPrefix]
+        public static bool Prefix()
+        {
+            if (TimeDecelMain.timeDecelIndex > 0)
+            {
+                WorldTime.main.SetState(1, true, false);
+                MsgDrawer.main.Log("Time restored to normal");
+                TimeDecelMain.timeDecelIndex = 0;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    public static class TimeDecelMain
+    {
+        public static int timeDecelIndex = 0;
+
+        public static void SlowTime()
+        {
+            if (!(bool)Config.settings["allowTimeSlowdown"]) return;
+            if (timeDecelIndex <= 5) timeDecelIndex++; else return;
+            double speed;
+            bool defaultMessage = true;
+
+            switch (timeDecelIndex)
+            {
+                case 1:
+                    speed = 0.75;
+                    break;
+                case 2:
+                    speed = 0.5;
+                    break;
+                case 3:
+                    speed = 0.25;
+                    break;
+                case 4:
+                    speed = 0.1;
+                    break;
+                case 5:
+                    speed = 0;
+                    defaultMessage = false;
+                    break;
+                default: return;
+            }
+
+            WorldTime.main.SetState(speed, true, defaultMessage);
+            if (!defaultMessage) MsgDrawer.main.Log("Time frozen");
+        }
+    }
     public class TimeManipulation : MonoBehaviour
     {
-        public static bool timewarpTo;
-
-        public static int decider;
-
-        public static bool heightIncreasing;
-
-        public static double height;
-
-        public static double threshold;
-
-        public static double target;
-
-        public static double lastHeight;
-
-        public static int index;
-
-        private static double GetTimewarpSpeed_Rails(int timewarpIndex_Rails)
+        public static void StopTimewarp(bool showmsg)
         {
-            return (new int[]
+            if (WorldTime.main.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
+
+            WorldTime.main.timewarpIndex = 0;
+            WorldTime.main.SetState(1, true, false);
+            TimeDecelMain.timeDecelIndex = 0;
+            if (showmsg)
             {
-                1,
-                5,
-                25
-            })[timewarpIndex_Rails % 3] * Math.Pow(100.0, (double)((int)((float)timewarpIndex_Rails / 3f)));
-        }
-
-        public static void ChangeTimewarp(int amount, bool set)
-        {
-            if (PlayerController.main.player.Value == null) return;
-
-            if (set)
-            {
-                index = amount;
-            }
-            else
-            {
-                index = WorldTime.main.timewarpIndex + amount;
-            }
-
-            bool real;
-            if (index <= 0)
-            {
-                index = 0;
-                real = true;
-            }
-            else
-            {
-                real = false;
-            }
-            if (index > WorldTime.main.timewarpIndex.MaxIndex) index = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex();
-
-            WorldTime.main.timewarpIndex = index;
-            WorldTime.main.SetState(GetTimewarpSpeed_Rails(index), real, false);
-        }
-
-        
-        public static void TimewarpTo()
-        {
-            if (PlayerController.main.player.Value == null) return;
-
-            ChangeTimewarp(1, true);
-
-            int maxIndex = WorldTime.main.timewarpIndex.GetMaxTimewarpIndex() - 1;
-
-            double usedIndex = (AdvancedInfo.instance.apoapsis.Round(1).ToString().Length + AdvancedInfo.instance.periapsis.Round(1).ToString().Length) / 2.5;
-            index = (int)usedIndex;
-            if (usedIndex > maxIndex)
-            {
-                usedIndex = maxIndex;
-            }
-            if (usedIndex < 4) usedIndex = 4;
-
-            if (WorldTime.main.CanTimewarp(false, false))
-            {
-                var name = heightIncreasing ? "apoapsis" : "periapsis";
-                if (AdvancedInfo.displayify(AdvancedInfo.instance.apoapsis) == "Escape" && heightIncreasing)
-                {
-                    name = "escape";
-                }
-                timewarpTo = true;
-                ChangeTimewarp((int)usedIndex, true);
-                MsgDrawer.main.Log("Timewarping to " + name + "...");
-
-                threshold = (target / Math.Pow(2, target.Round(1).ToString().Length)) * AdvancedInfo.instance.displayEcc;
-                TimeManipulation.lastHeight = Math.Abs(height - target);
+                MsgDrawer.main.Log("Time acceleration stopped");
             }
 
         }
-
-        public void Update()
-        {
-            if (PlayerController.main.player.Value == null || AdvancedInfo.instance == null || AdvancedInfo.currentRocket == null) return;
-
-            bool forceIncreasing;
-            bool forceDecreasing;
-            if (Math.Abs(height - AdvancedInfo.instance.periapsis) < threshold) { forceIncreasing = true; forceDecreasing = false; }
-            else if (Math.Abs(height - AdvancedInfo.instance.apoapsis) < threshold) { forceIncreasing = false; forceDecreasing = true; } else { forceIncreasing = false; forceDecreasing = false; }
-
-            if (!forceIncreasing && !forceDecreasing)
-            {
-
-
-                if (height.Round(0.01) < AdvancedInfo.currentRocket.physics.location.position.Value.magnitude.Round(0.01) - AdvancedInfo.currentRocket.physics.location.planet.Value.Radius)
-                {
-                    heightIncreasing = true;
-                }
-                if (height.Round(0.01) > AdvancedInfo.currentRocket.physics.location.position.Value.magnitude.Round(0.01) - AdvancedInfo.currentRocket.physics.location.planet.Value.Radius)
-                {
-                    heightIncreasing = false;
-                }
-
-            }
-            else
-            {
-                if (forceIncreasing)
-                {
-                    heightIncreasing = true;
-                }
-                else if (forceDecreasing)
-                {
-                    heightIncreasing = false;
-                }
-            }
-
-            height = AdvancedInfo.currentRocket.physics.location.position.Value.magnitude - AdvancedInfo.currentRocket.physics.location.planet.Value.Radius;
-            target = heightIncreasing ? AdvancedInfo.instance.apoapsis : AdvancedInfo.instance.periapsis;
-
-            int minIndex;
-            double velocity = AdvancedInfo.currentRocket.physics.location.velocity.Value.magnitude;
-            if (velocity < 300)
-            {
-                if (velocity < 50 && AdvancedInfo.instance.displayEcc < 0.5)
-                {
-                    minIndex = 7;
-                }
-                else
-                {
-                    minIndex = 6;
-                }
-
-            }
-            else
-            {
-                if (target > 10000000)
-                {
-                    minIndex = 9;
-                }
-                else minIndex = 4;
-            }
-
-            if (timewarpTo == true)
-            {
-
-                if (Math.Abs(height - target) < lastHeight * (0.03 * index) && index >= minIndex)
-                {
-                    ChangeTimewarp(-1, false);
-                    lastHeight = Math.Abs(height - target);
-                }
-                if (Math.Abs(height - target) < threshold)
-                {
-                    AdvancedInfo.StopTimewarp(true);
-                }
-            }
-
-
-        }
-
-        public Rect debugWindow = new Rect(20f, 500f, 200f, 200f);
-        public bool showDebug = false;
-
-        public void debugWindowFunc(int windowID)
-        {
-            GUI.Label(new Rect(20f, 20f, 1000f, 20f), "height: " + height.ToString());
-            GUI.Label(new Rect(20f, 40f, 1000f, 20f), "target: " + target.ToString());
-            GUI.Label(new Rect(20f, 60f, 1000f, 20f), "threshold: " + threshold.ToString());
-            GUI.Label(new Rect(20f, 80f, 1000f, 20f), "heightIncreasing: " + heightIncreasing.ToString());
-            GUI.Label(new Rect(20f, 100f, 1000f, 20f), "lastHeight: " + lastHeight.ToString());
-            GUI.Label(new Rect(20f, 120f, 1000f, 20f), "index: " + index.ToString());
-            GUI.Label(new Rect(20f, 140f, 1000f, 20f), "e: " + FaceDirection.e.ToString());
-        }
-
-        public void OnGUI()
-        {
-            if (showDebug)
-            {
-                debugWindow = GUI.Window(GUIUtility.GetControlID(FocusType.Passive), debugWindow, debugWindowFunc, "VanUp Debug");
-            }
-        }
-        
     }
-    */
 }

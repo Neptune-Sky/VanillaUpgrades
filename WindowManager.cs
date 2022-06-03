@@ -30,8 +30,8 @@ namespace VanillaUpgrades
         // Keeps windows from being moved off the screen.
         public static Rect ConfineRect(Rect window)
         {
-            window.x = Mathf.Clamp(window.x, 0, Screen.width - window.width);
-            window.y = Mathf.Clamp(window.y, 0, Screen.height - window.height);
+            window.x = Mathf.Clamp(window.x, -7, Screen.width - window.width + 7);
+            window.y = Mathf.Clamp(window.y, 0, Screen.height - window.height + 7);
             return window;
         }
 
@@ -40,7 +40,6 @@ namespace VanillaUpgrades
         {
             return GUIUtility.GetControlID(FocusType.Passive);
         }
-
         public void Awake()
         {
             defaults["buildSettings"]["x"] = defaultBuildSettings.x;

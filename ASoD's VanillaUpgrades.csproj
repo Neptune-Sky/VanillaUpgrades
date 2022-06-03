@@ -206,11 +206,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="WorldManager.cs" />
     <Compile Include="DVCalc.cs" />
     <Compile Include="ErrorNotification.cs" />
     <Compile Include="FaceDirection.cs" />
     <Compile Include="HideGUI.cs" />
-    <Compile Include="ModManager.cs" />
+    <Compile Include="SettingsPatches.cs" />
     <Compile Include="CustomKeys.cs" />
     <Compile Include="BuildSettings.cs" />
     <Compile Include="Main.cs" />

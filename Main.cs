@@ -15,7 +15,7 @@ namespace VanillaUpgrades
            "VanillaUpgrades", // Mod Name
            "ASoD", // Mod Author
            "v1.3.2", // Mod loader version
-           "v2.3.2", // Mod version
+           "v2.3.3", // Mod version
            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features."
            )
         { }
@@ -55,6 +55,7 @@ namespace VanillaUpgrades
 
                 case "World_PC":
                     worldViewObject = new GameObject("ASoDWorldObject");
+                    worldViewObject.AddComponent<WorldManager>();
                     worldViewObject.AddComponent<AdvancedInfo>();
                     // worldViewObject.AddComponent<TimewarpToClass>();
                     worldViewObject.AddComponent<FaceDirection>();
