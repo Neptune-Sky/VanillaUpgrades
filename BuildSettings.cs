@@ -68,7 +68,7 @@ namespace VanillaUpgrades
     public class BuildSettings : MonoBehaviour
     {
         // Token: 0x0400136C RID: 4972
-        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f, 90f);
+        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f * WindowManager.scale.x, 100f * WindowManager.scale.y);
 
         // Token: 0x0400136D RID: 4973
         public static bool snapping;
@@ -86,11 +86,55 @@ namespace VanillaUpgrades
             Base.sceneLoader.LoadWorldScene(launch: true);
         }
 
+        public string Toggle(bool enabled)
+        {
+            if (enabled) return " Disabled"; else return " Enabled";
+        }
+
+        public string Hide(bool shown)
+        {
+            if (shown) return "Hide "; else return "Show ";
+        }
+
+        public void Update()
+        {
+            windowRect.width = 180f * WindowManager.scale.x;
+            windowRect.height = 100f * WindowManager.scale.y;
+        }
         public void windowFunc(int windowID)
         {
-            snapping = GUILayout.Toggle(snapping, " Disable Snapping");
-            noAdaptation = GUILayout.Toggle(noAdaptation, " Disable Adapting");
-            DVCalc.showCalc = GUILayout.Toggle(DVCalc.showCalc, " ΔV Calculator");
+            GUIStyle leftAlign = new GUIStyle();
+            leftAlign.alignment = TextAnchor.LowerLeft;
+            leftAlign.normal.textColor = Color.white;
+            leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
+
+            GUIStyle midAlign = new GUIStyle(GUI.skin.button);
+            midAlign.alignment = TextAnchor.MiddleCenter;
+            midAlign.normal.textColor = Color.white;
+            midAlign.fontSize = (int)(12 * WindowManager.scale.y);
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Snapping" + Toggle(snapping), midAlign))
+            {
+                snapping = !snapping;
+            }
+            GUILayout.EndHorizontal();
+
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Adapting" + Toggle(noAdaptation), midAlign))
+            {
+                noAdaptation = !noAdaptation;
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button(Hide(DVCalc.showCalc) + "ΔV Calculator", midAlign))
+            {
+                DVCalc.showCalc = !DVCalc.showCalc;
+            }
+            GUILayout.EndHorizontal();
+
 
 
             GUI.DragWindow();

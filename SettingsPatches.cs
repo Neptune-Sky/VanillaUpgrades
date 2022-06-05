@@ -32,7 +32,7 @@ namespace VanillaUpgrades
             Config.showSettings = false;
             Main.menuOpen = false;
             File.WriteAllText(Config.configPath, Config.settings.ToString());
-            if (Main.buildMenuObject != null)
+            if (Main.buildObject != null)
             {
                 if ((bool)Config.settings["moreCameraZoom"])
                 {

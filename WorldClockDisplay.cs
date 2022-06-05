@@ -11,7 +11,7 @@ namespace VanillaUpgrades
         public static string timestamp;
         public static string timewarpTime;
 
-        public Rect windowRect = new Rect((float)WindowManager.settings["worldTime"]["x"], (float)WindowManager.settings["worldTime"]["y"], 150f, 30f);
+        public Rect windowRect = new Rect((float)WindowManager.settings["worldTime"]["x"], (float)WindowManager.settings["worldTime"]["y"], 150f * WindowManager.scale.x, 30f * WindowManager.scale.y);
 
         public string TimeSpanConv(TimeSpan span)
         {
@@ -26,6 +26,11 @@ namespace VanillaUpgrades
         }
         public void Update()
         {
+            /*
+            windowRect.width = 150f * WindowManager.scale.x;
+            windowRect.height = 30f * WindowManager.scale.y;
+            */
+
             var span = new TimeSpan((long)WorldTime.main.worldTime * 10000000);
             var span2 = new TimeSpan((long)WorldTime.main.worldTime * 10000000 - (long)subtractor);
 
@@ -35,27 +40,29 @@ namespace VanillaUpgrades
 
         public void windowFunc(int windowID)
         {
-            var guiStyle = new GUIStyle();
+            var bold = new GUIStyle();
             var midAlign = new GUIStyle();
 
+            midAlign.fontSize = (int)(14 * WindowManager.scale.y);
             midAlign.alignment = TextAnchor.MiddleCenter;
             midAlign.normal.textColor = Color.white;
 
-            guiStyle.fontSize = 13;
-            guiStyle.fontStyle = FontStyle.Bold;
-            guiStyle.normal.textColor = Color.white;
-            guiStyle.alignment = TextAnchor.MiddleCenter;
+            bold.fontSize = (int)(15 * WindowManager.scale.y);
+            bold.fontStyle = FontStyle.Bold;
+            bold.normal.textColor = Color.white;
+            bold.alignment = TextAnchor.MiddleCenter;
 
             if ((bool)Config.settings["worldTime"])
             {
                 GUILayout.Label("World Time:", midAlign);
-                GUILayout.Label(timestamp, guiStyle);
-                
+                GUILayout.Label(timestamp, bold);
+                GUILayout.Space(4);
             }
             if (WorldTime.main.timewarpIndex != 0)
             {
+                GUILayout.Space(4);
                 GUILayout.Label("Timewarp Span:", midAlign);
-                GUILayout.Label(timewarpTime, guiStyle);
+                GUILayout.Label(timewarpTime, bold);
             }
 
             GUI.DragWindow();

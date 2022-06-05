@@ -19,6 +19,8 @@ namespace VanillaUpgrades
 
         public Vector2 defaultAverager = new Vector2(Screen.width - 175f, 270f);
 
+        public static Vector2 scale = new Vector2(1080f / Screen.currentResolution.height, 1920f / Screen.currentResolution.width);
+
         public JObject defaults = JObject.Parse("{buildSettings:{}, advancedInfo:{}, config:{}, worldTime:{}, dvCalc: {}, ispAverager: {}}");
 
         public static JObject settings;
@@ -40,6 +42,20 @@ namespace VanillaUpgrades
         {
             return GUIUtility.GetControlID(FocusType.Passive);
         }
+
+        public void Update()
+        {
+            scale = new Vector2((float)(Screen.currentResolution.width / 1920f), (float)(Screen.currentResolution.height / 1080f));
+
+            if (scale.x < 1) scale.x = scale.x * 1.15f;
+            if (scale.y < 1) scale.y = scale.y * 1.15f;
+
+            if (scale.y > 1) scale.y = 1;
+            if (scale.x > 1) scale.x = 1;
+
+            if (scale.x < scale.y) scale.x = scale.y;
+        }
+
         public void Awake()
         {
             defaults["buildSettings"]["x"] = defaultBuildSettings.x;
@@ -102,6 +118,11 @@ namespace VanillaUpgrades
             }
 
             inst = this;
+        }
+
+        public void OnGUI()
+        {
+            GUILayout.Label(scale.ToString());
         }
     }
 }

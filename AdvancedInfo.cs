@@ -21,7 +21,6 @@ namespace VanillaUpgrades
 
         public bool maximized = true;
 
-
         public static AdvancedInfo instance;
 
         public void Awake()
@@ -57,50 +56,55 @@ namespace VanillaUpgrades
         {
             bool oldMax = maximized;
 
-            maximized = GUI.Toggle(new Rect(1, -1, 30, 30), maximized, "");
+            maximized = GUI.Toggle(new Rect(1, -1, 22, 22), maximized, "");
+
+            float height = (220 * WindowManager.scale.x).Round(1);
+            float width = (150 * WindowManager.scale.y).Round(1);
+            float compactheight = (115 * WindowManager.scale.x).Round(1);
+            float compactwidth = (200 * WindowManager.scale.y).Round(1);
+            float minheight = (42 * WindowManager.scale.y).Round(1);
 
             if (maximized)
             {
-                int height = 220;
-                int width = 150;
+                GUIStyle rightAlign = new GUIStyle();
+                rightAlign.alignment = TextAnchor.LowerRight;
+                rightAlign.normal.textColor = Color.white;
+                rightAlign.fontSize = (int)(14 * WindowManager.scale.y);
 
-                if (oldMax == false && maximized == true && windowRect.y >= Screen.height - 215)
+                GUIStyle leftAlign = new GUIStyle();
+                leftAlign.alignment = TextAnchor.LowerLeft;
+                leftAlign.normal.textColor = Color.white;
+                leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
+
+                if (oldMax == false && maximized == true && windowRect.y >= Screen.height - (height - 5))
                 {
-                    windowRect.y = windowRect.y - (115 - 42);
+                    windowRect.y = windowRect.y - (compactheight - minheight);
                 }
-                if (windowRect.y >= Screen.height - 215 || windowRect.y <= 10 || (bool)Config.settings["alwaysCompact"])
+                if (windowRect.y >= Screen.height - (height - 5) || windowRect.y <= 10 || (bool)Config.settings["alwaysCompact"])
                 {
-                    height = 115;
-                    width = 200;
 
-                    windowRect.height = height;
-                    windowRect.width = width;
+                    windowRect.height = compactheight;
+                    windowRect.width = compactwidth;
 
-                    GUIStyle rightAlign = new GUIStyle();
-                    rightAlign.alignment = TextAnchor.LowerRight;
-                    rightAlign.normal.textColor = Color.white;
-
-                    GUIStyle leftAlign = new GUIStyle();
-                    leftAlign.alignment = TextAnchor.LowerLeft;
-                    leftAlign.normal.textColor = Color.white;
+                    
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Apoapsis:", leftAlign);
                     GUILayout.Label(displayify(apoapsis), rightAlign);
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(8);
+                    GUILayout.Space(8 * WindowManager.scale.y);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Periapsis:", leftAlign);
                     GUILayout.Label(displayify(periapsis), rightAlign);
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(8);
+                    GUILayout.Space(8 * WindowManager.scale.y);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Eccentricity:", leftAlign);
                     GUILayout.Label(displayifyEcc(displayEcc), rightAlign);
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(8);
+                    GUILayout.Space(8 * WindowManager.scale.y);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Angle:", leftAlign);
@@ -112,24 +116,24 @@ namespace VanillaUpgrades
                     windowRect.height = height;
                     windowRect.width = width;
 
-                    GUILayout.Label("Apoapsis:");
-                    GUILayout.Space(-5);
-                    GUILayout.Label(displayify(apoapsis));
-                    GUILayout.Space(5);
+                    GUILayout.Label("Apoapsis:", leftAlign);
+                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Label(displayify(apoapsis), leftAlign);
+                    GUILayout.Space(13 * WindowManager.scale.y);
 
-                    GUILayout.Label("Periapsis:");
-                    GUILayout.Space(-5);
-                    GUILayout.Label(displayify(periapsis));
-                    GUILayout.Space(5);
+                    GUILayout.Label("Periapsis:", leftAlign);
+                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Label(displayify(periapsis), leftAlign);
+                    GUILayout.Space(13 * WindowManager.scale.y);
 
-                    GUILayout.Label("Eccentricity:");
-                    GUILayout.Space(-5);
-                    GUILayout.Label(displayifyEcc(displayEcc));
-                    GUILayout.Space(5);
+                    GUILayout.Label("Eccentricity:", leftAlign);
+                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Label(displayifyEcc(displayEcc), leftAlign);
+                    GUILayout.Space(13 * WindowManager.scale.y);
 
-                    GUILayout.Label("Angle:");
-                    GUILayout.Space(-5);
-                    GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°");
+                    GUILayout.Label("Angle:", leftAlign);
+                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°", leftAlign);
                 }
 
                 
@@ -138,13 +142,13 @@ namespace VanillaUpgrades
             }
             else
             {
-                if (oldMax == true && maximized == false && windowRect.y >= Screen.height - 215)
+                if (oldMax == true && maximized == false && windowRect.y >= Screen.height - (height - 5))
                 {
-                    windowRect.y = windowRect.y + (115 - 42);
+                    windowRect.y = windowRect.y + (compactheight - minheight);
                 }
 
-                windowRect.height = 42;
-                windowRect.width = 150;
+                windowRect.height = minheight;
+                windowRect.width = width;
             }
 
             GUI.DragWindow();
@@ -157,8 +161,9 @@ namespace VanillaUpgrades
         }
         public void Update()
         {
+            
 
-            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
+            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
 
 
             var sma = WorldManager.currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(WorldManager.currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - WorldManager.currentRocket.location.planet.Value.mass / WorldManager.currentRocket.location.Value.Radius));

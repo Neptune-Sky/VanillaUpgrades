@@ -11,10 +11,10 @@ namespace VanillaUpgrades
 {
     public class DVCalc : MonoBehaviour
     {
-        public Rect calcRect = new Rect((float)WindowManager.settings["dvCalc"]["x"], (float)WindowManager.settings["dvCalc"]["y"], 175f, 200f);
-        public Rect ispRect = new Rect((float)WindowManager.settings["ispAverager"]["x"], (float)WindowManager.settings["ispAverager"]["y"], 175f, 160f);
+        public Rect calcRect = new Rect((float)WindowManager.settings["dvCalc"]["x"], (float)WindowManager.settings["dvCalc"]["y"], 175f * WindowManager.scale.y, 200f * WindowManager.scale.y);
+        public Rect ispRect = new Rect((float)WindowManager.settings["ispAverager"]["x"], (float)WindowManager.settings["ispAverager"]["y"], 175f * WindowManager.scale.y, 160f * WindowManager.scale.y);
 
-        public int ispHeight = 160;
+        public int ispHeight = (int)(160 * WindowManager.scale.y);
 
         public static bool showCalc = (bool)Config.settings["showCalc"];
 
@@ -23,6 +23,13 @@ namespace VanillaUpgrades
         public string dryMass;
         public string result;
         public bool showIsp = (bool)Config.settings["showAverager"];
+        
+        public void Update()
+        {
+            ispHeight = (int)(160 * WindowManager.scale.y);
+            calcRect.width = 175f * WindowManager.scale.y;
+            calcRect.height = 200f * WindowManager.scale.y;
+        }
 
         public static void toggleCalc()
         {
@@ -31,36 +38,63 @@ namespace VanillaUpgrades
 
         public void calcFunc(int windowID)
         {
-            GUILayout.BeginHorizontal(); 
-            GUILayout.Label("ISP:", GUILayout.MaxWidth(65));
-            isp = GUILayout.TextField(isp);
-            GUILayout.EndHorizontal();
+            GUIStyle leftAlign = new GUIStyle();
+            leftAlign.alignment = TextAnchor.MiddleLeft;
+            leftAlign.normal.textColor = Color.white;
+            leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
 
-            GUILayout.Space(5);
+            GUIStyle leftAlignTextField = new GUIStyle(GUI.skin.textArea);
+            leftAlignTextField.alignment = TextAnchor.UpperLeft;
+            leftAlignTextField.normal.textColor = Color.white;
+            leftAlignTextField.fontSize = (int)(14 * WindowManager.scale.y);
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Wet Mass:", GUILayout.MaxWidth(65));
-            wetMass = GUILayout.TextField(wetMass);
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(5);
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Dry Mass:", GUILayout.MaxWidth(65));
-            dryMass = GUILayout.TextField(dryMass);
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(15);
+            GUIStyle midAlign = new GUIStyle(GUI.skin.button);
+            midAlign.alignment = TextAnchor.MiddleCenter;
+            midAlign.normal.textColor = Color.white;
+            midAlign.fontSize = (int)(14 * WindowManager.scale.y);
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Result:", GUILayout.MaxWidth(65));
-            GUILayout.Label(result, "TextField");
+            GUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("ISP:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
+            GUILayout.EndVertical();
+            isp = GUILayout.TextField(isp, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(5);
+            GUILayout.Space(5 * WindowManager.scale.y);
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Calculate", GUILayout.Width(75)))
+            GUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Wet Mass:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
+            GUILayout.EndVertical();
+            wetMass = GUILayout.TextField(wetMass, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(5 * WindowManager.scale.y);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Dry Mass:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
+            GUILayout.EndVertical();
+            dryMass = GUILayout.TextField(dryMass, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(15 * WindowManager.scale.y);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Result:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
+            GUILayout.EndVertical();
+            GUILayout.Label(result, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(5 * WindowManager.scale.y);
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Result", midAlign, GUILayout.Width(75 * WindowManager.scale.y)))
             {
                 bool valid = true;
                 try
@@ -97,7 +131,7 @@ namespace VanillaUpgrades
                 
                 
             }
-            if (GUILayout.Button("Clear", GUILayout.Width(75)))
+            if (GUILayout.Button("Clear", midAlign, GUILayout.Width(75 * WindowManager.scale.y)))
             {
                 isp = null;
                 dryMass = null;
@@ -107,7 +141,10 @@ namespace VanillaUpgrades
             }
             GUILayout.EndHorizontal();
 
-            showIsp = GUILayout.Toggle(showIsp, " ISP Averager");
+            if (GUILayout.Button("Toggle ISP Averager", midAlign))
+            {
+                showIsp = !showIsp;
+            }
 
             GUI.DragWindow();
 
@@ -122,38 +159,55 @@ namespace VanillaUpgrades
 
         public void ispFunc(int windowID)
         {
+            ispRect.width = 175f * WindowManager.scale.y;
+
+            GUIStyle leftAlign = new GUIStyle();
+            leftAlign.alignment = TextAnchor.MiddleLeft;
+            leftAlign.normal.textColor = Color.white;
+            leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
+
+            GUIStyle leftAlignTextField = new GUIStyle(GUI.skin.textArea);
+            leftAlignTextField.alignment = TextAnchor.UpperLeft;
+            leftAlignTextField.normal.textColor = Color.white;
+            leftAlignTextField.fontSize = (int)(14 * WindowManager.scale.y);
+
+            GUIStyle midAlign = new GUIStyle(GUI.skin.button);
+            midAlign.alignment = TextAnchor.MiddleCenter;
+            midAlign.normal.textColor = Color.white;
+            midAlign.fontSize = (int)(14 * WindowManager.scale.y);
+
             int count = 0;
             int dupeIndex = -1;
             int removeIndex = -1;
-            int minHeight = 75;
+            int minHeight = (int)(75 * WindowManager.scale.y);
             switch (engines.Count)
             {
                 case 1:
-                    minHeight = 85;
+                    minHeight = (int)(85 * WindowManager.scale.y);
                     break;
                 case 2:
-                    minHeight = 170;
+                    minHeight = (int)(170 * WindowManager.scale.y);
                     break;
                 default:
-                    minHeight = 250;
+                    minHeight = (int)(250 * WindowManager.scale.y);
                     break;
             }
             if (engines.Count > 0)
             {
                 ispRect.height = ispHeight + minHeight;
-                scroll = GUILayout.BeginScrollView(scroll, GUILayout.MinHeight(minHeight), GUILayout.MaxWidth(155));
+                scroll = GUILayout.BeginScrollView(scroll, GUILayout.MinHeight(minHeight), GUILayout.MaxWidth(155 * WindowManager.scale.y));
                 
 
                 foreach (var e in engines)
                 {
-                    GUILayout.Label($"Engine {count += 1}\nThrust: {e["thrust"]}\nISP: {e["isp"]}");
+                    GUILayout.Label($"Engine {count += 1}\nThrust: {e["thrust"]}\nISP: {e["isp"]}", leftAlign);
 
                     GUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Remove", GUILayout.MaxHeight(20), GUILayout.MaxWidth(65)))
+                    if (GUILayout.Button("Remove", midAlign, GUILayout.MaxHeight(20 * WindowManager.scale.y), GUILayout.MaxWidth(65 * WindowManager.scale.y)))
                     {
                         removeIndex = count - 1;
                     }
-                    if (GUILayout.Button("Copy", GUILayout.MaxHeight(20), GUILayout.MaxWidth(55)))
+                    if (GUILayout.Button("Copy", midAlign, GUILayout.MaxHeight(20 * WindowManager.scale.y), GUILayout.MaxWidth(55 * WindowManager.scale.y)))
                     {
                         dupeIndex = count - 1;
                     }
@@ -162,6 +216,10 @@ namespace VanillaUpgrades
 
 
                 GUILayout.EndScrollView();
+            }
+            else
+            {
+                ispRect.height = ispHeight;
             }
 
             if (dupeIndex != -1)
@@ -173,24 +231,33 @@ namespace VanillaUpgrades
                 engines.RemoveAt(removeIndex);
                 if (engines.Count == 0)
                 {
-                    ispRect.height = 160;
-                    ispRect.width = 175;
+                    ispRect.height = ispHeight;
+                    ispRect.width = 175 * WindowManager.scale.y;
                 }
             }
 
-            GUILayout.Label("New Engine:");
+            GUILayout.Label("New Engine:", leftAlign);
+            GUILayout.Space(6 * WindowManager.scale.y); 
             
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Thrust:", GUILayout.MaxWidth(65));
-            thrust = GUILayout.TextArea(thrust, GUILayout.MaxWidth(85));
+            GUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Thrust:", leftAlign, GUILayout.MaxWidth(65 * WindowManager.scale.y));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndVertical();
+            thrust = GUILayout.TextArea(thrust, leftAlignTextField, GUILayout.MaxWidth(85 * WindowManager.scale.y));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("ISP:", GUILayout.MaxWidth(65));
-            isp2 = GUILayout.TextArea(isp2, GUILayout.MaxWidth(85));
+            GUILayout.BeginVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("ISP:", leftAlign, GUILayout.MaxWidth(65 * WindowManager.scale.y));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndVertical();
+            isp2 = GUILayout.TextArea(isp2, leftAlignTextField, GUILayout.MaxWidth(85 * WindowManager.scale.y));
             GUILayout.EndHorizontal();
             
-            if (GUILayout.Button("Add Engine"))
+            if (GUILayout.Button("Add Engine", midAlign, GUILayout.MaxWidth(155 * WindowManager.scale.y)))
             {
                 bool valid = true;
                 try
@@ -222,7 +289,7 @@ namespace VanillaUpgrades
             }
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Calculate", GUILayout.Width(75)) && engines.Count > 0)
+            if (GUILayout.Button("Result", midAlign, GUILayout.Width(75 * WindowManager.scale.y)) && engines.Count > 0)
             {
                 float dividend = 0;
                 float divisor = 0;
@@ -236,23 +303,26 @@ namespace VanillaUpgrades
                 ispResult = (dividend / divisor).Round(0.01f).ToString();
             }
 
-            if (GUILayout.Button("Clear", GUILayout.Width(75)))
+            if (GUILayout.Button("Clear", midAlign, GUILayout.Width(75 * WindowManager.scale.y)))
             {
                 engines.Clear();
                 isp2 = null;
                 thrust = null;
                 ispResult = null;
-                ispRect.height = 160;
-                ispRect.width = 175;
+                ispRect.height = 160 * WindowManager.scale.y;
+                ispRect.width = 175 * WindowManager.scale.y;
             }
             GUILayout.EndHorizontal();
 
             if (ispResult != null)
             {
-                ispRect.height += 20;
+                ispRect.height += 20 * WindowManager.scale.y;
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("Avg. ISP:");
-                GUILayout.Label(ispResult, "TextField", GUILayout.Width(85));
+                GUILayout.BeginVertical();
+                GUILayout.FlexibleSpace();
+                GUILayout.Label("Avg. ISP:", leftAlign);
+                GUILayout.EndVertical();
+                GUILayout.Label(ispResult, leftAlignTextField, GUILayout.Width(85 * WindowManager.scale.y));
                 GUILayout.EndHorizontal();
             }
 
