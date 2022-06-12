@@ -11,8 +11,8 @@ namespace VanillaUpgrades
 {
     public class DVCalc : MonoBehaviour
     {
-        public Rect calcRect = new Rect((float)WindowManager.settings["dvCalc"]["x"], (float)WindowManager.settings["dvCalc"]["y"], 175f * WindowManager.scale.y, 200f * WindowManager.scale.y);
-        public Rect ispRect = new Rect((float)WindowManager.settings["ispAverager"]["x"], (float)WindowManager.settings["ispAverager"]["y"], 175f * WindowManager.scale.y, 160f * WindowManager.scale.y);
+        public Rect calcRect = new Rect((float)WindowManager.settings["dvCalc"]["x"], (float)WindowManager.settings["dvCalc"]["y"], 190f * WindowManager.scale.y, 200f * WindowManager.scale.y);
+        public Rect ispRect = new Rect((float)WindowManager.settings["ispAverager"]["x"], (float)WindowManager.settings["ispAverager"]["y"], 190f * WindowManager.scale.y, 160f * WindowManager.scale.y);
 
         public int ispHeight = (int)(160 * WindowManager.scale.y);
 
@@ -27,7 +27,7 @@ namespace VanillaUpgrades
         public void Update()
         {
             ispHeight = (int)(160 * WindowManager.scale.y);
-            calcRect.width = 175f * WindowManager.scale.y;
+            calcRect.width = 190f * WindowManager.scale.y;
             calcRect.height = 200f * WindowManager.scale.y;
         }
 
@@ -43,10 +43,11 @@ namespace VanillaUpgrades
             leftAlign.normal.textColor = Color.white;
             leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
 
-            GUIStyle leftAlignTextField = new GUIStyle(GUI.skin.textArea);
+            GUIStyle leftAlignTextField = new GUIStyle(GUI.skin.textField);
             leftAlignTextField.alignment = TextAnchor.UpperLeft;
             leftAlignTextField.normal.textColor = Color.white;
             leftAlignTextField.fontSize = (int)(14 * WindowManager.scale.y);
+
 
             GUIStyle midAlign = new GUIStyle(GUI.skin.button);
             midAlign.alignment = TextAnchor.MiddleCenter;
@@ -58,7 +59,7 @@ namespace VanillaUpgrades
             GUILayout.FlexibleSpace();
             GUILayout.Label("ISP:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
             GUILayout.EndVertical();
-            isp = GUILayout.TextField(isp, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
+            isp = GUILayout.TextArea(isp, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y), GUILayout.ExpandHeight(false));
             GUILayout.EndHorizontal();
 
             GUILayout.Space(5 * WindowManager.scale.y);
@@ -68,7 +69,7 @@ namespace VanillaUpgrades
             GUILayout.FlexibleSpace();
             GUILayout.Label("Wet Mass:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
             GUILayout.EndVertical();
-            wetMass = GUILayout.TextField(wetMass, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
+            wetMass = GUILayout.TextField(wetMass, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y), GUILayout.ExpandHeight(false));
             GUILayout.EndHorizontal();
 
             GUILayout.Space(5 * WindowManager.scale.y);
@@ -78,23 +79,16 @@ namespace VanillaUpgrades
             GUILayout.FlexibleSpace();
             GUILayout.Label("Dry Mass:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
             GUILayout.EndVertical();
-            dryMass = GUILayout.TextField(dryMass, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
+            dryMass = GUILayout.TextField(dryMass, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y), GUILayout.ExpandHeight(false));
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(15 * WindowManager.scale.y);
+            GUILayout.Space(7 * WindowManager.scale.y);
+            GUILayout.Label(result, leftAlignTextField);
+
+            GUILayout.Space(3 * WindowManager.scale.y);
 
             GUILayout.BeginHorizontal();
-            GUILayout.BeginVertical();
-            GUILayout.FlexibleSpace();
-            GUILayout.Label("Result:", leftAlign, GUILayout.Width(65 * WindowManager.scale.y));
-            GUILayout.EndVertical();
-            GUILayout.Label(result, leftAlignTextField, GUILayout.MinWidth(85 * WindowManager.scale.y));
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(5 * WindowManager.scale.y);
-
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Result", midAlign, GUILayout.Width(75 * WindowManager.scale.y)))
+            if (GUILayout.Button("Result", midAlign, GUILayout.Width(83 * WindowManager.scale.y)))
             {
                 bool valid = true;
                 try
@@ -131,7 +125,7 @@ namespace VanillaUpgrades
                 
                 
             }
-            if (GUILayout.Button("Clear", midAlign, GUILayout.Width(75 * WindowManager.scale.y)))
+            if (GUILayout.Button("Clear", midAlign, GUILayout.Width(82 * WindowManager.scale.y)))
             {
                 isp = null;
                 dryMass = null;
@@ -159,14 +153,14 @@ namespace VanillaUpgrades
 
         public void ispFunc(int windowID)
         {
-            ispRect.width = 175f * WindowManager.scale.y;
+            ispRect.width = 190f * WindowManager.scale.y;
 
             GUIStyle leftAlign = new GUIStyle();
             leftAlign.alignment = TextAnchor.MiddleLeft;
             leftAlign.normal.textColor = Color.white;
             leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
 
-            GUIStyle leftAlignTextField = new GUIStyle(GUI.skin.textArea);
+            GUIStyle leftAlignTextField = new GUIStyle(GUI.skin.textField);
             leftAlignTextField.alignment = TextAnchor.UpperLeft;
             leftAlignTextField.normal.textColor = Color.white;
             leftAlignTextField.fontSize = (int)(14 * WindowManager.scale.y);
@@ -195,7 +189,7 @@ namespace VanillaUpgrades
             if (engines.Count > 0)
             {
                 ispRect.height = ispHeight + minHeight;
-                scroll = GUILayout.BeginScrollView(scroll, GUILayout.MinHeight(minHeight), GUILayout.MaxWidth(155 * WindowManager.scale.y));
+                scroll = GUILayout.BeginScrollView(scroll, GUILayout.MinHeight(minHeight), GUILayout.MaxWidth(180 * WindowManager.scale.y));
                 
 
                 foreach (var e in engines)
@@ -232,7 +226,7 @@ namespace VanillaUpgrades
                 if (engines.Count == 0)
                 {
                     ispRect.height = ispHeight;
-                    ispRect.width = 175 * WindowManager.scale.y;
+                    ispRect.width = 190 * WindowManager.scale.y;
                 }
             }
 
@@ -242,22 +236,22 @@ namespace VanillaUpgrades
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Thrust:", leftAlign, GUILayout.MaxWidth(65 * WindowManager.scale.y));
+            GUILayout.Label("Thrust:", leftAlign, GUILayout.MaxWidth(80 * WindowManager.scale.y));
             GUILayout.FlexibleSpace();
             GUILayout.EndVertical();
-            thrust = GUILayout.TextArea(thrust, leftAlignTextField, GUILayout.MaxWidth(85 * WindowManager.scale.y));
+            thrust = GUILayout.TextArea(thrust, leftAlignTextField, GUILayout.MaxWidth(100 * WindowManager.scale.y));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
             GUILayout.FlexibleSpace();
-            GUILayout.Label("ISP:", leftAlign, GUILayout.MaxWidth(65 * WindowManager.scale.y));
+            GUILayout.Label("ISP:", leftAlign, GUILayout.MaxWidth(80 * WindowManager.scale.y));
             GUILayout.FlexibleSpace();
             GUILayout.EndVertical();
-            isp2 = GUILayout.TextArea(isp2, leftAlignTextField, GUILayout.MaxWidth(85 * WindowManager.scale.y));
+            isp2 = GUILayout.TextArea(isp2, leftAlignTextField, GUILayout.MaxWidth(100 * WindowManager.scale.y));
             GUILayout.EndHorizontal();
             
-            if (GUILayout.Button("Add Engine", midAlign, GUILayout.MaxWidth(155 * WindowManager.scale.y)))
+            if (GUILayout.Button("Add Engine", midAlign, GUILayout.MaxWidth(175 * WindowManager.scale.y)))
             {
                 bool valid = true;
                 try
@@ -289,7 +283,7 @@ namespace VanillaUpgrades
             }
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Result", midAlign, GUILayout.Width(75 * WindowManager.scale.y)) && engines.Count > 0)
+            if (GUILayout.Button("Result", midAlign, GUILayout.Width(83 * WindowManager.scale.y)) && engines.Count > 0)
             {
                 float dividend = 0;
                 float divisor = 0;
@@ -303,14 +297,14 @@ namespace VanillaUpgrades
                 ispResult = (dividend / divisor).Round(0.01f).ToString();
             }
 
-            if (GUILayout.Button("Clear", midAlign, GUILayout.Width(75 * WindowManager.scale.y)))
+            if (GUILayout.Button("Clear", midAlign, GUILayout.Width(82 * WindowManager.scale.y)))
             {
                 engines.Clear();
                 isp2 = null;
                 thrust = null;
                 ispResult = null;
                 ispRect.height = 160 * WindowManager.scale.y;
-                ispRect.width = 175 * WindowManager.scale.y;
+                ispRect.width = 190 * WindowManager.scale.y;
             }
             GUILayout.EndHorizontal();
 
@@ -322,7 +316,7 @@ namespace VanillaUpgrades
                 GUILayout.FlexibleSpace();
                 GUILayout.Label("Avg. ISP:", leftAlign);
                 GUILayout.EndVertical();
-                GUILayout.Label(ispResult, leftAlignTextField, GUILayout.Width(85 * WindowManager.scale.y));
+                GUILayout.Label(ispResult, leftAlignTextField, GUILayout.Width(100 * WindowManager.scale.y));
                 GUILayout.EndHorizontal();
             }
 

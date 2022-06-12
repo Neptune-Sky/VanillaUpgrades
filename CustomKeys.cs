@@ -37,6 +37,8 @@ namespace VanillaUpgrades
 
             public Key Timewarp_To = KeyCode.Semicolon;
 
+            public Key ToggleTorque = KeyCode.T;
+
             public Key Throttle01 = KeyCode.C;
 
             public Key Prograde = KeyCode.Alpha1;
@@ -81,6 +83,7 @@ namespace VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
             //createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
             createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
+            createTraverse.GetValue(new object[] { custom_keys.ToggleTorque, defaultData.ToggleTorque, "Toggle torque" });
             createTextTraverse.GetValue("__________________________________________");
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
@@ -158,6 +161,7 @@ namespace VanillaUpgrades
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(WorldManager.Throttle01));
             // GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.ToggleTorque, new Action(ToggleTorque.toggleTorque));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
             {
                 FaceDirection.Mode(1);

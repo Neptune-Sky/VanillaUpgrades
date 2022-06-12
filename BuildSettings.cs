@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System.Collections.Generic;
 using SFS;
 using SFS.Builds;
 using SFS.Parts.Modules;
@@ -36,6 +37,7 @@ namespace VanillaUpgrades
             BuildSettings.noAdaptOverride = false;
         }
     }
+    /*
     [HarmonyPatch(typeof(HoldGrid), "GetSnapPosition_Old")]
     public class NotifyMagnet
     {
@@ -52,17 +54,19 @@ namespace VanillaUpgrades
         }
 
     }
-
-    [HarmonyPatch(typeof(MagnetModule), nameof(MagnetModule.GetSnapOffsets))]
+    */
+    [HarmonyPatch(typeof(MagnetModule), nameof(MagnetModule.GetAllSnapOffsets))]
     public class KillMagnet
     {
         [HarmonyPrefix]
-        static void Prefix(MagnetModule A, MagnetModule B, ref float snapDistance)
+        static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
         {
             if (BuildSettings.snapping)
             {
-                snapDistance = 0.0f;
+                __result = new List<Vector2>();
+                return false;
             }
+            return true;
         }
     }
     public class BuildSettings : MonoBehaviour

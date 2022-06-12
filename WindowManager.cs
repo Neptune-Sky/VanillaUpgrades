@@ -119,10 +119,5 @@ namespace VanillaUpgrades
 
             inst = this;
         }
-
-        public void OnGUI()
-        {
-            GUILayout.Label(scale.ToString());
-        }
     }
 }
