@@ -206,29 +206,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
-    <Compile Include="ToggleTorque.cs" />
-    <Compile Include="WorldManager.cs" />
-    <Compile Include="DVCalc.cs" />
-    <Compile Include="ErrorNotification.cs" />
-    <Compile Include="FaceDirection.cs" />
-    <Compile Include="HideGUI.cs" />
-    <Compile Include="SettingsPatches.cs" />
-    <Compile Include="CustomKeys.cs" />
-    <Compile Include="BuildSettings.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="MoreCameraMove.cs" />
-    <Compile Include="MoreTrajectories.cs" />
+    <Compile Include="src\Config.cs" />
+    <Compile Include="src\World\ToggleTorque.cs" />
+    <Compile Include="src\World\WorldManager.cs" />
+    <Compile Include="src\Build\DVCalc.cs" />
+    <Compile Include="src\ErrorNotification.cs" />
+    <Compile Include="src\World\FaceDirection.cs" />
+    <Compile Include="src\Global\HideGUI.cs" />
+    <Compile Include="src\Patches\SettingsPatches.cs" />
+    <Compile Include="src\Patches\CustomKeys.cs" />
+    <Compile Include="src\Build\BuildSettings.cs" />
+    <Compile Include="src\Main.cs" />
+    <Compile Include="src\Global\MoreCameraMove.cs" />
+    <Compile Include="src\World\MoreTrajectories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MoreUnits.cs" />
-    <Compile Include="RaisePhysicsMaxWarp.cs" />
-    <Compile Include="StopTimewarpOnEncounter.cs" />
-    <Compile Include="TimeDeceleration.cs" />
-    <Compile Include="TimeManipulation.cs" />
-    <Compile Include="AdditionalSettings.cs" />
-    <Compile Include="WindowManager.cs" />
-    <Compile Include="AdvancedInfo.cs" />
-    <Compile Include="WorldClockDisplay.cs" />
+    <Compile Include="src\Patches\MoreUnits.cs" />
+    <Compile Include="src\Patches\RaisePhysicsMaxWarp.cs" />
+    <Compile Include="src\World\StopTimewarpOnEncounter.cs" />
+    <Compile Include="src\World\TimeDeceleration.cs" />
+    <Compile Include="src\World\TimeManipulation.cs" />
+    <Compile Include="src\Patches\AdditionalSettings.cs" />
+    <Compile Include="src\WindowManager.cs" />
+    <Compile Include="src\World\AdvancedInfo.cs" />
+    <Compile Include="src\World\WorldClockDisplay.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
