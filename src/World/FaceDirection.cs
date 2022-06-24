@@ -47,7 +47,7 @@ namespace VanillaUpgrades
             return;
             int subtractor = 0;
             int forceDir = 0;
-            Vector2 velo = AdvancedInfo.currentRocket.physics.location.velocity.Value;
+            Vector2 velo = WorldManager.currentRocket.physics.location.velocity.Value;
             e = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg;
             switch (mode)
             {
@@ -68,10 +68,10 @@ namespace VanillaUpgrades
                     if (e < 0) e += 360;
                     break;
             }
-            var angularVelo = AdvancedInfo.currentRocket.rb2d.angularVelocity;
+            var angularVelo = WorldManager.currentRocket.rb2d.angularVelocity;
 
 
-            arrowkeys.Value = AdvancedInfo.currentRocket.arrowkeys;
+            arrowkeys.Value = WorldManager.currentRocket.arrowkeys;
             var angle = AdvancedInfo.instance.angle;
             if (angle > e + 1)
             {
@@ -90,7 +90,7 @@ namespace VanillaUpgrades
             if (angle < e + 1 && angle > e - 1)
             {
 
-                AdvancedInfo.currentRocket.rb2d.angularVelocity = 0;
+                WorldManager.currentRocket.rb2d.angularVelocity = 0;
             }
         }
     }

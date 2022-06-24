@@ -14,15 +14,15 @@ namespace VanillaUpgrades
            "VanUp", // Mod id
            "VanillaUpgrades", // Mod Name
            "ASoD", // Mod Author
-           "v1.1.x", // Mod loader version
-           "v2.2.8", // Mod version
+           "v1.3.2", // Mod loader version
+           "v2.3.5", // Mod version
            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features."
            )
         { }
         public override void early_load()
         {
-            Main.patcher = new Harmony("mods.ASoD.VanUp");
-            Main.patcher.PatchAll();
+            patcher = new Harmony("mods.ASoD.VanUp");
+            patcher.PatchAll();
             SceneManager.sceneLoaded += OnSceneLoaded;
             Application.quitting += OnQuit;
             return;
@@ -44,29 +44,28 @@ namespace VanillaUpgrades
             switch (scene.name)
             {
                 case "Build_PC":
-                    GameObject gameObject = new GameObject("ASoDBuildObject");
-                    gameObject.AddComponent<BuildSettings>();
-                    UnityEngine.Object.DontDestroyOnLoad(gameObject);
-                    gameObject.SetActive(true);
-                    Main.buildMenuObject = gameObject;
-                    UnityEngine.Object.Destroy(Main.worldViewObject);
+                    buildObject = new GameObject("ASoDBuildObject");
+                    buildObject.AddComponent<BuildSettings>();
+                    buildObject.AddComponent<DVCalc>();
+                    buildObject.SetActive(true);
+                    UnityEngine.Object.Destroy(worldObject);
                     return;
 
                 case "World_PC":
-                    worldViewObject = new GameObject("ASoDWorldObject");
-                    worldViewObject.AddComponent<AdvancedInfo>();
-                    worldViewObject.AddComponent<TimewarpToClass>();
-                    worldViewObject.AddComponent<FaceDirection>();
-                    worldViewObject.AddComponent<WorldClockDisplay>();
-                    UnityEngine.Object.DontDestroyOnLoad(worldViewObject);
-                    worldViewObject.SetActive(true);
-                    UnityEngine.Object.Destroy(Main.buildMenuObject);
+                    worldObject = new GameObject("ASoDWorldObject");
+                    worldObject.AddComponent<WorldManager>();
+                    worldObject.AddComponent<AdvancedInfo>();
+                    // worldViewObject.AddComponent<TimewarpToClass>();
+                    worldObject.AddComponent<FaceDirection>();
+                    worldObject.AddComponent<WorldClockDisplay>();
+                    worldObject.SetActive(true);
+                    UnityEngine.Object.Destroy(buildObject);
                     return;
 
                 default:
-                    UnityEngine.Object.Destroy(Main.buildMenuObject);
-                    UnityEngine.Object.Destroy(Main.worldViewObject);
-                    break;
+                    UnityEngine.Object.Destroy(buildObject);
+                    UnityEngine.Object.Destroy(worldObject);
+                    return;
             }
         }
 
@@ -86,9 +85,9 @@ namespace VanillaUpgrades
 
         public static GameObject mainObject;
 
-        public static GameObject buildMenuObject;
+        public static GameObject buildObject;
 
-        public static GameObject worldViewObject;
+        public static GameObject worldObject;
 
         public static Harmony patcher;
 

@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System.Collections.Generic;
 using SFS;
 using SFS.Builds;
 using SFS.Parts.Modules;
@@ -36,6 +37,7 @@ namespace VanillaUpgrades
             BuildSettings.noAdaptOverride = false;
         }
     }
+    /*
     [HarmonyPatch(typeof(HoldGrid), "GetSnapPosition_Old")]
     public class NotifyMagnet
     {
@@ -52,23 +54,25 @@ namespace VanillaUpgrades
         }
 
     }
-
-    [HarmonyPatch(typeof(MagnetModule), nameof(MagnetModule.GetSnapOffsets))]
+    */
+    [HarmonyPatch(typeof(MagnetModule), nameof(MagnetModule.GetAllSnapOffsets))]
     public class KillMagnet
     {
         [HarmonyPrefix]
-        static void Prefix(MagnetModule A, MagnetModule B, ref float snapDistance)
+        static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
         {
             if (BuildSettings.snapping)
             {
-                snapDistance = 0.0f;
+                __result = new List<Vector2>();
+                return false;
             }
+            return true;
         }
     }
     public class BuildSettings : MonoBehaviour
     {
         // Token: 0x0400136C RID: 4972
-        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f, 70f);
+        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f * WindowManager.scale.x, 100f * WindowManager.scale.y);
 
         // Token: 0x0400136D RID: 4973
         public static bool snapping;
@@ -82,14 +86,59 @@ namespace VanillaUpgrades
 
         public static void Launch()
         {
-            BuildState.main.SaveLaunchData(updatePersistent: true);
+            BuildState.main.UpdatePersistent();
             Base.sceneLoader.LoadWorldScene(launch: true);
         }
 
+        public string Toggle(bool enabled)
+        {
+            if (enabled) return " Disabled"; else return " Enabled";
+        }
+
+        public string Hide(bool shown)
+        {
+            if (shown) return "Hide "; else return "Show ";
+        }
+
+        public void Update()
+        {
+            windowRect.width = 180f * WindowManager.scale.x;
+            windowRect.height = 100f * WindowManager.scale.y;
+        }
         public void windowFunc(int windowID)
         {
-            snapping = GUI.Toggle(new Rect(10f, 20f, 120f, 20f), snapping, " Disable Snapping");
-            noAdaptation = GUI.Toggle(new Rect(10f, 40f, 120f, 20f), noAdaptation, " Disable Adapting");
+            GUIStyle leftAlign = new GUIStyle();
+            leftAlign.alignment = TextAnchor.LowerLeft;
+            leftAlign.normal.textColor = Color.white;
+            leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
+
+            GUIStyle midAlign = new GUIStyle(GUI.skin.button);
+            midAlign.alignment = TextAnchor.MiddleCenter;
+            midAlign.normal.textColor = Color.white;
+            midAlign.fontSize = (int)(12 * WindowManager.scale.y);
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Snapping" + Toggle(snapping), midAlign))
+            {
+                snapping = !snapping;
+            }
+            GUILayout.EndHorizontal();
+
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Adapting" + Toggle(noAdaptation), midAlign))
+            {
+                noAdaptation = !noAdaptation;
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button(Hide(DVCalc.showCalc) + "ΔV Calculator", midAlign))
+            {
+                DVCalc.showCalc = !DVCalc.showCalc;
+            }
+            GUILayout.EndHorizontal();
+
 
 
             GUI.DragWindow();

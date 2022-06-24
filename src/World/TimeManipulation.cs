@@ -1,16 +1,20 @@
 ﻿using HarmonyLib;
+using SFS.Achievements;
 using SFS.UI;
 using SFS.World;
+using SFS.WorldBase;
+using System;
+using UnityEngine;
 
 namespace VanillaUpgrades
 {
-    [HarmonyPatch(typeof(TimewarpIndex), nameof(TimewarpIndex.DecelerateTime))]
+    [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.DecelerateTime))]
     public class TimeDecelerationPatch
     {
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (WorldTime.main.timewarpIndex.timewarpIndex == 0)
+            if (WorldTime.main.timewarpIndex == 0)
             {
                 TimeDecelMain.SlowTime();
                 return false;
@@ -19,7 +23,7 @@ namespace VanillaUpgrades
         }
     }
 
-    [HarmonyPatch(typeof(TimewarpIndex), nameof(TimewarpIndex.AccelerateTime))]
+    [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.AccelerateTime))]
     public class EndDeceleration
     {
         [HarmonyPrefix]
@@ -70,6 +74,22 @@ namespace VanillaUpgrades
 
             WorldTime.main.SetState(speed, true, defaultMessage);
             if (!defaultMessage) MsgDrawer.main.Log("Time frozen");
+        }
+    }
+    public class TimeManipulation : MonoBehaviour
+    {
+        public static void StopTimewarp(bool showmsg)
+        {
+            if (WorldTime.main.timewarpIndex == 0 && TimeDecelMain.timeDecelIndex == 0) return;
+
+            WorldTime.main.timewarpIndex = 0;
+            WorldTime.main.SetState(1, true, false);
+            TimeDecelMain.timeDecelIndex = 0;
+            if (showmsg)
+            {
+                MsgDrawer.main.Log("Time acceleration stopped");
+            }
+
         }
     }
 }

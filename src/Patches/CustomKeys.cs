@@ -3,6 +3,7 @@ using SFS.Builds;
 using SFS.Input;
 using SFS.IO;
 using SFS.World;
+using SFS;
 using System;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
@@ -24,11 +25,19 @@ namespace VanillaUpgrades
         {
             public Key Hide_UI = KeyCode.F2;
 
+            public Key Toggle_Symmetry = KeyCode.J;
+
+            public Key Toggle_Interior = KeyCode.K;      
+
             public Key Launch = KeyCode.L;
+
+            public Key CalcToggle = KeyCode.C;
 
             public Key Stop_Timewarp = KeyCode.Slash;
 
             public Key Timewarp_To = KeyCode.Semicolon;
+
+            public Key ToggleTorque = KeyCode.T;
 
             public Key Throttle01 = KeyCode.C;
 
@@ -64,11 +73,18 @@ namespace VanillaUpgrades
             createTextTraverse.GetValue("VanillaUpgrades Keybinds");
             createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
             createSpaceTraverse.GetValue();
+            createTextTraverse.GetValue("Build Mode");
+            createTraverse.GetValue(new object[] { custom_keys.Toggle_Symmetry, defaultData.Toggle_Symmetry, "Toggle symmetry mode" });
+            createTraverse.GetValue(new object[] { custom_keys.Toggle_Interior, defaultData.Toggle_Interior, "Toggle interior view" });
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
+            createTraverse.GetValue(new object[] { custom_keys.CalcToggle, defaultData.CalcToggle, "Toggle ΔV Calulator" });
             createSpaceTraverse.GetValue();
+            createTextTraverse.GetValue("World View");
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
-            createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
+            //createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
             createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
+            createTraverse.GetValue(new object[] { custom_keys.ToggleTorque, defaultData.ToggleTorque, "Toggle torque" });
+            createTextTraverse.GetValue("__________________________________________");
             createSpaceTraverse.GetValue();
             createSpaceTraverse.GetValue();
 
@@ -124,7 +140,11 @@ namespace VanillaUpgrades
             KeysNode keysNode = BuildManager.main.build_Input.keysNode;
 
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildSettings.Launch());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Symmetry, () => BuildManager.main.ToggleSymmetryMode());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Interior, () => InteriorManager.main.ToggleInteriorView());
+
             keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, () => OpacityChanger.HideUI());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.CalcToggle, () => DVCalc.toggleCalc());
         }
     }
 
@@ -136,11 +156,12 @@ namespace VanillaUpgrades
         {
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Stop_Timewarp, delegate
             {
-                AdvancedInfo.StopTimewarp(true);
+                TimeManipulation.StopTimewarp(true);
             });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(AdvancedInfo.Throttle01));
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(WorldManager.Throttle01));
+            // GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.ToggleTorque, new Action(ToggleTorque.toggleTorque));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
             {
                 FaceDirection.Mode(1);
