@@ -1,6 +1,6 @@
-# ASoD's VanillaUpgraded
+# ASoD's VanillaUpgrades
 
-Source code for ASoD's Vanilla Upgraded mod.
+Source code for ASoD's Vanilla Upgrades mod.
 
 If you use any of my code for your mods, all I ask is that you give credit for the portion you took.
 
