@@ -32,7 +32,6 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - L to launch and skip warnings in build space
 - Z to toggle symmetry
 - X to toggle interior view
-
 - Slash to instantly stop timewarp
 - C to set thrust to 0.1%
 - T to toggle torque
