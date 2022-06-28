@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
-using ModLoader;
 using System;
+using ModLoader;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -8,18 +8,18 @@ using UnityEngine.SceneManagement;
 
 namespace VanillaUpgrades
 {
-    public class Main : SFSMod
+    public class Main : Mod
     {
         public Main() : base(
            "VanUp", // Mod id
            "VanillaUpgrades", // Mod Name
            "ASoD", // Mod Author
-           "v1.3.2", // Mod loader version
-           "v2.3.5", // Mod version
+           "0.5.7", // Game version
+           "v3.0", // Mod version
            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features."
            )
         { }
-        public override void early_load()
+        public override void Early_Load()
         {
             patcher = new Harmony("mods.ASoD.VanUp");
             patcher.PatchAll();
@@ -28,7 +28,7 @@ namespace VanillaUpgrades
             return;
         }
 
-        public override void load()
+        public override void Load()
         {
             mainObject = new GameObject("ASoDMainObject");
             mainObject.AddComponent<WindowManager>();
@@ -74,7 +74,7 @@ namespace VanillaUpgrades
             File.WriteAllText(WindowManager.inst.windowDir, WindowManager.settings.ToString());
         }
 
-        public override void unload()
+        public override void Unload()
         {
             throw new NotImplementedException();
         }
