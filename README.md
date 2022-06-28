@@ -50,11 +50,11 @@ Tons more will be added in the future.
 
 # Installation
 
-This mod is only compatible with SFS Modloader version 1.1.2 and up, which can be found [here.](https://github.com/105-Code/SFS-Modloader)
+Starting from version 3.0, this mod only supports the official modloader. Use v2.3.5 for the old third-party loader.
 
-1. Install the modloader.
-2. Download the latest ZIP.
-3. Extract the root folder to `Spaceflight Simulator_Data\MODS`. Do not rename it or take the DLL out.
+1. Download the latest zip.
+2. Use the "Open Mods Folder" button in-game. 
+3. Extract the entire folder from the zip to the mods folder. Do not remove the DLL.
 
 
 **This mod is untested on Mac.** Use at your own risk.
