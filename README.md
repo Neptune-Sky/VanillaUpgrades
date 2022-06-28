@@ -1,6 +1,6 @@
-# ASoD's VanillaUpgraded
+# ASoD's VanillaUpgrades
 
-Source code for ASoD's Vanilla Upgraded mod.
+Source code for ASoD's Vanilla Upgrades mod.
 
 If you use any of my code for your mods, all I ask is that you give credit for the portion you took.
 
@@ -8,13 +8,17 @@ If you use any of my code for your mods, all I ask is that you give credit for t
 
 The goal of this mod is to upgrade the vanilla experience with tons of quality of life stuff. Current features are:
 
-- Toggles for disabling adaptation and snapping in the build grid.
-- New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
-- World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
+
 - Greatly increased zoom-in/movement limits of the camera in world/build views.
 - Timewarp now stops when entering a planet's SoI.*
 - Time slowdown, you can now use decimal timewarps and even freeze time completely. (Off by default, due to cheaty nature.)
 - Physics timewarp up to 25x on all difficulties (Off by default, due to cheaty nature.)
+
+**New UI:**
+- Toggles for disabling adaptation and snapping in the build grid.
+- Manual delta V calculator in build mode. Can be toggled with C.
+- New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
+- World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
 
 **New Unit Displays:**
 
@@ -26,9 +30,11 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 **New Keybinds:**
 
 - L to launch and skip warnings in build space
+- Z to toggle symmetry
+- X to toggle interior view
 - Slash to instantly stop timewarp
 - C to set thrust to 0.1%
-- Semicolon to timewarp to periapsis/apoapsis/escape*
+- T to toggle torque
 - F2 to hide the UI
 
 **New Settings:**
@@ -40,7 +46,7 @@ Mod features can be individually disabled in the config window in the game's set
 
 Tons more will be added in the future.
 
-\*Inconsistent due to floating point errors and me being bad at math. If I find a better implementation I will use it.
+\*Inconsistent. If I find a better implementation I will use it.
 
 # Installation
 
