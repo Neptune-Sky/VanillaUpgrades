@@ -5,13 +5,14 @@ using SFS.Builds;
 using SFS.UI;
 using System;
 using System.IO;
+using SFS.IO;
 using UnityEngine;
 
 namespace VanillaUpgrades
 {
     public class Config : MonoBehaviour
     {
-        public static string configPath = Main.modDir + "Config.txt";
+        public static FilePath configPath = Main.modFolder.ExtendToFile("Config.txt");
 
         public static JObject defaultConfig = JObject.Parse("{ " +
             "persistentVars: { " +

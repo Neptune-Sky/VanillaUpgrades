@@ -1,5 +1,5 @@
-﻿using HarmonyLib;
 using System.Collections.Generic;
+using HarmonyLib;
 using SFS;
 using SFS.Builds;
 using SFS.Parts.Modules;
@@ -10,14 +10,10 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(PartGrid), "UpdateAdaptation")]
     class StopAdaptation
     {
-
         [HarmonyPrefix]
         static bool Prefix()
         {
-            if (BuildSettings.noAdaptation && !BuildSettings.noAdaptOverride)
-            {
-                return false;
-            }
+            if (BuildSettings.noAdaptation && !BuildSettings.noAdaptOverride) return false;
             return true;
         }
     }
@@ -37,6 +33,7 @@ namespace VanillaUpgrades
             BuildSettings.noAdaptOverride = false;
         }
     }
+
     /*
     [HarmonyPatch(typeof(HoldGrid), "GetSnapPosition_Old")]
     public class NotifyMagnet
@@ -66,13 +63,17 @@ namespace VanillaUpgrades
                 __result = new List<Vector2>();
                 return false;
             }
+
             return true;
         }
     }
+
     public class BuildSettings : MonoBehaviour
     {
         // Token: 0x0400136C RID: 4972
-        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"], (float)WindowManager.settings["buildSettings"]["y"], 180f * WindowManager.scale.x, 100f * WindowManager.scale.y);
+        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"],
+            (float)WindowManager.settings["buildSettings"]["y"], 180f * WindowManager.scale.x,
+            100f * WindowManager.scale.y);
 
         // Token: 0x0400136D RID: 4973
         public static bool snapping;
@@ -84,27 +85,42 @@ namespace VanillaUpgrades
 
         public static bool noAdaptOverride;
 
-        public static void Launch()
-        {
-            BuildState.main.UpdatePersistent();
-            Base.sceneLoader.LoadWorldScene(launch: true);
-        }
-
-        public string Toggle(bool enabled)
-        {
-            if (enabled) return " Disabled"; else return " Enabled";
-        }
-
-        public string Hide(bool shown)
-        {
-            if (shown) return "Hide "; else return "Show ";
-        }
-
         public void Update()
         {
             windowRect.width = 180f * WindowManager.scale.x;
             windowRect.height = 100f * WindowManager.scale.y;
         }
+
+        public void OnGUI()
+        {
+            if (Main.menuOpen || !(bool)Config.settings["showBuildGUI"] ||
+                VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
+            Rect oldRect = windowRect;
+            GUI.color = Config.windowColor;
+            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "Build Settings");
+            windowRect = WindowManager.ConfineRect(windowRect);
+            if (oldRect != windowRect) WindowManager.settings["buildSettings"]["x"] = windowRect.x;
+            WindowManager.settings["buildSettings"]["y"] = windowRect.y;
+        }
+
+        public static void Launch()
+        {
+            BuildState.main.UpdatePersistent();
+            Base.sceneLoader.LoadWorldScene(true);
+        }
+
+        public string Toggle(bool enabled)
+        {
+            if (enabled) return " Disabled";
+            return " Enabled";
+        }
+
+        public string Hide(bool shown)
+        {
+            if (shown) return "Hide ";
+            return "Show ";
+        }
+
         public void windowFunc(int windowID)
         {
             GUIStyle leftAlign = new GUIStyle();
@@ -118,40 +134,20 @@ namespace VanillaUpgrades
             midAlign.fontSize = (int)(12 * WindowManager.scale.y);
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Snapping" + Toggle(snapping), midAlign))
-            {
-                snapping = !snapping;
-            }
+            if (GUILayout.Button("Snapping" + Toggle(snapping), midAlign)) snapping = !snapping;
             GUILayout.EndHorizontal();
 
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Adapting" + Toggle(noAdaptation), midAlign))
-            {
-                noAdaptation = !noAdaptation;
-            }
+            if (GUILayout.Button("Adapting" + Toggle(noAdaptation), midAlign)) noAdaptation = !noAdaptation;
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button(Hide(DVCalc.showCalc) + "ΔV Calculator", midAlign))
-            {
-                DVCalc.showCalc = !DVCalc.showCalc;
-            }
+            if (GUILayout.Button(Hide(DVCalc.showCalc) + "ΔV Calculator", midAlign)) DVCalc.showCalc = !DVCalc.showCalc;
             GUILayout.EndHorizontal();
-
 
 
             GUI.DragWindow();
-        }
-        public void OnGUI()
-        {
-            if (Main.menuOpen || !(bool)Config.settings["showBuildGUI"] || VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
-            Rect oldRect = windowRect;
-            GUI.color = Config.windowColor;
-            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, new GUI.WindowFunction(windowFunc), "Build Settings");
-            windowRect = WindowManager.ConfineRect(windowRect);
-            if (oldRect != windowRect) WindowManager.settings["buildSettings"]["x"] = windowRect.x; WindowManager.settings["buildSettings"]["y"] = windowRect.y;
-
         }
     }
 }

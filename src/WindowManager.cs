@@ -25,7 +25,7 @@ namespace VanillaUpgrades
 
         public static JObject settings;
 
-        public string windowDir = Main.modDir + "WindowPositions.txt";
+        public string windowDir = Main.modFolder.ExtendToFile("WindowPositions.txt");
 
         public static WindowManager inst;
 
