@@ -34,8 +34,6 @@ namespace VanillaUpgrades
         }
     }
 
-<<<<<<< Updated upstream
-=======
     [HarmonyPatch(typeof(AdaptModule), "UpdateAdaptation")] 
     class FixCucumber
     {
@@ -49,25 +47,6 @@ namespace VanillaUpgrades
         }
     }
 
->>>>>>> Stashed changes
-    /*
-    [HarmonyPatch(typeof(HoldGrid), "GetSnapPosition_Old")]
-    public class NotifyMagnet
-    {
-        [HarmonyPrefix]
-        static void Prefix()
-        {
-            BuildSettings.partMagnetizing = true;
-        }
-
-        [HarmonyPostfix]
-        static void Postfix()
-        {
-            BuildSettings.partMagnetizing = false;
-        }
-
-    }
-    */
     [HarmonyPatch(typeof(MagnetModule), nameof(MagnetModule.GetAllSnapOffsets))]
     public class KillMagnet
     {

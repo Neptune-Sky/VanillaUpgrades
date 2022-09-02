@@ -6,18 +6,29 @@ using SFS.IO;
 namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(VideoSettingsPC), "UIOpacityChanged")]
-    public class OpacityChangeListener
+    public static class OpacityChangeListener
     {
         [HarmonyPostfix]
         public static void Postfix()
         {
             if (!Main.menuOpen) return;
-            Config.settings["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
+            if (VideoSettingsPC.main.uiOpacitySlider.value < 0.001)
+            {
+                Config.settings["persistentVars"]["opacity"] = 1;
+                VideoSettingsPC.main.uiOpacitySlider.value = 0;
+                Config.settings["guiHidden"] = true;
+            }
+            else
+            {
+                Config.settings["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
+                Config.settings["guiHidden"] = false;
+            }
+
             File.WriteAllText(Config.configPath, Config.settings.ToString());
         }
     }
 
-    public class OpacityChanger
+    public static class OpacityChanger
     {
         public static bool hidden;
         public static float uiOpacity = (float)Config.settings["persistentVars"]["opacity"];
