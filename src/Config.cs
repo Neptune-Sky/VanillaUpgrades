@@ -23,6 +23,7 @@ namespace VanillaUpgrades
             "b: 1.0 " +
             "} " +
             "}, " +
+            "guiHidden: false," +
             "showBuildGUI: true, " +
             "showAdvanced: true, " +
             "alwaysCompact: false, " +
@@ -76,7 +77,7 @@ namespace VanillaUpgrades
             {
                 settings = JObject.Parse(File.ReadAllText(configPath));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 File.WriteAllText(configPath, defaultConfig.ToString());
                 ErrorNotification.Error("Config file was of an invalid format, and was reset to defaults.");
@@ -93,11 +94,13 @@ namespace VanillaUpgrades
             {
                 Vector3 check = new Vector3((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 ErrorNotification.Error("Window color data was of an invalid format, and was reset to defaults.");
                 settings["persistentVars"]["windowColor"] = defaultConfig["persistentVars"]["windowColor"];
             }
+
+            if (settings["guiHidden"] == null) settings["guiHidden"] = defaultConfig["guiHidden"];
 
             if (settings["showBuildGUI"] == null) settings["showBuildGUI"] = defaultConfig["showBuildGUI"];
 
@@ -141,7 +144,13 @@ namespace VanillaUpgrades
 
             windowColor = new Color((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
 
+            VideoSettingsPC.main.uiOpacitySlider.value = -1;
+            VideoSettingsPC.main.uiOpacitySlider.value = (float)settings["persistentVars"]["opacity"];
+            settings["guiHidden"] = false;
+
             File.WriteAllText(Config.configPath, Config.settings.ToString());
+
+
         }
         public string Arrow(bool open)
         {

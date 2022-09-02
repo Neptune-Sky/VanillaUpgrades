@@ -34,6 +34,22 @@ namespace VanillaUpgrades
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    [HarmonyPatch(typeof(AdaptModule), "UpdateAdaptation")] 
+    class FixCucumber
+    {
+        static bool Prefix()
+        {
+            if (BuildSettings.noAdaptation && !BuildSettings.noAdaptOverride)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
+>>>>>>> Stashed changes
     /*
     [HarmonyPatch(typeof(HoldGrid), "GetSnapPosition_Old")]
     public class NotifyMagnet
