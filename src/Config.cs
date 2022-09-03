@@ -16,7 +16,7 @@ namespace VanillaUpgrades
 
         public static JObject defaultConfig = JObject.Parse("{ " +
             "persistentVars: { " +
-            "opacity: 0, " +
+            "opacity: 1, " +
             "windowColor: {" +
             "r: 1.0, " +
             "g: 1.0, " +
