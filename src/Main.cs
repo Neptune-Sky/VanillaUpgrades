@@ -35,6 +35,8 @@ namespace VanillaUpgrades
             mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(Config), typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
+            Config.settings["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
+
         }
 
         void SubscribeToScenes()
