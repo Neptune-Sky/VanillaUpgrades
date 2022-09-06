@@ -59,8 +59,8 @@ namespace VanillaUpgrades
             Vector2 pos = window.Position;
             Vector2 size = window.Size;
 
-            size.x = size.x * Config.settings.persistentVars.windowScale;
-            size.y = size.y * Config.settings.persistentVars.windowScale;
+            size.x = size.x * Config.settingsData.persistentVars.windowScale;
+            size.y = size.y * Config.settingsData.persistentVars.windowScale;
 
             pos.x = Mathf.Clamp(pos.x, size.x / 2, gameSize.x - size.x / 2);
             pos.y = Mathf.Clamp(pos.y, size.y, gameSize.y);

@@ -16,9 +16,9 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix(BasicMenu __instance)
         {
-            if (__instance.GetComponent<VideoSettingsPC>())
+            if (__instance.gameObject.HasComponent<VideoSettingsPC>())
             {
-                Config.settingsWindow.gameObject.SetActive(true);
+                 ConfigUI.window.Enable();
             }
             Main.menuOpen = true;
         }
@@ -30,12 +30,12 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix()
         {
-            Config.settingsWindow.gameObject.SetActive(false);
+            ConfigUI.window.Disable();
             Main.menuOpen = false;
             Config.Save();
             if (Main.buildObject != null)
             {
-                if (Config.settings.moreCameraZoom)
+                if (Config.settingsData.moreCameraZoom)
                 {
                     if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
                     BuildManager.main.buildCamera.maxCameraDistance = 300;
@@ -48,7 +48,6 @@ namespace VanillaUpgrades
                     BuildManager.main.buildCamera.minCameraDistance = 10f;
                 }
             }
-            Config3.windowColor = new Color((float)Config3.settings2["persistentVars"]["windowColor"]["r"], (float)Config3.settings2["persistentVars"]["windowColor"]["g"], (float)Config3.settings2["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
         }
 
     }

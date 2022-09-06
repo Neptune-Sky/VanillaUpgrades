@@ -14,14 +14,14 @@ namespace VanillaUpgrades
             if (!Main.menuOpen) return;
             if (VideoSettingsPC.main.uiOpacitySlider.value < 0.001)
             {
-                Config.settings.persistentVars.opacity = 1;
+                Config.settingsData.persistentVars.opacity = 1;
                 VideoSettingsPC.main.uiOpacitySlider.value = 0;
-                Config.settings.guiHidden = true;
+                Config.settingsData.guiHidden = true;
             }
             else
             {
-                Config.settings.persistentVars.opacity = VideoSettingsPC.main.uiOpacitySlider.value;
-                Config.settings.guiHidden = false;
+                Config.settingsData.persistentVars.opacity = VideoSettingsPC.main.uiOpacitySlider.value;
+                Config.settingsData.guiHidden = false;
             }
 
             File.WriteAllText(Config3.configPath, Config3.settings2.ToString());
@@ -31,15 +31,15 @@ namespace VanillaUpgrades
     public static class OpacityChanger
     {
         public static bool hidden;
-        public static float uiOpacity = Config.settings.persistentVars.opacity;
+        public static float uiOpacity = Config.settingsData.persistentVars.opacity;
 
         public static void HideUI()
         {
             hidden = !hidden;
             float toChange = 0;
-            if (hidden) toChange = Config.settings.persistentVars.opacity;
+            if (hidden) toChange = Config.settingsData.persistentVars.opacity;
             VideoSettingsPC.main.uiOpacitySlider.value = toChange;
-            Config.settings.guiHidden = hidden;
+            Config.settingsData.guiHidden = hidden;
             File.WriteAllText(Config3.configPath, Config3.settings2.ToString());
         }
     }

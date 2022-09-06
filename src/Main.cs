@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using ModLoader;
 using SFS;
 using SFS.IO;
@@ -7,6 +8,7 @@ using System.Reflection;
 using ModLoader.Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades
 {
@@ -19,6 +21,7 @@ namespace VanillaUpgrades
         public override string MinimumGameVersionNecessary => "1.5.7";
         public override string ModVersion => "v3.1.1";
         public override string Description => "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
+        public override Func<ModKeybindings> OnLoadKeybindings => MyKeybindings.Setup;
 
         public override void Early_Load()
         {
@@ -28,15 +31,15 @@ namespace VanillaUpgrades
             patcher.PatchAll();
             SubscribeToScenes();
             Application.quitting += OnQuit;
+            Config.Load();
         }
 
         public override void Load()
         {
-            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager2), typeof(WindowManager), typeof(Config3), typeof(Config), typeof(ErrorNotification));
+            ConfigUI.Setup();
+            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager2), typeof(WindowManager), typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
-            Config3.settings2["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
-
         }
 
         void SubscribeToScenes()

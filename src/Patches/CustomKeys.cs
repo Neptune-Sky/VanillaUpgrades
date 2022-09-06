@@ -5,6 +5,7 @@ using SFS.IO;
 using SFS.World;
 using SFS;
 using System;
+using ModLoader;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
 
@@ -178,6 +179,24 @@ namespace VanillaUpgrades
             {
                 FaceDirection.Mode(4);
             });
+        }
+    }
+
+    public class MyKeybindings : ModKeybindings
+    {
+        KeybindingsPC.Key someKey = KeyCode.J;
+
+        public static MyKeybindings Setup()
+        {
+            MyKeybindings keybindings = SetupKeybindings<MyKeybindings>(Main.main);
+            AddOnKeyDown_Build(keybindings.someKey, () => Debug.Log("Do something"));
+            return keybindings;
+        }
+        
+        public override void CreateUI()
+        {
+            CreateUI_Text("Vanilla Upgrades");
+            CreateUI_Keybinding(someKey, KeyCode.J, "Some Key");
         }
     }
 }
