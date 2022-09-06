@@ -413,7 +413,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Config.cs" />
+    <Compile Include="src\Config3.cs" />
     <Compile Include="src\World\ToggleTorque.cs" />
     <Compile Include="src\World\WorldManager.cs" />
     <Compile Include="src\Build\DVCalc.cs" />
@@ -425,7 +425,6 @@
     <Compile Include="src\Build\BuildSettings.cs" />
     <Compile Include="src\Main.cs" />
     <Compile Include="src\Global\MoreCameraMove.cs" />
-    <Compile Include="src\World\MoreTrajectories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Patches\MoreUnits.cs" />
     <Compile Include="src\Patches\RaisePhysicsMaxWarp.cs" />
@@ -435,6 +434,7 @@
     <Compile Include="src\WindowManager.cs" />
     <Compile Include="src\World\AdvancedInfo.cs" />
     <Compile Include="src\World\WorldClockDisplay.cs" />
+    <Compile Include="src\Config.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

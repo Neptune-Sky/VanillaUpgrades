@@ -66,9 +66,9 @@ namespace VanillaUpgrades
     public class BuildSettings : MonoBehaviour
     {
         // Token: 0x0400136C RID: 4972
-        public static Rect windowRect = new Rect((float)WindowManager.settings["buildSettings"]["x"],
-            (float)WindowManager.settings["buildSettings"]["y"], 180f * WindowManager.scale.x,
-            100f * WindowManager.scale.y);
+        public static Rect windowRect = new Rect((float)WindowManager2.settings["buildSettings"]["x"],
+            (float)WindowManager2.settings["buildSettings"]["y"], 180f * WindowManager2.scale.x,
+            100f * WindowManager2.scale.y);
 
         // Token: 0x0400136D RID: 4973
         public static bool snapping;
@@ -82,20 +82,20 @@ namespace VanillaUpgrades
 
         public void Update()
         {
-            windowRect.width = 180f * WindowManager.scale.x;
-            windowRect.height = 100f * WindowManager.scale.y;
+            windowRect.width = 180f * WindowManager2.scale.x;
+            windowRect.height = 100f * WindowManager2.scale.y;
         }
 
         public void OnGUI()
         {
-            if (Main.menuOpen || !(bool)Config.settings["showBuildGUI"] ||
+            if (Main.menuOpen || !(bool)Config3.settings2["showBuildGUI"] ||
                 VideoSettingsPC.main.uiOpacitySlider.value == 0) return;
             Rect oldRect = windowRect;
-            GUI.color = Config.windowColor;
-            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "Build Settings");
-            windowRect = WindowManager.ConfineRect(windowRect);
-            if (oldRect != windowRect) WindowManager.settings["buildSettings"]["x"] = windowRect.x;
-            WindowManager.settings["buildSettings"]["y"] = windowRect.y;
+            GUI.color = Config3.windowColor;
+            windowRect = GUI.Window(WindowManager2.GetValidID(), windowRect, windowFunc, "Build Settings");
+            windowRect = WindowManager2.ConfineRect(windowRect);
+            if (oldRect != windowRect) WindowManager2.settings["buildSettings"]["x"] = windowRect.x;
+            WindowManager2.settings["buildSettings"]["y"] = windowRect.y;
         }
 
         public static void Launch()
@@ -121,12 +121,12 @@ namespace VanillaUpgrades
             GUIStyle leftAlign = new GUIStyle();
             leftAlign.alignment = TextAnchor.LowerLeft;
             leftAlign.normal.textColor = Color.white;
-            leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
+            leftAlign.fontSize = (int)(14 * WindowManager2.scale.y);
 
             GUIStyle midAlign = new GUIStyle(GUI.skin.button);
             midAlign.alignment = TextAnchor.MiddleCenter;
             midAlign.normal.textColor = Color.white;
-            midAlign.fontSize = (int)(12 * WindowManager.scale.y);
+            midAlign.fontSize = (int)(12 * WindowManager2.scale.y);
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Snapping" + Toggle(snapping), midAlign)) snapping = !snapping;

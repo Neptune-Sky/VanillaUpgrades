@@ -21,7 +21,7 @@ namespace VanillaUpgrades
 
         public void Update()
         {
-            if (!(bool)Config.settings["allowTimeSlowdown"] && TimeDecelMain.timeDecelIndex != 0)
+            if (!(bool)Config3.settings2["allowTimeSlowdown"] && TimeDecelMain.timeDecelIndex != 0)
             {
                 WorldTime.main.SetState(1, true, false);
                 TimeDecelMain.timeDecelIndex = 0;

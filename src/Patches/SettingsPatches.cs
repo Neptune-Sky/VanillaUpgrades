@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using SFS;
+using SFS.Parsers.Json;
 using SFS.Builds;
 using SFS.UI;
 using System;
@@ -17,7 +18,7 @@ namespace VanillaUpgrades
         {
             if (__instance.GetComponent<VideoSettingsPC>())
             {
-                Config.showSettings = true;
+                Config.settingsWindow.gameObject.SetActive(true);
             }
             Main.menuOpen = true;
         }
@@ -29,12 +30,12 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix()
         {
-            Config.showSettings = false;
+            Config.settingsWindow.gameObject.SetActive(false);
             Main.menuOpen = false;
-            File.WriteAllText(Config.configPath, Config.settings.ToString());
+            Config.Save();
             if (Main.buildObject != null)
             {
-                if ((bool)Config.settings["moreCameraZoom"])
+                if (Config.settings.moreCameraZoom)
                 {
                     if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
                     BuildManager.main.buildCamera.maxCameraDistance = 300;
@@ -47,7 +48,7 @@ namespace VanillaUpgrades
                     BuildManager.main.buildCamera.minCameraDistance = 10f;
                 }
             }
-            Config.windowColor = new Color((float)Config.settings["persistentVars"]["windowColor"]["r"], (float)Config.settings["persistentVars"]["windowColor"]["g"], (float)Config.settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
+            Config3.windowColor = new Color((float)Config3.settings2["persistentVars"]["windowColor"]["r"], (float)Config3.settings2["persistentVars"]["windowColor"]["g"], (float)Config3.settings2["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
         }
 
     }

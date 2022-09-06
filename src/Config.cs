@@ -1,367 +1,225 @@
-﻿using HarmonyLib;
-using Newtonsoft.Json.Linq;
-using SFS;
-using SFS.Builds;
-using SFS.UI;
-using System;
+﻿using System;
 using System.IO;
 using SFS.IO;
 using UnityEngine;
+using ModLoader;
+using SFS.UI.ModGUI;
+using SFS.Parsers.Json;
+using SFS.UI;
 
 namespace VanillaUpgrades
 {
+    [Serializable]
+    public class PersistentVars
+    {
+        public float opacity = 1;
+        public Color windowColor = new Color(0.007843138f, 0.09019608f, 0.18039216f, 1f);
+        public float windowScale = 1;
+    }
+    [Serializable]
+    public class Settings
+    {
+        // random vars
+        public PersistentVars persistentVars = new PersistentVars();
+        public bool guiHidden;
+
+        // GUI
+        public bool showBuildGui = true;
+        public bool showAdvanced = true;
+        public bool alwaysCompact;
+        public bool showCalc;
+        public bool showAverager;
+        public bool showTime = true;
+        public bool worldTime = true;
+        public bool alwaysShowTime;
+
+        // Units
+        public bool mmUnits = true;
+        public bool kmsUnits = true;
+        public bool cUnits = true;
+        public bool ktUnits = true;
+
+        // Misc
+        public bool explosions = true;
+        public bool explosionShake = true;
+        public bool stopTimewarpOnEncounter = true;
+        public bool moreCameraZoom = true;
+        public bool moreCameraMove = true;
+
+        // Cheats
+        public bool allowTimeSlowdown;
+        public bool higherPhysicsWarp;
+    }
     public class Config : MonoBehaviour
     {
-        public static FilePath configPath = Main.modFolder.ExtendToFile("Config.txt");
+        private const int normalToggle = 575;
+        private const int toggleHeight = 42;
+        private const int subToggle = 575;
 
-        public static JObject defaultConfig = JObject.Parse("{ " +
-            "persistentVars: { " +
-            "opacity: 1, " +
-            "windowColor: {" +
-            "r: 1.0, " +
-            "g: 1.0, " +
-            "b: 1.0 " +
-            "} " +
-            "}, " +
-            "guiHidden: false," +
-            "showBuildGUI: true, " +
-            "showAdvanced: true, " +
-            "alwaysCompact: false, " +
-            "showCalc: false, " +
-            "showAverager: false, " +
-            "showTime: true, " +
-            "worldTime: true," +
-            "alwaysShowTime: false," +
-            "mmUnits: true, " +
-            "kmsUnits: true, " +
-            "cUnits: true, " +
-            "ktUnits: true, " +
-            "shakeEffects: true," +
-            "explosions: true," +
-            "explosionShake: true, " +
-            "stopTimewarpOnEncounter: true, " +
-            "moreCameraZoom: true, " +
-            "moreCameraMove: true, " +
-            "allowTimeSlowdown: false, " +
-            "higherPhysicsWarp: false }");
+        public static Settings settings;
+        public static GameObject configHolder;
+        public static Window settingsWindow;
+        public static Box settingsHolder;
 
-        public static JObject settings;
+        public static FilePath configPath = Main.modFolder.ExtendToFile("Config2.txt");
 
-        public static bool showSettings;
 
-        public bool gui = false;
-        public bool units = false;
-        public bool functions = false;
-        public bool more = false;
-        public bool cheats = false;
-        public bool color = false;
-
-        public static int test = 3;
-
-        public static float windowHeight = 350f;
-
-        public static Color windowColor;
-
-        public Vector2 scroll = Vector2.zero;
-
-        public Rect windowRect = new Rect((float)WindowManager.settings["config"]["x"], (float)WindowManager.settings["config"]["y"], 245f, windowHeight);
-
-        public void Awake()
+        void Awake()
         {
-            if (!File.Exists(configPath))
+            configHolder = Builder.CreateHolder(Builder.SceneToAttach.BaseScene, "ConfigHolder");
+            var rectTransform = configHolder.AddComponent<RectTransform>();
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.zero;
+            rectTransform.sizeDelta = Vector2.zero;
+            rectTransform.position = Vector2.zero;
+            DontDestroyOnLoad(configHolder.gameObject);
+
+            if (!JsonWrapper.TryLoadJson(configPath, out settings) && File.Exists(configPath))
             {
-                File.WriteAllText(configPath, defaultConfig.ToString());
+                ErrorNotification.Error("An error occured while trying to load Config, so it was reset to defaults.");
             }
-
-            try
-            {
-                settings = JObject.Parse(File.ReadAllText(configPath));
-            }
-            catch (Exception)
-            {
-                File.WriteAllText(configPath, defaultConfig.ToString());
-                ErrorNotification.Error("Config file was of an invalid format, and was reset to defaults.");
-                settings = defaultConfig;
-            }
-
-            if (settings["persistentVars"] == null) settings["persistentVars"] = defaultConfig["persistentVars"];
-
-            if (settings["persistentVars"]["opacity"] == null) settings["persistentVars"]["opacity"] = defaultConfig["persistentVars"]["opacity"];
-
-            if (settings["persistentVars"]["windowColor"] == null) settings["persistentVars"]["windowColor"] = defaultConfig["persistentVars"]["windowColor"];
-
-            try
-            {
-                Vector3 check = new Vector3((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
-            }
-            catch (Exception)
-            {
-                ErrorNotification.Error("Window color data was of an invalid format, and was reset to defaults.");
-                settings["persistentVars"]["windowColor"] = defaultConfig["persistentVars"]["windowColor"];
-            }
-
-            if (settings["guiHidden"] == null) settings["guiHidden"] = defaultConfig["guiHidden"];
-
-            if (settings["showBuildGUI"] == null) settings["showBuildGUI"] = defaultConfig["showBuildGUI"];
-
-            if (settings["showAdvanced"] == null) settings["showAdvanced"] = defaultConfig["showAdvanced"];
-
-            if (settings["alwaysCompact"] == null) settings["alwaysCompact"] = defaultConfig["alwaysCompact"];
-
-            if (settings["showCalc"] == null) settings["showCalc"] = defaultConfig["showCalc"];
-
-            if (settings["showAverager"] == null) settings["showAverager"] = defaultConfig["showAverager"];
-
-            if (settings["showTime"] == null) settings["showTime"] = defaultConfig["showTime"];
-
-            if (settings["worldTime"] == null) settings["worldTime"] = defaultConfig["worldTime"];
-
-            if (settings["alwaysShowTime"] == null) settings["alwaysShowTime"] = defaultConfig["alwaysShowTime"];
-
-            if (settings["mmUnits"] == null) settings["mmUnits"] = defaultConfig["mmUnits"];
-
-            if (settings["kmsUnits"] == null) settings["kmsUnits"] = defaultConfig["kmsUnits"];
-
-            if (settings["cUnits"] == null) settings["cUnits"] = defaultConfig["cUnits"];
-
-            if (settings["ktUnits"] == null) settings["ktUnits"] = defaultConfig["ktUnits"];
-
-            if (settings["shakeEffects"] == null) settings["shakeEffects"] = defaultConfig["shakeEffects"];
-
-            if (settings["explosions"] == null) settings["explosions"] = defaultConfig["explosions"];
-
-            if (settings["explosionShake"] == null) settings["explosionShake"] = defaultConfig["explosionShake"];
-
-            if (settings["stopTimewarpOnEncounter"] == null) settings["stopTimewarpOnEncounter"] = defaultConfig["stopTimewarpOnEncounter"];
-
-            if (settings["moreCameraZoom"] == null) settings["moreCameraZoom"] = defaultConfig["moreCameraZoom"];
-
-            if (settings["moreCameraMove"] == null) settings["moreCameraMove"] = defaultConfig["moreCameraMove"];
-
-            if (settings["allowTimeSlowdown"] == null) settings["allowTimeSlowdown"] = defaultConfig["allowTimeSlowdown"];
-
-            if (settings["higherPhysicsWarp"] == null) settings["higherPhysicsWarp"] = defaultConfig["higherPhysicsWarp"];
-
-            windowColor = new Color((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
-
-            VideoSettingsPC.main.uiOpacitySlider.value = -1;
-            VideoSettingsPC.main.uiOpacitySlider.value = (float)settings["persistentVars"]["opacity"];
-            settings["guiHidden"] = false;
-
-            File.WriteAllText(Config.configPath, Config.settings.ToString());
+            settings = settings ?? new Settings();
+            Save();
+            ShowGUI(true);
 
 
         }
-        public string Arrow(bool open)
+
+        public static void ShowGUI(bool init)
         {
-            if (open)
+            settingsWindow = Builder.CreateWindow(configHolder.gameObject.transform, Builder.GetRandomID(), 750, 670, 320, 320, true, true, 1, "VanillaUpgrades Config");
+            settingsWindow.CreateLayoutGroup(SFS.UI.ModGUI.Type.Horizontal, TextAnchor.UpperCenter);
+            settingsWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += OnDragDrop;
+
+            Builder.CreateSpace(settingsWindow, 0, 0);
+            Container categories = Builder.CreateContainer(settingsWindow);
+            categories.CreateLayoutGroup(SFS.UI.ModGUI.Type.Vertical, spacing: 10);
+
+            Builder.CreateSpace(categories, 0, 10);
+            Builder.CreateButton(categories, 100, 50, 0, 0, () => RefreshGUI("gui"), "GUI");
+            Builder.CreateButton(categories, 100, 50, 0, 0, () => RefreshGUI("units"), "Units");
+            Builder.CreateButton(categories, 100, 50, 0, 0, () => RefreshGUI("misc"), "Misc");
+            Builder.CreateButton(categories, 100, 50, 0, 0, () => RefreshGUI("cheats"), "Cheats");
+            RefreshGUI("gui", init);
+
+            settingsWindow.rectTransform.localScale = new Vector2(settings.persistentVars.windowScale, settings.persistentVars.windowScale);
+        }
+
+        public static void RefreshGUI(string options, bool init = false)
+        {
+            if (!init)
             {
-                return "▼    ";
+                Destroy(settingsHolder.gameObject);
+                settingsHolder = null;
             }
-            else
+            
+            settingsHolder = Builder.CreateBox(settingsWindow, 600, 600, 0, 0, 0.7f);
+            settingsHolder.CreateLayoutGroup(SFS.UI.ModGUI.Type.Vertical, spacing: 0, childAlignment: TextAnchor.UpperCenter);
+
+            switch (options)
             {
-                return "▶    ";
+                case "gui":
+                    Builder.CreateLabel(settingsHolder, 300, 50, 0, 0, "GUI");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.showBuildGui, () => settings.showBuildGui = !settings.showBuildGui, 0, 0, 
+                    "Show Build Settings");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.showAdvanced, () => settings.showAdvanced = !settings.showAdvanced, 0, 0,
+                    "Show Advanced Info");
+                    Space(false);
+                    SubToggle(settingsHolder, subToggle, toggleHeight, () => settings.alwaysCompact, () => settings.alwaysCompact = !settings.alwaysCompact, 0, 0,
+                    "    Force Compact Mode");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.showCalc, () => settings.showCalc = !settings.showCalc, 0, 0,
+                    "Show dV Calc by Default");
+                    Space(false);
+
+                    SubToggle(settingsHolder, subToggle, toggleHeight, () => settings.showAverager, () => settings.showAverager = !settings.showAverager, 0, 0,
+                    "    Averager Default");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.showTime, () => settings.showTime = !settings.showTime, 0, 0,
+                    "Show World Clock While Timewarping");
+                    Space(false);
+                    SubToggle(settingsHolder, subToggle, toggleHeight, () => settings.worldTime, () => settings.worldTime = !settings.worldTime, 0, 0,
+                    "    Show World Time in Clock");
+                    Space(false);
+                    SubToggle(settingsHolder, subToggle, toggleHeight, () => settings.alwaysShowTime, () => settings.alwaysShowTime = !settings.alwaysShowTime, 0, 0,
+                    "    Always Show World Clock");
+                    break;
+                case "units":
+                    Builder.CreateLabel(settingsHolder, 300, 50, 0, 0, "Units");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.mmUnits, () => settings.mmUnits = !settings.mmUnits, 0, 0,
+                    "Megameters (Mm)");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.kmsUnits, () => settings.kmsUnits = !settings.kmsUnits, 0, 0,
+                    "Kilometers/Second (km/s)");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.cUnits, () => settings.cUnits = !settings.cUnits, 0, 0,
+                    "% Speed of Light (c)");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.ktUnits, () => settings.ktUnits = !settings.ktUnits, 0, 0,
+                    "Kilotonnes (kt)");
+                    break;
+                case "misc":
+                    Builder.CreateLabel(settingsHolder, 300, 50, 0, 0, "Miscellaneous");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.explosions, () => settings.explosions = !settings.explosions, 0, 0,
+                    "Explosion Effects");
+                    Space(false);
+                    SubToggle(settingsHolder, subToggle, toggleHeight, () => settings.explosionShake, () => settings.explosionShake = !settings.explosionShake, 0, 0,
+                    "    Explosion Shake");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.stopTimewarpOnEncounter, () => settings.stopTimewarpOnEncounter = !settings.stopTimewarpOnEncounter, 0, 0,
+                    "Stop Timewarp On Encounter");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.moreCameraZoom, () => settings.moreCameraZoom = !settings.moreCameraZoom, 0, 0,
+                    "More Camera Zoom");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.moreCameraMove, () => settings.moreCameraMove = !settings.moreCameraMove, 0, 0,
+                    "More Camera Movement");
+                    break;
+                case "cheats":
+                    Builder.CreateLabel(settingsHolder, 300, 50, 0, 0, "Cheats");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.allowTimeSlowdown, () => settings.allowTimeSlowdown = !settings.allowTimeSlowdown, 0, 0,
+                    "Allow Time Slowdown");
+                    Space(true);
+                    Builder.CreateToggleWithLabel(settingsHolder, normalToggle, toggleHeight, () => settings.higherPhysicsWarp, () => settings.higherPhysicsWarp = !settings.higherPhysicsWarp, 0, 0,
+                    "Higher Physics Timewarps");
+                    break;
             }
         }
-        public void windowFunc(int windowID)
+
+        public static void Space(bool more)
         {
-            scroll = GUILayout.BeginScrollView(scroll);
-
-            GUIStyle button = new GUIStyle(GUI.skin.button);
-
-            button.alignment = TextAnchor.MiddleLeft;
-
-            button.normal.textColor = Color.white;
-
-            if (GUILayout.Button(Arrow(gui) + "GUI", button))
-            {
-                gui = !gui;
-            }
-
-            if (gui)
-            {
-                settings["showBuildGUI"] = GUILayout.Toggle((bool)settings["showBuildGUI"], " Show Build Settings");
-
-                settings["showAdvanced"] = GUILayout.Toggle((bool)settings["showAdvanced"], " Show Advanced Info");
-
-                if ((bool)settings["showAdvanced"])
-                {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(20);
-                    settings["alwaysCompact"] = GUILayout.Toggle((bool)settings["alwaysCompact"], " Force Compact Mode");
-                    GUILayout.EndHorizontal();
-                }
-
-                settings["showCalc"] = GUILayout.Toggle((bool)settings["showCalc"], " ΔV Calc Default");
-
-                if ((bool)settings["showCalc"])
-                {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(20);
-                    settings["showAverager"] = GUILayout.Toggle((bool)settings["showAverager"], " ISP Averager Default");
-                    GUILayout.EndHorizontal();
-                }
-                else
-                {
-                    settings["showAverager"] = false;
-                }
-
-                settings["showTime"] = GUILayout.Toggle((bool)settings["showTime"], " World Clock During Timewarp");
-
-                if ((bool)settings["showTime"])
-                {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(20);
-                    settings["worldTime"] = GUILayout.Toggle((bool)settings["worldTime"], " World Time In World Clock");
-                    GUILayout.EndHorizontal();
-                }
-
-                if (!(bool)settings["showTime"] || !(bool)settings["worldTime"])
-                {
-                    settings["alwaysShowTime"] = false;
-                }
-                else
-                {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(20);
-                    settings["alwaysShowTime"] = GUILayout.Toggle((bool)settings["alwaysShowTime"], " Always Show World Time");
-                    GUILayout.EndHorizontal();
-                }
-            }
-
-            if (GUILayout.Button(Arrow(units) + "Units", button))
-            {
-                units = !units;
-            }
-
-            if (units)
-            {
-
-                settings["mmUnits"] = GUILayout.Toggle((bool)settings["mmUnits"], " Megameters (Mm)");
-
-                settings["kmsUnits"] = GUILayout.Toggle((bool)settings["kmsUnits"], " Kilometers per Second (km/s)");
-
-                settings["cUnits"] = GUILayout.Toggle((bool)settings["cUnits"], " % Speed of Light (c)");
-
-                settings["ktUnits"] = GUILayout.Toggle((bool)settings["ktUnits"], " Kilotonnes (kt)");
-            }
-
-            if (GUILayout.Button(Arrow(functions) + "Functions", button))
-            {
-                functions = !functions;
-            }
-
-            if (functions)
-            {
-                settings["stopTimewarpOnEncounter"] = GUILayout.Toggle((bool)settings["stopTimewarpOnEncounter"], " Stop Timewarp on Encounter");
-
-                settings["moreCameraZoom"] = GUILayout.Toggle((bool)settings["moreCameraZoom"], " Camera Zoom Increase");
-
-                settings["moreCameraMove"] = GUILayout.Toggle((bool)settings["moreCameraMove"], " Camera Movement Increase");
-            }
-
-            if (GUILayout.Button(Arrow(cheats) + "Cheats", button))
-            {
-                cheats = !cheats;
-            }
-
-            if (cheats)
-            {
-                settings["allowTimeSlowdown"] = GUILayout.Toggle((bool)settings["allowTimeSlowdown"], " Allow Time Slowdown");
-
-                settings["higherPhysicsWarp"] = GUILayout.Toggle((bool)settings["higherPhysicsWarp"], " Higher Physics Timewarps");
-            }
-
-
-            if (GUILayout.Button(Arrow(more) + "Additional Settings", button))
-            {
-                more = !more;
-            }
-
             if (more)
             {
-                settings["shakeEffects"] = GUILayout.Toggle((bool)settings["shakeEffects"], " Toggle Shake Effects");
-
-                if (!(bool)settings["shakeEffects"])
-                {
-                    settings["explosionShake"] = false;
-                }
-                else
-                {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(20);
-                    settings["explosionShake"] = GUILayout.Toggle((bool)settings["explosionShake"], " Toggle Explosion Shake");
-                    GUILayout.EndHorizontal();
-                }
-
-                settings["explosions"] = GUILayout.Toggle((bool)settings["explosions"], " Toggle Explosion Effects");
+                Builder.CreateSpace(settingsHolder, 30, 30);
+                return;
             }
+            Builder.CreateSpace(settingsHolder, 15, 15);
+        }
 
+        public static void SubToggle(Transform parent, int width, int height, Func<bool> getToggleValue, Action onChange, int posX, int posY, string label)
+        {
+            Container container = Builder.CreateContainer(settingsHolder);
+            container.CreateLayoutGroup(SFS.UI.ModGUI.Type.Horizontal);
 
-            if (GUILayout.Button(Arrow(color) + "Window Color", button))
-            {
-                color = !color;
-            }
-
-            if (color)
-            {
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("R", GUILayout.MaxWidth(15));
-
-                GUILayout.BeginVertical();
-                GUILayout.Space(9);
-                settings["persistentVars"]["windowColor"]["r"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["r"], 0, 1, GUILayout.Width(140));
-                GUILayout.EndVertical();
-
-                GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["r"] * 100).Round(1f)}%");
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("G", GUILayout.MaxWidth(15));
-
-                GUILayout.BeginVertical();
-                GUILayout.Space(9);
-                settings["persistentVars"]["windowColor"]["g"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["g"], 0, 1, GUILayout.Width(140));
-                GUILayout.EndVertical();
-
-                GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["g"] * 100).Round(1f)}%");
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("B", GUILayout.MaxWidth(15));
-
-                GUILayout.BeginVertical();
-                GUILayout.Space(9);
-                settings["persistentVars"]["windowColor"]["b"] = GUILayout.HorizontalSlider((float)settings["persistentVars"]["windowColor"]["b"], 0, 1, GUILayout.Width(140));
-                GUILayout.EndVertical();
-
-                GUILayout.Label($"{((float)settings["persistentVars"]["windowColor"]["b"] * 100).Round(1f)}%");
-                GUILayout.EndHorizontal();
-            }
-
-            GUILayout.EndScrollView();
-
-            if (GUILayout.Button("Default Settings"))
-            {
-                File.WriteAllText(configPath, defaultConfig.ToString());
-                settings = defaultConfig;
-            }
-
-            GUI.DragWindow();
+            Builder.CreateSpace(container, 55, 0);
+            Builder.CreateToggleWithLabel(parent, width, height, getToggleValue, onChange, posX, posY, label);
 
         }
 
-        public void OnGUI()
+        public static void Save()
         {
-            if (WindowManager.inst == null) return;
-            if (!showSettings) return;
-            Rect oldRect = windowRect;
-            windowColor.a = 1;
-            GUI.color = windowColor;
-            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "VanillaUpgrades Config");
-            windowColor = new Color((float)settings["persistentVars"]["windowColor"]["r"], (float)settings["persistentVars"]["windowColor"]["g"], (float)settings["persistentVars"]["windowColor"]["b"]);
-            windowRect = WindowManager.ConfineRect(windowRect);
-            if (oldRect != windowRect) WindowManager.settings["config"]["x"] = windowRect.x; WindowManager.settings["config"]["y"] = windowRect.y;
+            JsonWrapper.SaveAsJson(configPath, settings, true);
+        }
+
+        static void OnDragDrop()
+        {
+            WindowManager.windows.config = settingsWindow.Position;
+            WindowManager.ClampWindow(settingsWindow);
         }
     }
 }

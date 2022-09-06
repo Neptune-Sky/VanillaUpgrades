@@ -11,7 +11,7 @@ namespace VanillaUpgrades
         public static string timestamp;
         public static string timewarpTime;
 
-        public Rect windowRect = new Rect((float)WindowManager.settings["worldTime"]["x"], (float)WindowManager.settings["worldTime"]["y"], 150f * WindowManager.scale.x, 30f * WindowManager.scale.y);
+        public Rect windowRect = new Rect((float)WindowManager2.settings["worldTime"]["x"], (float)WindowManager2.settings["worldTime"]["y"], 150f * WindowManager2.scale.x, 30f * WindowManager2.scale.y);
 
         public string TimeSpanConv(TimeSpan span)
         {
@@ -43,16 +43,16 @@ namespace VanillaUpgrades
             var bold = new GUIStyle();
             var midAlign = new GUIStyle();
 
-            midAlign.fontSize = (int)(14 * WindowManager.scale.y);
+            midAlign.fontSize = (int)(14 * WindowManager2.scale.y);
             midAlign.alignment = TextAnchor.MiddleCenter;
             midAlign.normal.textColor = Color.white;
 
-            bold.fontSize = (int)(15 * WindowManager.scale.y);
+            bold.fontSize = (int)(15 * WindowManager2.scale.y);
             bold.fontStyle = FontStyle.Bold;
             bold.normal.textColor = Color.white;
             bold.alignment = TextAnchor.MiddleCenter;
 
-            if ((bool)Config.settings["worldTime"])
+            if ((bool)Config3.settings2["worldTime"])
             {
                 GUILayout.Label("World Time:", midAlign);
                 GUILayout.Label(timestamp, bold);
@@ -73,14 +73,14 @@ namespace VanillaUpgrades
         {
             if (Main.menuOpen) return;
 
-            if (((WorldTime.main.timewarpIndex != 0 && (bool)Config.settings["showTime"]) || (bool)Config.settings["alwaysShowTime"]) && VideoSettingsPC.main.uiOpacitySlider.value != 0)
+            if (((WorldTime.main.timewarpIndex != 0 && (bool)Config3.settings2["showTime"]) || (bool)Config3.settings2["alwaysShowTime"]) && VideoSettingsPC.main.uiOpacitySlider.value != 0)
             {
                 if (subtractor == 0) subtractor = WorldTime.main.worldTime * 10000000;
-                GUI.color = Config.windowColor;
+                GUI.color = Config3.windowColor;
                 Rect oldRect = windowRect;
-                windowRect = GUILayout.Window(WindowManager.GetValidID(), windowRect, windowFunc, "World Clock", GUILayout.MaxWidth(Screen.width * 0.125f), GUILayout.MaxHeight(Screen.height * 0.06f), GUILayout.MinHeight(30));
-                windowRect = WindowManager.ConfineRect(windowRect);
-                if (oldRect != windowRect) WindowManager.settings["worldTime"]["x"] = windowRect.x; WindowManager.settings["worldTime"]["y"] = windowRect.y;
+                windowRect = GUILayout.Window(WindowManager2.GetValidID(), windowRect, windowFunc, "World Clock", GUILayout.MaxWidth(Screen.width * 0.125f), GUILayout.MaxHeight(Screen.height * 0.06f), GUILayout.MinHeight(30));
+                windowRect = WindowManager2.ConfineRect(windowRect);
+                if (oldRect != windowRect) WindowManager2.settings["worldTime"]["x"] = windowRect.x; WindowManager2.settings["worldTime"]["y"] = windowRect.y;
 
             }
             else subtractor = 0;

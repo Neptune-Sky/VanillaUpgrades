@@ -32,10 +32,10 @@ namespace VanillaUpgrades
 
         public override void Load()
         {
-            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(Config), typeof(ErrorNotification));
+            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager2), typeof(WindowManager), typeof(Config3), typeof(Config), typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
-            Config.settings["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
+            Config3.settings2["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
 
         }
 
@@ -47,9 +47,9 @@ namespace VanillaUpgrades
 
         void OnQuit()
         {
-            File.WriteAllText(WindowManager.inst.windowDir, WindowManager.settings.ToString());
+            Config.Save();
+            WindowManager.Save();
         }
-
         public static bool menuOpen;
 
         public static GameObject mainObject;

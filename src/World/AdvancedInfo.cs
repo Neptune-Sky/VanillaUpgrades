@@ -9,7 +9,7 @@ namespace VanillaUpgrades
 
     public class AdvancedInfo : MonoBehaviour
     {
-        public static Rect windowRect = new Rect((float)WindowManager.settings["advancedInfo"]["x"], (float)WindowManager.settings["advancedInfo"]["y"], 10f, 10f);
+        public static Rect windowRect = new Rect((float)WindowManager2.settings["advancedInfo"]["x"], (float)WindowManager2.settings["advancedInfo"]["y"], 10f, 10f);
 
         public double apoapsis;
 
@@ -44,7 +44,7 @@ namespace VanillaUpgrades
             }
             else
             {
-                if (value > 100000000 && (bool)Config.settings["mmUnits"])
+                if (value > 100000000 && (bool)Config3.settings2["mmUnits"])
                 {
                     return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
                 }
@@ -58,29 +58,29 @@ namespace VanillaUpgrades
 
             maximized = GUI.Toggle(new Rect(1, -1, 22, 22), maximized, "");
 
-            float height = (220 * WindowManager.scale.x).Round(1);
-            float width = (150 * WindowManager.scale.y).Round(1);
-            float compactheight = (115 * WindowManager.scale.x).Round(1);
-            float compactwidth = (200 * WindowManager.scale.y).Round(1);
-            float minheight = (42 * WindowManager.scale.y).Round(1);
+            float height = (220 * WindowManager2.scale.x).Round(1);
+            float width = (150 * WindowManager2.scale.y).Round(1);
+            float compactheight = (115 * WindowManager2.scale.x).Round(1);
+            float compactwidth = (200 * WindowManager2.scale.y).Round(1);
+            float minheight = (42 * WindowManager2.scale.y).Round(1);
 
             if (maximized)
             {
                 GUIStyle rightAlign = new GUIStyle();
                 rightAlign.alignment = TextAnchor.LowerRight;
                 rightAlign.normal.textColor = Color.white;
-                rightAlign.fontSize = (int)(14 * WindowManager.scale.y);
+                rightAlign.fontSize = (int)(14 * WindowManager2.scale.y);
 
                 GUIStyle leftAlign = new GUIStyle();
                 leftAlign.alignment = TextAnchor.LowerLeft;
                 leftAlign.normal.textColor = Color.white;
-                leftAlign.fontSize = (int)(14 * WindowManager.scale.y);
+                leftAlign.fontSize = (int)(14 * WindowManager2.scale.y);
 
                 if (oldMax == false && maximized == true && windowRect.y >= Screen.height - (height - 5))
                 {
                     windowRect.y = windowRect.y - (compactheight - minheight);
                 }
-                if (windowRect.y >= Screen.height - (height - 5) || windowRect.y <= 10 || (bool)Config.settings["alwaysCompact"])
+                if (windowRect.y >= Screen.height - (height - 5) || windowRect.y <= 10 || (bool)Config3.settings2["alwaysCompact"])
                 {
 
                     windowRect.height = compactheight;
@@ -92,19 +92,19 @@ namespace VanillaUpgrades
                     GUILayout.Label("Apoapsis:", leftAlign);
                     GUILayout.Label(displayify(apoapsis), rightAlign);
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(8 * WindowManager.scale.y);
+                    GUILayout.Space(8 * WindowManager2.scale.y);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Periapsis:", leftAlign);
                     GUILayout.Label(displayify(periapsis), rightAlign);
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(8 * WindowManager.scale.y);
+                    GUILayout.Space(8 * WindowManager2.scale.y);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Eccentricity:", leftAlign);
                     GUILayout.Label(displayifyEcc(displayEcc), rightAlign);
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(8 * WindowManager.scale.y);
+                    GUILayout.Space(8 * WindowManager2.scale.y);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Angle:", leftAlign);
@@ -117,22 +117,22 @@ namespace VanillaUpgrades
                     windowRect.width = width;
 
                     GUILayout.Label("Apoapsis:", leftAlign);
-                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Space(5 * WindowManager2.scale.y);
                     GUILayout.Label(displayify(apoapsis), leftAlign);
-                    GUILayout.Space(13 * WindowManager.scale.y);
+                    GUILayout.Space(13 * WindowManager2.scale.y);
 
                     GUILayout.Label("Periapsis:", leftAlign);
-                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Space(5 * WindowManager2.scale.y);
                     GUILayout.Label(displayify(periapsis), leftAlign);
-                    GUILayout.Space(13 * WindowManager.scale.y);
+                    GUILayout.Space(13 * WindowManager2.scale.y);
 
                     GUILayout.Label("Eccentricity:", leftAlign);
-                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Space(5 * WindowManager2.scale.y);
                     GUILayout.Label(displayifyEcc(displayEcc), leftAlign);
-                    GUILayout.Space(13 * WindowManager.scale.y);
+                    GUILayout.Space(13 * WindowManager2.scale.y);
 
                     GUILayout.Label("Angle:", leftAlign);
-                    GUILayout.Space(5 * WindowManager.scale.y);
+                    GUILayout.Space(5 * WindowManager2.scale.y);
                     GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°", leftAlign);
                 }
 
@@ -163,7 +163,7 @@ namespace VanillaUpgrades
         {
             
 
-            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
+            if (Main.menuOpen || !(bool)Config3.settings2["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
 
 
             var sma = WorldManager.currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(WorldManager.currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - WorldManager.currentRocket.location.planet.Value.mass / WorldManager.currentRocket.location.Value.Radius));
@@ -204,13 +204,13 @@ namespace VanillaUpgrades
 
         public void OnGUI()
         {
-            if (Main.menuOpen || !(bool)Config.settings["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
+            if (Main.menuOpen || !(bool)Config3.settings2["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
 
             Rect oldRect = windowRect;
-            GUI.color = Config.windowColor;
-            windowRect = WindowManager.ConfineRect(windowRect);
-            windowRect = GUI.Window(WindowManager.GetValidID(), windowRect, windowFunc, "Advanced");
-            if (oldRect != windowRect) WindowManager.settings["advancedInfo"]["x"] = windowRect.x; WindowManager.settings["advancedInfo"]["y"] = windowRect.y;
+            GUI.color = Config3.windowColor;
+            windowRect = WindowManager2.ConfineRect(windowRect);
+            windowRect = GUI.Window(WindowManager2.GetValidID(), windowRect, windowFunc, "Advanced");
+            if (oldRect != windowRect) WindowManager2.settings["advancedInfo"]["x"] = windowRect.x; WindowManager2.settings["advancedInfo"]["y"] = windowRect.y;
         }
     }
 }

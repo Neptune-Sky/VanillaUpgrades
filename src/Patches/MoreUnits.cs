@@ -9,7 +9,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this double a, ref string __result)
         {
-            if (!(bool)Config.settings["mmUnits"]) return true;
+            if (!Config.settings.mmUnits) return true;
 
             if (a >= 100000000 && !double.IsInfinity(a))
             {
@@ -26,14 +26,14 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this double a, ref string __result)
         {
-            if (!(bool)Config.settings["kmsUnits"] && !(bool)Config.settings["cUnits"])
+            if (!Config.settings.kmsUnits && !Config.settings.cUnits)
             {
                 return true;
             }
 
             if (a >= 10000 && !double.IsInfinity(a))
             {
-                if (a > 2997924 && (bool)Config.settings["cUnits"])
+                if (a > 2997924 && Config.settings.cUnits)
                 {
                     __result = (a / 299792458).Round(0.001).ToString(3, true) + "c";
                     return false;
@@ -51,9 +51,9 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, bool forceDecimal, ref string __result)
         {
-            if (!(bool)Config.settings["ktUnits"]) return true;
+            if (!Config.settings.ktUnits) return true;
 
-            if (a >= 10000 && !float.IsInfinity(a) && (bool)Config.settings["ktUnits"])
+            if (a >= 10000 && !float.IsInfinity(a) && Config.settings.ktUnits)
             {
                 var newVar = (a / 1000).Round(0.01f).ToString(2, forceDecimal) + "k";
                 __result = Loc.main.Mass.Inject(newVar, "value");
@@ -71,9 +71,9 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, ref string __result)
         {
-            if (!(bool)Config.settings["ktUnits"]) return false;
+            if (!Config.settings.ktUnits) return false;
 
-            if (a >= 10000 && !float.IsInfinity(a) && (bool)Config.settings["ktUnits"])
+            if (a >= 10000 && !float.IsInfinity(a) && Config.settings.ktUnits)
             {
                 var newVar = (a / 1000).Round(0.01f).ToString(2, false) + "k";
                 __result = Loc.main.Thrust.Inject(newVar, "value");

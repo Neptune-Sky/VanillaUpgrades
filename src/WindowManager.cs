@@ -1,17 +1,86 @@
 ﻿using Newtonsoft.Json.Linq;
+using SFS.IO;
 using System;
 using System.IO;
 using UnityEngine;
+using SFS.UI.ModGUI;
+using SFS.Parsers.Json;
+using UnityEngine.UI;
 
 namespace VanillaUpgrades
 {
+    [Serializable]
+    public class Windows
+    {
+        public Vector2 buildSettings = new Vector2(Screen.width * 0.05f, Screen.height * 0.94f);
+
+        public Vector2 advancedInfo = new Vector2(0f, Screen.height * 0.05f);
+
+        public Vector2 config = new Vector2(10f, Screen.height - Config3.windowHeight);
+
+        public Vector2 worldTime = new Vector2(Screen.width * 0.958f, Screen.height * 0.045f);
+
+        public Vector2 calc = new Vector2(Screen.width - 175f, 50f);
+
+        public Vector2 averager = new Vector2(Screen.width - 175f, 270f);
+    }
+
+
     public class WindowManager : MonoBehaviour
+    {
+        public static Vector2 gameSize;
+
+        public static Windows windows;
+
+        public static FilePath windowPath = Main.modFolder.ExtendToFile("WindowPositions.txt");
+
+        GameObject sizeTracking;
+
+        void Awake()
+        {
+            sizeTracking = Builder.CreateHolder(Builder.SceneToAttach.BaseScene, "sizeTracking");
+            DontDestroyOnLoad(sizeTracking.gameObject);
+
+            if (!JsonWrapper.TryLoadJson(windowPath, out windows) && File.Exists(windowPath))
+            {
+                ErrorNotification.Error("An error occured while trying to load Config, so it was reset to defaults.");
+            }
+            windows = windows ?? new Windows();
+            Save();
+        }
+
+        void Update()
+        {
+            gameSize = new Vector2((sizeTracking.GetComponentInParent<CanvasScaler>().referenceResolution.y / Screen.height) * Screen.width, sizeTracking.GetComponentInParent<CanvasScaler>().referenceResolution.y);
+        }
+
+        public static void ClampWindow(Window window)
+        {
+            Vector2 pos = window.Position;
+            Vector2 size = window.Size;
+
+            size.x = size.x * Config.settings.persistentVars.windowScale;
+            size.y = size.y * Config.settings.persistentVars.windowScale;
+
+            pos.x = Mathf.Clamp(pos.x, size.x / 2, gameSize.x - size.x / 2);
+            pos.y = Mathf.Clamp(pos.y, size.y, gameSize.y);
+            window.Position = pos;
+        }
+
+        public static void Save()
+        {
+            JsonWrapper.SaveAsJson(windowPath, windows, true);
+        }
+    }
+
+
+    public class WindowManager2 : MonoBehaviour
     {
         public Vector2 defaultBuildSettings = new Vector2(Screen.width * 0.05f, Screen.height * 0.94f);
 
         public Vector2 defaultAdvancedInfo = new Vector2(0f, Screen.height * 0.05f);
 
-        public Vector2 defaultConfig = new Vector2(10f, Screen.height - Config.windowHeight);
+        public Vector2 defaultConfig = new Vector2(10f, Screen.height - Config3.windowHeight);
 
         public Vector2 defaultWorldTime = new Vector2(Screen.width * 0.958f, Screen.height * 0.045f);
 
@@ -27,7 +96,7 @@ namespace VanillaUpgrades
 
         public string windowDir = Main.modFolder.ExtendToFile("WindowPositions.txt");
 
-        public static WindowManager inst;
+        public static WindowManager2 inst;
 
         // Keeps windows from being moved off the screen.
         public static Rect ConfineRect(Rect window)
@@ -110,7 +179,7 @@ namespace VanillaUpgrades
                 }
                 */
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 File.WriteAllText(windowDir, defaults.ToString());
                 ErrorNotification.Error("Window positions file was of an invalid format, and was reset to defaults.");
