@@ -16,7 +16,7 @@ namespace VanillaUpgrades
 
         public Vector2 advancedInfo = new Vector2(0f, Screen.height * 0.05f);
 
-        public Vector2 config = new Vector2(10f, Screen.height - Config3.windowHeight);
+        public Vector2 config = new Vector2(300, 1000);
 
         public Vector2 worldTime = new Vector2(Screen.width * 0.958f, Screen.height * 0.045f);
 
@@ -80,8 +80,6 @@ namespace VanillaUpgrades
 
         public Vector2 defaultAdvancedInfo = new Vector2(0f, Screen.height * 0.05f);
 
-        public Vector2 defaultConfig = new Vector2(10f, Screen.height - Config3.windowHeight);
-
         public Vector2 defaultWorldTime = new Vector2(Screen.width * 0.958f, Screen.height * 0.045f);
 
         public Vector2 defaultCalc = new Vector2(Screen.width - 175f, 50f);
@@ -131,8 +129,6 @@ namespace VanillaUpgrades
             defaults["buildSettings"]["y"] = defaultBuildSettings.y;
             defaults["advancedInfo"]["x"] = defaultAdvancedInfo.x;
             defaults["advancedInfo"]["y"] = defaultAdvancedInfo.y;
-            defaults["config"]["x"] = defaultConfig.x;
-            defaults["config"]["y"] = defaultConfig.y;
             defaults["worldTime"]["x"] = defaultWorldTime.x;
             defaults["worldTime"]["y"] = defaultWorldTime.y;
             defaults["dvCalc"]["x"] = defaultCalc.x;

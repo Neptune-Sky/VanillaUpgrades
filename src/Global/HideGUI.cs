@@ -24,7 +24,7 @@ namespace VanillaUpgrades
                 Config.settingsData.guiHidden = false;
             }
 
-            File.WriteAllText(Config3.configPath, Config3.settings2.ToString());
+            Config.Save();
         }
     }
 
@@ -40,7 +40,7 @@ namespace VanillaUpgrades
             if (hidden) toChange = Config.settingsData.persistentVars.opacity;
             VideoSettingsPC.main.uiOpacitySlider.value = toChange;
             Config.settingsData.guiHidden = hidden;
-            File.WriteAllText(Config3.configPath, Config3.settings2.ToString());
+            Config.Save();
         }
     }
 }

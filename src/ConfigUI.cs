@@ -34,22 +34,22 @@ namespace VanillaUpgrades
         {
             Box box = Builder.CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
-            
+
             int elementWidth = size.x - 60;
             
             Builder.CreateLabel(box, elementWidth, 50, 0, 0, "GUI");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showBuildGui, () => Config.settingsData.showBuildGui ^= true, 0, 0, "Show Build Settings");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showBuildGui, () => Config.settingsData.showBuildGui.Value ^= true, 0, 0, "Show Build Settings");
             Builder.CreateSeparator(box, elementWidth - 20);
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAdvanced, () => Config.settingsData.showAdvanced ^= true, 0, 0, "Show Advanced Info");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysCompact, () => Config.settingsData.alwaysCompact ^= true, 0, 0, "Force Compact Mode");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAdvanced, () => Config.settingsData.showAdvanced.Value ^= true, 0, 0, "Show Advanced Info");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysCompact, () => Config.settingsData.alwaysCompact.Value ^= true, 0, 0, "Force Compact Mode");
             Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showCalc, () => Config.settingsData.showCalc ^= true, 0, 0, "Show dV Calc by Default");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAverager, () => Config.settingsData.showAverager ^= true, 0, 0, "Averager Default");
             Builder.CreateSeparator(box, elementWidth - 20);
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showTime, () => Config.settingsData.showTime ^= true, 0, 0, "Show Clock While Timewarping");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.worldTime, () => Config.settingsData.worldTime ^= true, 0, 0, "Show World Time in Clock");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showTime, () => Config.settingsData.showTime.Value ^= true, 0, 0, "Show Clock While Timewarping");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.worldTime, () => Config.settingsData.worldTime.Value ^= true, 0, 0, "Show World Time in Clock");
             Builder.CreateSeparator(box, elementWidth - 20);
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysShowTime, () => Config.settingsData.alwaysShowTime ^= true, 0, 0, "Always Show World Clock");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysShowTime, () => Config.settingsData.alwaysShowTime.Value ^= true, 0, 0, "Always Show World Clock");
 
             return box.gameObject;
         }

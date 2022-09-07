@@ -46,7 +46,7 @@ namespace VanillaUpgrades
 
         public static void SlowTime()
         {
-            if (!(bool)Config3.settings2["allowTimeSlowdown"]) return;
+            if (!Config.settingsData.allowTimeSlowdown) return;
             if (timeDecelIndex <= 5) timeDecelIndex++; else return;
             double speed;
             bool defaultMessage = true;

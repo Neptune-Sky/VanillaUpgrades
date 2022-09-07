@@ -44,7 +44,7 @@ namespace VanillaUpgrades
             }
             else
             {
-                if (value > 100000000 && (bool)Config3.settings2["mmUnits"])
+                if (value > 100000000 && Config.settingsData.mmUnits)
                 {
                     return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
                 }
@@ -80,7 +80,7 @@ namespace VanillaUpgrades
                 {
                     windowRect.y = windowRect.y - (compactheight - minheight);
                 }
-                if (windowRect.y >= Screen.height - (height - 5) || windowRect.y <= 10 || (bool)Config3.settings2["alwaysCompact"])
+                if (windowRect.y >= Screen.height - (height - 5) || windowRect.y <= 10 || Config.settingsData.alwaysCompact)
                 {
 
                     windowRect.height = compactheight;
@@ -163,7 +163,7 @@ namespace VanillaUpgrades
         {
             
 
-            if (Main.menuOpen || !(bool)Config3.settings2["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
+            if (Main.menuOpen || !Config.settingsData.showAdvanced || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
 
 
             var sma = WorldManager.currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(WorldManager.currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - WorldManager.currentRocket.location.planet.Value.mass / WorldManager.currentRocket.location.Value.Radius));
@@ -204,10 +204,10 @@ namespace VanillaUpgrades
 
         public void OnGUI()
         {
-            if (Main.menuOpen || !(bool)Config3.settings2["showAdvanced"] || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
+            if (Main.menuOpen || !Config.settingsData.showAdvanced || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
 
             Rect oldRect = windowRect;
-            GUI.color = Config3.windowColor;
+            GUI.color = Config.settingsData.persistentVars.windowColor;
             windowRect = WindowManager2.ConfineRect(windowRect);
             windowRect = GUI.Window(WindowManager2.GetValidID(), windowRect, windowFunc, "Advanced");
             if (oldRect != windowRect) WindowManager2.settings["advancedInfo"]["x"] = windowRect.x; WindowManager2.settings["advancedInfo"]["y"] = windowRect.y;

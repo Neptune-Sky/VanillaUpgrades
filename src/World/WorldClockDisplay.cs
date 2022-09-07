@@ -52,7 +52,7 @@ namespace VanillaUpgrades
             bold.normal.textColor = Color.white;
             bold.alignment = TextAnchor.MiddleCenter;
 
-            if ((bool)Config3.settings2["worldTime"])
+            if (Config.settingsData.worldTime)
             {
                 GUILayout.Label("World Time:", midAlign);
                 GUILayout.Label(timestamp, bold);
@@ -73,10 +73,10 @@ namespace VanillaUpgrades
         {
             if (Main.menuOpen) return;
 
-            if (((WorldTime.main.timewarpIndex != 0 && (bool)Config3.settings2["showTime"]) || (bool)Config3.settings2["alwaysShowTime"]) && VideoSettingsPC.main.uiOpacitySlider.value != 0)
+            if (((WorldTime.main.timewarpIndex != 0 && Config.settingsData.showTime) || Config.settingsData.alwaysShowTime) && VideoSettingsPC.main.uiOpacitySlider.value != 0)
             {
                 if (subtractor == 0) subtractor = WorldTime.main.worldTime * 10000000;
-                GUI.color = Config3.windowColor;
+                GUI.color = Config.settingsData.persistentVars.windowColor;
                 Rect oldRect = windowRect;
                 windowRect = GUILayout.Window(WindowManager2.GetValidID(), windowRect, windowFunc, "World Clock", GUILayout.MaxWidth(Screen.width * 0.125f), GUILayout.MaxHeight(Screen.height * 0.06f), GUILayout.MinHeight(30));
                 windowRect = WindowManager2.ConfineRect(windowRect);

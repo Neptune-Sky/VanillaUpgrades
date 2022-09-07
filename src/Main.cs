@@ -1,13 +1,8 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using ModLoader;
-using SFS;
 using SFS.IO;
-using System.IO;
-using System.Reflection;
 using ModLoader.Helpers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades
@@ -19,9 +14,9 @@ namespace VanillaUpgrades
         public override string DisplayName => "Vanilla Upgrades";
         public override string Author => "ASoD";
         public override string MinimumGameVersionNecessary => "1.5.7";
-        public override string ModVersion => "v3.1.1";
+        public override string ModVersion => "v4.0";
         public override string Description => "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
-        public override Func<ModKeybindings> OnLoadKeybindings => MyKeybindings.Setup;
+        // public override Func<ModKeybindings> OnLoadKeybindings => MyKeybindings.Setup;
 
         public override void Early_Load()
         {
@@ -42,10 +37,15 @@ namespace VanillaUpgrades
             mainObject.SetActive(true);
         }
 
+        void UpdateSettings(SettingsData settingsData)
+        {
+            Debug.Log("change");
+        }
+
         void SubscribeToScenes()
         {
             SceneHelper.OnBuildSceneLoaded += () => buildObject = new GameObject("ASoDBuildObject", typeof(BuildSettings), typeof(DVCalc));
-            SceneHelper.OnWorldSceneLoaded += () => worldObject = new GameObject("ASoDWorldObject", typeof(WorldManager), typeof(AdvancedInfo), typeof(FaceDirection), typeof(WorldClockDisplay));
+            SceneHelper.OnWorldSceneLoaded += () => worldObject = new GameObject("ASoDWorldObject", typeof(WorldManager), typeof(AdvancedInfo), typeof(WorldClockDisplay));
         }
 
         void OnQuit()

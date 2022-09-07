@@ -86,6 +86,7 @@ namespace VanillaUpgrades
             windowRect.height = 100f * WindowManager2.scale.y;
         }
 
+        /*
         public void OnGUI()
         {
             if (Main.menuOpen || !(bool)Config3.settings2["showBuildGUI"] ||
@@ -97,6 +98,7 @@ namespace VanillaUpgrades
             if (oldRect != windowRect) WindowManager2.settings["buildSettings"]["x"] = windowRect.x;
             WindowManager2.settings["buildSettings"]["y"] = windowRect.y;
         }
+        */
 
         public static void Launch()
         {

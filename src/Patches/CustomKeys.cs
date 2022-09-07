@@ -163,28 +163,12 @@ namespace VanillaUpgrades
             // GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.ToggleTorque, new Action(ToggleTorque.toggleTorque));
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
-            {
-                FaceDirection.Mode(1);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Retrograde, delegate
-            {
-                FaceDirection.Mode(2);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_In, delegate
-            {
-                FaceDirection.Mode(3);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_Out, delegate
-            {
-                FaceDirection.Mode(4);
-            });
         }
     }
-
+    /*
     public class MyKeybindings : ModKeybindings
     {
-        KeybindingsPC.Key someKey = KeyCode.J;
+        Key someKey = KeyCode.J;
 
         public static MyKeybindings Setup()
         {
@@ -199,4 +183,5 @@ namespace VanillaUpgrades
             CreateUI_Keybinding(someKey, KeyCode.J, "Some Key");
         }
     }
+    */
 }

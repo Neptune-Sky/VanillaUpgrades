@@ -35,360 +35,14 @@
     <Reference Include="Accessibility">
       <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Accessibility.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Coffee.SoftMaskForUGUI">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Coffee.SoftMaskForUGUI.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Mono.Posix.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.WebBrowser">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Mono.WebBrowser.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="NativeShare.Runtime">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\NativeShare.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="netstandard">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\netstandard.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Newtonsoft.Json.dll</HintPath>
-      <Package>monodevelop</Package>
-    </Reference>
-    <Reference Include="Purchasing.Common">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Purchasing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerLibrary">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\ServerLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.OdinInspector.Attributes">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Sirenix.OdinInspector.Attributes.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.ComponentModel.Composition.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
       <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System.EnterpriseServices">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.EnterpriseServices.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Compression">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.IO.Compression.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Compression.FileSystem">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.IO.Compression.FileSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Net.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Runtime.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Runtime.Serialization.Formatters.Soap.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ServiceModel.Internals">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.ServiceModel.Internals.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Transactions">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Transactions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Windows.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Xml.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Xml.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RemoteConfig">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Unity.RemoteConfig.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AIModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AndroidJNIModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ClothModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.DSPGraphModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.GridModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.GridModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.InputModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.LocalizationModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PerformanceReportingModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ProfilerModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.AppleCore">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.AppleCore.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.AppleMacosStub">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.AppleMacosStub.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.AppleStub">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.AppleStub.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.Codeless">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.Codeless.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.SecurityCore">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.SecurityStub">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.SecurityStub.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.Stores">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.Stores.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.WinRTCore">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.WinRTCore.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.WinRTStub">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Purchasing.WinRTStub.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpriteShapeModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.StreamingModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SubstanceModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TerrainModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TerrainPhysicsModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.VRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.WindModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.XRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\media\seth\3c03197b-9f68-4e55-a3d1-eb791245461e\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VirtualTexturingModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.VirtualTexturingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityCurlModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.UnityCurlModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsNativeModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.UIElementsNativeModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextCoreTextEngineModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextCoreFontEngineModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.GIModule">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\UnityEngine.GIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RemoteConfig.Editor.Core">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\Unity.RemoteConfig.Editor.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <HintPath>..\..\..\Downloads\LinuxModloader\Spaceflight_Simulator_Data\Managed\System.Data.DataSetExtensions.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\0Harmony.dll</HintPath>
@@ -411,9 +65,56 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Accessibility">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Accessibility.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeShare.Runtime">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\NativeShare.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Data.DataSetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\..\..\..\..\mnt\Games\SteamLibrary\steamapps\common\Spaceflight Simulator\Spaceflight Simulator Game\Spaceflight Simulator_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Config3.cs" />
     <Compile Include="src\World\ToggleTorque.cs" />
     <Compile Include="src\World\WorldManager.cs" />
     <Compile Include="src\Build\DVCalc.cs" />
@@ -435,6 +136,7 @@
     <Compile Include="src\World\AdvancedInfo.cs" />
     <Compile Include="src\World\WorldClockDisplay.cs" />
     <Compile Include="src\Config.cs" />
+    <Compile Include="src\ConfigUI.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

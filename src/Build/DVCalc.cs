@@ -16,13 +16,13 @@ namespace VanillaUpgrades
 
         public int ispHeight = (int)(160 * WindowManager2.scale.y);
 
-        public static bool showCalc = (bool)Config3.settings2["showCalc"];
+        public static bool showCalc = Config.settingsData.showCalc;
 
         public string isp;
         public string wetMass;
         public string dryMass;
         public string result;
-        public bool showIsp = (bool)Config3.settings2["showAverager"];
+        public bool showIsp = Config.settingsData.showAverager;
         
         public void Update()
         {
@@ -327,7 +327,7 @@ namespace VanillaUpgrades
         { 
             if (showCalc && !Main.menuOpen && VideoSettingsPC.main.uiOpacitySlider.value != 0)
             {
-                GUI.color = Config3.windowColor;
+                GUI.color = Config.settingsData.persistentVars.windowColor;
                 Rect oldCalc = calcRect;
                 calcRect = GUI.Window(WindowManager2.GetValidID(), calcRect, calcFunc, "ΔV Calculator");
                 calcRect = WindowManager2.ConfineRect(calcRect);

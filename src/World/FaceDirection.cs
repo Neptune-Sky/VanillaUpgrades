@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace VanillaUpgrades
 {
+    /*
     public class FaceDirection : MonoBehaviour
     {
         public Float_Local turn_Axis = new Float_Local();
@@ -94,4 +95,5 @@ namespace VanillaUpgrades
             }
         }
     }
+    */
 }
