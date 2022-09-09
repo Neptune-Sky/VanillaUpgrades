@@ -16,8 +16,11 @@ namespace VanillaUpgrades
         
         void Start()
         {
-            errors.Insert(0, "An error occured while loading VanillaUpgrades." + Environment.NewLine + Environment.NewLine);
-            Menu.read.ShowReport(errors, () => errors.Clear());
+            if (errors.Length != 0)
+            {
+                errors.Insert(0, "An error occured while loading VanillaUpgrades." + Environment.NewLine + Environment.NewLine);
+                Menu.read.ShowReport(errors, () => errors.Clear());
+            }
         }
     }
 }

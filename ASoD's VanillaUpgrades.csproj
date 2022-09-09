@@ -54,6 +54,7 @@
     <Compile Include="src\Config.cs" />
     <Compile Include="src\ConfigUI.cs" />
     <Compile Include="src\World\AdvancedInfo.cs" />
+    <Compile Include="src\CustomUI.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -28,7 +28,7 @@ namespace VanillaUpgrades
             window.AddMenu("Units", transform1 => GetUnitsSettings(transform1, window.RecommendedContentSize));
             window.AddMenu("Misc", transform1 => GetMiscSettings(transform1, window.RecommendedContentSize));
             window.AddMenu("Cheats", transform1 => GetCheatsSettings(transform1, window.RecommendedContentSize));
-            // window.AddMenu("Windows", transform1 => GetWindowSettings(transform1, window.RecommendedContentSize));
+            window.AddMenu("Windows", transform1 => GetWindowSettings(transform1, window.RecommendedContentSize));
         }
 
         static GameObject GetGUISettings(Transform parent, Vector2Int size)
@@ -42,7 +42,7 @@ namespace VanillaUpgrades
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showBuildGui, () => Config.settingsData.showBuildGui.Value ^= true, 0, 0, "Show Build Settings");
             Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAdvanced, () => Config.settingsData.showAdvanced.Value ^= true, 0, 0, "Show Advanced Info");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysCompact, () => Config.settingsData.alwaysCompact.Value ^= true, 0, 0, "Force Compact Mode");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.horizontalMode, () => Config.settingsData.horizontalMode.Value ^= true, 0, 0, "Horizontal Mode");
             Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showCalc, () => Config.settingsData.showCalc ^= true, 0, 0, "Show dV Calc by Default");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAverager, () => Config.settingsData.showAverager ^= true, 0, 0, "Averager Default");
@@ -116,6 +116,22 @@ namespace VanillaUpgrades
             int elementWidth = size.x - 60;
 
             Builder.CreateLabel(box, elementWidth, 50, 0, 0, "Windows");
+
+            Container container = Builder.CreateContainer(box);
+            container.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
+
+            CustomUI.LeftAlignedLabel(container, elementWidth - 70, ToggleHeight, "Window Scale");
+
+            NumberInput scale = CustomUI.CreateData(1, 0.5, 2);
+            void MakeNumber(string text)
+            {
+                scale = CustomUI.Numberify(scale);
+                Config.settingsData.persistentVars.windowScale.Value = (float)scale.currentVal;
+                return;
+            }
+            scale.currentVal = Config.settingsData.persistentVars.windowScale.Value;
+            scale.textInput = Builder.CreateTextInput(container, 70, 40, 0, 0, scale.currentVal.ToString(), MakeNumber);
+
             return box.gameObject;
         }
     }
@@ -157,7 +173,7 @@ namespace VanillaUpgrades
             mainWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () => SavePosition(mainWindow.Position);
             
             // Categories Buttons
-            categoriesButtonsBox = Builder.CreateBox(mainWindow, 140, 10, opacity: 0.15f);
+            categoriesButtonsBox = Builder.CreateBox(mainWindow, 150, 10, opacity: 0.15f);
             categoriesButtonsBox.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, spacing: 10, padding: new RectOffset(10, 10, 10, 10));
             categoriesButtonsBox.gameObject.GetOrAddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize; // Vertical Auto-resizing
 
@@ -222,7 +238,7 @@ namespace VanillaUpgrades
         public void AddMenu(string name, Func<Transform, GameObject> createWindowFunc)
         {
             elements.Add((name, createWindowFunc));
-            Button selectButton = Builder.CreateButton(categoriesButtonsBox, 120, 60, 0, 0, () => SetScreen(name), name);
+            Button selectButton = Builder.CreateButton(categoriesButtonsBox, 130, 60, 0, 0, () => SetScreen(name), name);
             categoriesButtons.Add(selectButton);
         }
     }

@@ -39,14 +39,6 @@ namespace VanillaUpgrades
         void Awake()
         {
             sizeTracking = Builder.CreateHolder(Builder.SceneToAttach.BaseScene, "sizeTracking");
-            DontDestroyOnLoad(sizeTracking.gameObject);
-
-            if (!JsonWrapper.TryLoadJson(windowPath, out windows) && File.Exists(windowPath))
-            {
-                ErrorNotification.Error("An error occured while trying to load Config, so it was reset to defaults.");
-            }
-            windows = windows ?? new Windows();
-            Save();
         }
 
         void Update()
@@ -67,9 +59,12 @@ namespace VanillaUpgrades
             window.Position = pos;
         }
 
-        public static void Save()
+        public static void Save(string key, Window window)
         {
-            JsonWrapper.SaveAsJson(windowPath, windows, true);
+            if (Config.settingsData.windowsSavedPosition.ContainsKey(key))
+                Config.settingsData.windowsSavedPosition[key] = window.Position;
+            else
+                Config.settingsData.windowsSavedPosition.Add(key, window.Position);
         }
     }
 
@@ -178,7 +173,7 @@ namespace VanillaUpgrades
             catch (Exception)
             {
                 File.WriteAllText(windowDir, defaults.ToString());
-                ErrorNotification.Error("Window positions file was of an invalid format, and was reset to defaults.");
+                // ErrorNotification.Error("Window positions file was of an invalid format, and was reset to defaults.");
                 settings = defaults;
             }
 

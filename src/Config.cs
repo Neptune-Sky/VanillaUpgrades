@@ -4,6 +4,7 @@ using SFS.IO;
 using UnityEngine;
 using SFS.Parsers.Json;
 using SFS.Variables;
+using SFS.UI.ModGUI;
 
 namespace VanillaUpgrades
 {
@@ -12,7 +13,7 @@ namespace VanillaUpgrades
     {
         public float opacity = 1;
         public Color windowColor = new Color(0.007843138f, 0.09019608f, 0.18039216f, 1f);
-        public float windowScale = 1;
+        public Float_Local windowScale = new Float_Local { Value = 1 };
     }
     [Serializable]
     public class SettingsData
@@ -26,7 +27,7 @@ namespace VanillaUpgrades
 
         public Bool_Local showBuildGui = new Bool_Local { Value = true };
         public Bool_Local showAdvanced = new Bool_Local { Value = true };
-        public Bool_Local alwaysCompact = new Bool_Local();
+        public Bool_Local horizontalMode = new Bool_Local();
         public bool showCalc;
         public bool showAverager;
         public Bool_Local showTime = new Bool_Local { Value = true };
@@ -71,5 +72,7 @@ namespace VanillaUpgrades
         {
             Path.WriteText(JsonWrapper.ToJson(settingsData, true));
         }
+
+
     }
 }

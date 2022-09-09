@@ -1,10 +1,11 @@
-﻿using HarmonyLib;
+﻿using System;
+using System.Collections.Generic;
+using HarmonyLib;
 using ModLoader;
-using SFS.IO;
 using ModLoader.Helpers;
+using SFS.IO;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using System;
 
 namespace VanillaUpgrades
 {
@@ -51,9 +52,10 @@ namespace VanillaUpgrades
         void OnQuit()
         {
             Config.Save();
-            WindowManager.Save();
         }
         public static bool menuOpen;
+
+        public static bool buildSettingsPresent;
 
         public static GameObject mainObject;
 
@@ -64,5 +66,19 @@ namespace VanillaUpgrades
         public static Harmony patcher;
 
         public static FolderPath modFolder;
+    }
+
+    [HarmonyPatch(typeof(Loader), "Initialize_Load")]
+    class ModCheck
+    {
+        static void Postfix(List<Mod> ___loadedMods)
+        {
+            List<Mod> modList = ___loadedMods;
+
+            if (modList.FindIndex(e => { return e.ModNameID == "BuildSettings"; }) != -1)
+            {
+                Main.buildSettingsPresent = true;
+            }
+        }
     }
 }
