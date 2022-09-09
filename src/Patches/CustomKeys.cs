@@ -17,9 +17,9 @@ namespace VanillaUpgrades
         public static CustomKeybinds keybinds = new CustomKeybinds();
     }
 
-    public class CustomKeybinds : Settings<CustomKeybinds.DefaultData>
+    public class CustomKeybinds
     {
-        protected override string FileName => "VanillaUpgradesKeybinds";
+        //protected override string FileName => "VanillaUpgradesKeybinds";
 
         public static DefaultData custom_keys = new DefaultData();
         public class DefaultData
@@ -52,6 +52,7 @@ namespace VanillaUpgrades
 
         }
 
+        /*
         // Loads automatically(?), no need for a hook here
         protected override void OnLoad()
         {
@@ -94,7 +95,7 @@ namespace VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Retrograde, defaultData.Retrograde, "Face retrograde" });
             createTraverse.GetValue(new object[] { custom_keys.Rad_In, defaultData.Rad_In, "Face radial in" });
             createTraverse.GetValue(new object[] { custom_keys.Rad_Out, defaultData.Rad_Out, "Face radial out" });
-            */
+
 
             createSpaceTraverse.GetValue();
         }
@@ -103,8 +104,11 @@ namespace VanillaUpgrades
         {
             Save();
         }
+        */
 
     }
+
+    /*
 
     // Save hook for... Saving
     [HarmonyPatch(typeof(Settings<Data>), "Save")]
@@ -165,9 +169,12 @@ namespace VanillaUpgrades
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.ToggleTorque, new Action(ToggleTorque.toggleTorque));
         }
     }
-    /*
+    */
+
+
     public class MyKeybindings : ModKeybindings
     {
+        // protected override string FileName => "VanillaUpgradesKeybinds";
         Key someKey = KeyCode.J;
 
         public static MyKeybindings Setup()
@@ -183,5 +190,6 @@ namespace VanillaUpgrades
             CreateUI_Keybinding(someKey, KeyCode.J, "Some Key");
         }
     }
-    */
+
+
 }

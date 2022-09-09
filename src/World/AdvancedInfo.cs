@@ -1,216 +1,122 @@
-﻿using SFS;
-using SFS.UI;
+﻿using SFS.UI;
+using SFS.UI.ModGUI;
 using SFS.World;
-using System;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace VanillaUpgrades
 {
-
     public class AdvancedInfo : MonoBehaviour
     {
-        public static Rect windowRect = new Rect((float)WindowManager2.settings["advancedInfo"]["x"], (float)WindowManager2.settings["advancedInfo"]["y"], 10f, 10f);
+        public GameObject windowHolder;
+        public Window advancedInfoWindow;
+        Label apoapsis;
+        Label periapsis;
+        Label eccentricity;
+        Label angle;
 
-        public double apoapsis;
-
-        public double periapsis;
-
-        public double angle;
-
-        public double displayEcc;
-
-        public bool maximized = true;
-
-        public static AdvancedInfo instance;
-
-        public void Awake()
+        void Awake()
         {
-            instance = this;
+            windowHolder = Builder.CreateHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
+            var rect = windowHolder.gameObject.AddComponent<RectTransform>();
+            var zero = Vector2.zero;
+            rect.anchorMax = zero;
+            rect.anchorMin = zero;
+            rect.position = zero;
+
+            PlayerController.main.player.OnChange += OnPlayerChange;
+            Config.settingsData.showAdvanced.OnChange += OnToggle;
+            ShowGUI();
+
+            advancedInfoWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () => WindowManager.ClampWindow(advancedInfoWindow);
+
+            if (!Config.settingsData.showAdvanced) windowHolder.SetActive(false);
         }
 
-        public static string displayify(double value)
+        void OnPlayerChange()
         {
-            if (double.IsNegativeInfinity(value))
+            if (WorldManager.currentRocket == null)
             {
-                return "Escape";
+                windowHolder.SetActive(false);
+                return;
             }
-            if (double.IsNaN(value))
+            if (Config.settingsData.showAdvanced) windowHolder.SetActive(true);
+        }
+
+        void OnToggle()
+        {
+            windowHolder.SetActive(Config.settingsData.showAdvanced);
+        }
+
+        void ShowGUI()
+        {
+            Vector2 pos = Config.settingsData.windowsSavedPosition.GetValueOrDefault("AdvancedInfoWindow", new Vector2(200, 1200));
+            advancedInfoWindow = Builder.CreateWindow(windowHolder.gameObject.transform, Builder.GetRandomID(), 250, 350, (int)pos.x, (int)pos.y, true, true, 1, string.Empty);
+
+            advancedInfoWindow.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperLeft, 0, new RectOffset(5, 0, 3, 3));
+
+            var apoapsisLabel = Builder.CreateLabel(advancedInfoWindow, 150, 30, text: "Apoapsis:");
+            apoapsisLabel.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+            apoapsis = Builder.CreateLabel(advancedInfoWindow, 175, 30, text: "");
+            apoapsis.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+
+
+            Builder.CreateSpace(advancedInfoWindow, 0, 10);
+
+            var periapsisLabel = Builder.CreateLabel(advancedInfoWindow, 150, 30, text: "Periapsis:");
+            periapsisLabel.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+            periapsis = Builder.CreateLabel(advancedInfoWindow, 175, 30, text: "");
+            periapsis.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+
+            Builder.CreateSpace(advancedInfoWindow, 0, 10);
+
+            var eccentricityLabel = Builder.CreateLabel(advancedInfoWindow, 150, 30, text: "Eccentricity:");
+            eccentricityLabel.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+            eccentricity = Builder.CreateLabel(advancedInfoWindow, 175, 30, text: "");
+            eccentricity.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+
+            Builder.CreateSpace(advancedInfoWindow, 0, 10);
+
+            var angleLabel = Builder.CreateLabel(advancedInfoWindow, 150, 30, text: "Angle:");
+            angleLabel.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+            angle = Builder.CreateLabel(advancedInfoWindow, 175, 30, text: "");
+            angle.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+        }
+
+        void ScaledWidth(Label label)
+        {
+            label.Size = new Vector2(label.Text.Length * 12, 30);
+        }
+
+        void Update()
+        {
+            if (WorldManager.currentRocket == null) return;
+
+
+
+            if (WorldManager.currentRocket.physics.GetTrajectory().paths[0] is Orbit orbit)
             {
-                return "Error";
-            }
-            if (value < 10000)
-            {
-                return value.Round(0.1).ToString(1, true) + "m";
+                apoapsis.Text = (orbit.apoapsis - WorldManager.currentRocket.location.planet.Value.Radius).ToDistanceString();
+
+                double truePeriapsis = 
+                orbit.periapsis < WorldManager.currentRocket.location.planet.Value.Radius 
+                    ? 0 : (orbit.periapsis - WorldManager.currentRocket.location.planet.Value.Radius);
+                periapsis.Text = truePeriapsis.ToDistanceString();
+
+                eccentricity.Text = orbit.ecc.ToString("F3");
             }
             else
             {
-                if (value > 100000000 && Config.settingsData.mmUnits)
-                {
-                    return (value / 1000000).Round(0.1).ToString(1, true) + "Mm";
-                }
-                return (value / 1000).Round(0.1).ToString(1, true) + "km";
+                apoapsis.Text = "0.0m";
+                periapsis.Text = "0.0m";
+                eccentricity.Text = "0.000";
             }
-        }
-
-        public void windowFunc(int windowID)
-        {
-            bool oldMax = maximized;
-
-            maximized = GUI.Toggle(new Rect(1, -1, 22, 22), maximized, "");
-
-            float height = (220 * WindowManager2.scale.x).Round(1);
-            float width = (150 * WindowManager2.scale.y).Round(1);
-            float compactheight = (115 * WindowManager2.scale.x).Round(1);
-            float compactwidth = (200 * WindowManager2.scale.y).Round(1);
-            float minheight = (42 * WindowManager2.scale.y).Round(1);
-
-            if (maximized)
-            {
-                GUIStyle rightAlign = new GUIStyle();
-                rightAlign.alignment = TextAnchor.LowerRight;
-                rightAlign.normal.textColor = Color.white;
-                rightAlign.fontSize = (int)(14 * WindowManager2.scale.y);
-
-                GUIStyle leftAlign = new GUIStyle();
-                leftAlign.alignment = TextAnchor.LowerLeft;
-                leftAlign.normal.textColor = Color.white;
-                leftAlign.fontSize = (int)(14 * WindowManager2.scale.y);
-
-                if (oldMax == false && maximized == true && windowRect.y >= Screen.height - (height - 5))
-                {
-                    windowRect.y = windowRect.y - (compactheight - minheight);
-                }
-                if (windowRect.y >= Screen.height - (height - 5) || windowRect.y <= 10 || Config.settingsData.alwaysCompact)
-                {
-
-                    windowRect.height = compactheight;
-                    windowRect.width = compactwidth;
-
-                    
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("Apoapsis:", leftAlign);
-                    GUILayout.Label(displayify(apoapsis), rightAlign);
-                    GUILayout.EndHorizontal();
-                    GUILayout.Space(8 * WindowManager2.scale.y);
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("Periapsis:", leftAlign);
-                    GUILayout.Label(displayify(periapsis), rightAlign);
-                    GUILayout.EndHorizontal();
-                    GUILayout.Space(8 * WindowManager2.scale.y);
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("Eccentricity:", leftAlign);
-                    GUILayout.Label(displayifyEcc(displayEcc), rightAlign);
-                    GUILayout.EndHorizontal();
-                    GUILayout.Space(8 * WindowManager2.scale.y);
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("Angle:", leftAlign);
-                    GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°", rightAlign);
-                    GUILayout.EndHorizontal();
-                }
-                else
-                {
-                    windowRect.height = height;
-                    windowRect.width = width;
-
-                    GUILayout.Label("Apoapsis:", leftAlign);
-                    GUILayout.Space(5 * WindowManager2.scale.y);
-                    GUILayout.Label(displayify(apoapsis), leftAlign);
-                    GUILayout.Space(13 * WindowManager2.scale.y);
-
-                    GUILayout.Label("Periapsis:", leftAlign);
-                    GUILayout.Space(5 * WindowManager2.scale.y);
-                    GUILayout.Label(displayify(periapsis), leftAlign);
-                    GUILayout.Space(13 * WindowManager2.scale.y);
-
-                    GUILayout.Label("Eccentricity:", leftAlign);
-                    GUILayout.Space(5 * WindowManager2.scale.y);
-                    GUILayout.Label(displayifyEcc(displayEcc), leftAlign);
-                    GUILayout.Space(13 * WindowManager2.scale.y);
-
-                    GUILayout.Label("Angle:", leftAlign);
-                    GUILayout.Space(5 * WindowManager2.scale.y);
-                    GUILayout.Label(angle.Round(0.1).ToString(1, true) + "°", leftAlign);
-                }
-
-                
-
-                
-            }
-            else
-            {
-                if (oldMax == true && maximized == false && windowRect.y >= Screen.height - (height - 5))
-                {
-                    windowRect.y = windowRect.y + (compactheight - minheight);
-                }
-
-                windowRect.height = minheight;
-                windowRect.width = width;
-            }
-
-            GUI.DragWindow();
-        }
-
-        public string displayifyEcc(double value)
-        {
-            if (value > 1000000 || double.IsNaN(value)) return "Error";
-            return value.Round(0.001).ToString(3, true);
-        }
-        public void Update()
-        {
-            
-
-            if (Main.menuOpen || !Config.settingsData.showAdvanced || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
-
-
-            var sma = WorldManager.currentRocket.location.planet.Value.mass / -(2.0 * (Math.Pow(WorldManager.currentRocket.location.velocity.Value.magnitude, 2.0) / 2.0 - WorldManager.currentRocket.location.planet.Value.mass / WorldManager.currentRocket.location.Value.Radius));
-            Double3 @double = Double3.Cross(WorldManager.currentRocket.location.position, WorldManager.currentRocket.location.velocity);
-            Double2 double2 = (Double2)(Double3.Cross((Double3)WorldManager.currentRocket.location.velocity.Value, @double) / WorldManager.currentRocket.location.planet.Value.mass) - WorldManager.currentRocket.location.position.Value.normalized;
-            var ecc = double2.magnitude;
-            displayEcc = ecc;
-
-
-            apoapsis = (Kepler.GetApoapsis(sma, ecc) - WorldManager.currentRocket.location.planet.Value.Radius);
-            periapsis = (Kepler.GetPeriapsis(sma, ecc) - WorldManager.currentRocket.location.planet.Value.Radius);
-
-            if (apoapsis == double.PositiveInfinity)
-            {
-
-                if (WorldManager.currentRocket.physics.location.velocity.Value.normalized.magnitude > 0)
-                {
-                    apoapsis = double.NegativeInfinity;
-                }
-                else
-                {
-                    apoapsis = 0;
-                }
-
-            }
-            if (periapsis < 0) { periapsis = 0; }
-
-
-
 
             var trueAngle = WorldManager.currentRocket.partHolder.transform.eulerAngles.z;
 
-            if (trueAngle > 180) { angle = 360 - trueAngle; }
-            if (trueAngle < 180) { angle = -trueAngle; }
-
-
-        }
-
-        public void OnGUI()
-        {
-            if (Main.menuOpen || !Config.settingsData.showAdvanced || VideoSettingsPC.main.uiOpacitySlider.value == 0 || WorldManager.currentRocket == null) return;
-
-            Rect oldRect = windowRect;
-            GUI.color = Config.settingsData.persistentVars.windowColor;
-            windowRect = WindowManager2.ConfineRect(windowRect);
-            windowRect = GUI.Window(WindowManager2.GetValidID(), windowRect, windowFunc, "Advanced");
-            if (oldRect != windowRect) WindowManager2.settings["advancedInfo"]["x"] = windowRect.x; WindowManager2.settings["advancedInfo"]["y"] = windowRect.y;
+            if (trueAngle > 180) angle.Text = (360 - trueAngle).ToString("F1") + "°";
+            else angle.Text = (-trueAngle).ToString("F1") + "°";
         }
     }
 }

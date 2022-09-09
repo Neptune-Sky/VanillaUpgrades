@@ -28,6 +28,7 @@ namespace VanillaUpgrades
             window.AddMenu("Units", transform1 => GetUnitsSettings(transform1, window.RecommendedContentSize));
             window.AddMenu("Misc", transform1 => GetMiscSettings(transform1, window.RecommendedContentSize));
             window.AddMenu("Cheats", transform1 => GetCheatsSettings(transform1, window.RecommendedContentSize));
+            // window.AddMenu("Windows", transform1 => GetWindowSettings(transform1, window.RecommendedContentSize));
         }
 
         static GameObject GetGUISettings(Transform parent, Vector2Int size)
@@ -100,10 +101,21 @@ namespace VanillaUpgrades
             int elementWidth = size.x - 60;
             
             Builder.CreateLabel(box, elementWidth, 50, 0, 0, "Cheats");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.allowTimeSlowdown, () => Config.settingsData.allowTimeSlowdown ^= true, 0, 0, "Allow Time Slowdown");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.allowTimeSlowdown, () => Config.settingsData.allowTimeSlowdown.Value ^= true, 0, 0, "Allow Time Slowdown");
             Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.higherPhysicsWarp, () => Config.settingsData.higherPhysicsWarp ^= true, 0, 0, "Higher Physics Timewarps");
 
+            return box.gameObject;
+        }
+
+        static GameObject GetWindowSettings(Transform parent, Vector2Int size)
+        {
+            Box box = Builder.CreateBox(parent, size.x, size.y);
+            box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
+
+            int elementWidth = size.x - 60;
+
+            Builder.CreateLabel(box, elementWidth, 50, 0, 0, "Windows");
             return box.gameObject;
         }
     }
@@ -140,7 +152,7 @@ namespace VanillaUpgrades
         void BuildBase(int width, int height, int posX, int posY, string title, Builder.SceneToAttach attachMode)
         {
             // Window
-            mainWindow = Builder.CreateWindow(holder.transform, windowID, width, height, posX, posY, true, true, 1, title);
+            mainWindow = Builder.CreateWindow(holder.transform, windowID, width, height, posX, posY, false, true, 1, title);
             mainWindow.CreateLayoutGroup(Type.Horizontal, TextAnchor.UpperLeft, padding: new RectOffset(20, 20, 20, 20));
             mainWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () => SavePosition(mainWindow.Position);
             
@@ -164,7 +176,7 @@ namespace VanillaUpgrades
         public void Enable()
         {
             if (elements.Count == 0)
-                SetScreen(String.Empty);
+                SetScreen(string.Empty);
             else
                 SetScreen(elements[0].name);
             holder.SetActive(true);

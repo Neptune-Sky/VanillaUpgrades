@@ -75,8 +75,22 @@ namespace VanillaUpgrades
             WorldTime.main.SetState(speed, true, defaultMessage);
             if (!defaultMessage) MsgDrawer.main.Log("Time frozen");
         }
+
+        public static void ToggleChange()
+        {
+            if (!Config.settingsData.allowTimeSlowdown && timeDecelIndex != 0)
+            {
+                WorldTime.main.SetState(1, true, false);
+                timeDecelIndex = 0;
+            }
+
+            if (timeDecelIndex != 0 && WorldTime.main.timewarpIndex != 0)
+            {
+                timeDecelIndex = 0;
+            }
+        }
     }
-    public class TimeManipulation : MonoBehaviour
+    public static class TimeManipulation
     {
         public static void StopTimewarp(bool showmsg)
         {

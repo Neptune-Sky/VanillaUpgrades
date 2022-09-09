@@ -4,6 +4,7 @@ using SFS.IO;
 using ModLoader.Helpers;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System;
 
 namespace VanillaUpgrades
 {
@@ -21,7 +22,7 @@ namespace VanillaUpgrades
         public override void Early_Load()
         {
             main = this;
-            modFolder = new FolderPath(ModFolder);
+            modFolder = new FolderPath(base.ModFolder);
             patcher = new Harmony("mods.ASoD.VanUp");
             patcher.PatchAll();
             SubscribeToScenes();
@@ -37,15 +38,14 @@ namespace VanillaUpgrades
             mainObject.SetActive(true);
         }
 
-        void UpdateSettings(SettingsData settingsData)
-        {
-            Debug.Log("change");
-        }
-
         void SubscribeToScenes()
         {
             SceneHelper.OnBuildSceneLoaded += () => buildObject = new GameObject("ASoDBuildObject", typeof(BuildSettings), typeof(DVCalc));
-            SceneHelper.OnWorldSceneLoaded += () => worldObject = new GameObject("ASoDWorldObject", typeof(WorldManager), typeof(AdvancedInfo), typeof(WorldClockDisplay));
+            SceneHelper.OnWorldSceneLoaded += () =>
+            {
+                WorldManager.Setup();
+                worldObject = new GameObject("ASoDWorldObject", typeof(AdvancedInfo), typeof(WorldClockDisplay));
+            };
         }
 
         void OnQuit()

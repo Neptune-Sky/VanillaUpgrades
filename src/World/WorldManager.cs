@@ -9,7 +9,7 @@ using SFS.World;
 
 namespace VanillaUpgrades
 {
-    public class WorldManager : MonoBehaviour
+    public class WorldManager
     {
         public static Rocket currentRocket = (PlayerController.main.player.Value as Rocket);
 
@@ -19,27 +19,10 @@ namespace VanillaUpgrades
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 
-        public void Update()
+        public static void Setup()
         {
-            if (!Config.settingsData.allowTimeSlowdown && TimeDecelMain.timeDecelIndex != 0)
-            {
-                WorldTime.main.SetState(1, true, false);
-                TimeDecelMain.timeDecelIndex = 0;
-            }
-
-            if (TimeDecelMain.timeDecelIndex != 0 && WorldTime.main.timewarpIndex != 0)
-            {
-                TimeDecelMain.timeDecelIndex = 0;
-            }
-
-            if (PlayerController.main.player.Value == null)
-            {
-                currentRocket = null;
-                return;
-            } else
-            {
-                currentRocket = (PlayerController.main.player.Value as Rocket);
-            }
+            PlayerController.main.player.OnChange += () => currentRocket = (PlayerController.main.player.Value as Rocket);
+            Config.settingsData.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
         }
     }
 }

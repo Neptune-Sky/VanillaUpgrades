@@ -47,13 +47,13 @@ namespace VanillaUpgrades
         public bool moreCameraMove = true;
 
         // Cheats
-        public bool allowTimeSlowdown;
+        public Bool_Local allowTimeSlowdown = new Bool_Local();
         public bool higherPhysicsWarp;
     }
 
     public static class Config
     {
-        static readonly FilePath Path = Main.modFolder.ExtendToFile("Config2.txt");
+        static readonly FilePath Path = Main.modFolder.ExtendToFile("Config.txt");
         
         public static void Load()
         {

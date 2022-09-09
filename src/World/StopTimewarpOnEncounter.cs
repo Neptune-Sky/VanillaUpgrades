@@ -1,10 +1,7 @@
 ﻿using HarmonyLib;
 using SFS.Achievements;
-using SFS.UI;
 using SFS.World;
 using SFS.WorldBase;
-using System;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {
