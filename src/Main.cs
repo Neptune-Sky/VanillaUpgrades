@@ -1,12 +1,10 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using ModLoader;
-using SFS;
-using SFS.IO;
-using System.IO;
-using System.Reflection;
 using ModLoader.Helpers;
+using SFS.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades
 {
@@ -17,40 +15,49 @@ namespace VanillaUpgrades
         public override string DisplayName => "Vanilla Upgrades";
         public override string Author => "ASoD";
         public override string MinimumGameVersionNecessary => "1.5.7";
-        public override string ModVersion => "v3.1.1";
+        public override string ModVersion => "v4.0";
         public override string Description => "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
+        // public override Func<ModKeybindings> OnLoadKeybindings => MyKeybindings.Setup;
 
         public override void Early_Load()
         {
             main = this;
-            modFolder = new FolderPath(ModFolder);
+            modFolder = new FolderPath(base.ModFolder);
             patcher = new Harmony("mods.ASoD.VanUp");
             patcher.PatchAll();
             SubscribeToScenes();
             Application.quitting += OnQuit;
+            Config.Load();
         }
 
         public override void Load()
         {
-            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(Config), typeof(ErrorNotification));
+            ConfigUI.Setup();
+            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
-            Config.settings["persistentVars"]["opacity"] = VideoSettingsPC.main.uiOpacitySlider.value;
-
         }
 
         void SubscribeToScenes()
         {
-            SceneHelper.OnBuildSceneLoaded += () => buildObject = new GameObject("ASoDBuildObject", typeof(BuildSettings), typeof(DVCalc));
-            SceneHelper.OnWorldSceneLoaded += () => worldObject = new GameObject("ASoDWorldObject", typeof(WorldManager), typeof(AdvancedInfo), typeof(FaceDirection), typeof(WorldClockDisplay));
+            SceneHelper.OnBuildSceneLoaded += () =>
+            {
+                BuildSettings.Setup();
+            };
+            SceneHelper.OnWorldSceneLoaded += () =>
+            {
+                WorldManager.Setup();
+                worldObject = new GameObject("ASoDWorldObject", typeof(AdvancedInfo), typeof(WorldClockDisplay));
+            };
         }
 
         void OnQuit()
         {
-            File.WriteAllText(WindowManager.inst.windowDir, WindowManager.settings.ToString());
+            Config.Save();
         }
-
         public static bool menuOpen;
+
+        public static bool buildSettingsPresent;
 
         public static GameObject mainObject;
 
@@ -61,5 +68,20 @@ namespace VanillaUpgrades
         public static Harmony patcher;
 
         public static FolderPath modFolder;
+    }
+
+    [HarmonyPatch(typeof(Loader), "Initialize_Load")]
+    class ModCheck
+    {
+        static void Postfix(List<Mod> ___loadedMods)
+        {
+            List<Mod> modList = ___loadedMods;
+
+            if (modList.FindIndex(e => { return e.ModNameID == "BuildSettings"; }) != -1)
+            {
+                Main.buildSettingsPresent = true;
+                Debug.Log("VanillaUpgrades: BuildSettings mod was detected, disabling own Build Settings features to avoid conflicts.");
+            }
+        }
     }
 }

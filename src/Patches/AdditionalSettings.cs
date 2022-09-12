@@ -9,7 +9,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (!(bool)Config.settings["explosionShake"])
+            if (!Config.settingsData.explosionShake)
             {
                 return false;
             }
@@ -27,7 +27,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix()
         {
-            if (!(bool)Config.settings["explosions"])
+            if (!Config.settingsData.explosions)
             {
                 return false;
             }
@@ -41,24 +41,9 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix()
         {
-            if (!(bool)Config.settings["explosions"])
+            if (!Config.settingsData.explosions)
             {
                 return true;
-            }
-            return true;
-        }
-    }
-
-    [HarmonyPatch(typeof(PlayerController), "TrackPlayer")]
-    public class StopShake
-    {
-        [HarmonyPrefix]
-        static bool Prefix()
-        {
-            if (!(bool)Config.settings["shakeEffects"])
-            {
-                WorldView.main.SetViewLocation(PlayerController.main.player.Value.location.Value);
-                return false;
             }
             return true;
         }

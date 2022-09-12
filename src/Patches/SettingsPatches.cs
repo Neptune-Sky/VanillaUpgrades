@@ -1,11 +1,7 @@
 ﻿using HarmonyLib;
-using Newtonsoft.Json.Linq;
 using SFS;
 using SFS.Builds;
 using SFS.UI;
-using System;
-using System.IO;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {
@@ -15,9 +11,9 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix(BasicMenu __instance)
         {
-            if (__instance.GetComponent<VideoSettingsPC>())
+            if (__instance.gameObject.HasComponent<VideoSettingsPC>())
             {
-                Config.showSettings = true;
+                 ConfigUI.window.Enable();
             }
             Main.menuOpen = true;
         }
@@ -29,12 +25,12 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix()
         {
-            Config.showSettings = false;
+            ConfigUI.window.Disable();
             Main.menuOpen = false;
-            File.WriteAllText(Config.configPath, Config.settings.ToString());
+            Config.Save();
             if (Main.buildObject != null)
             {
-                if ((bool)Config.settings["moreCameraZoom"])
+                if (Config.settingsData.moreCameraZoom)
                 {
                     if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
                     BuildManager.main.buildCamera.maxCameraDistance = 300;
@@ -47,7 +43,6 @@ namespace VanillaUpgrades
                     BuildManager.main.buildCamera.minCameraDistance = 10f;
                 }
             }
-            Config.windowColor = new Color((float)Config.settings["persistentVars"]["windowColor"]["r"], (float)Config.settings["persistentVars"]["windowColor"]["g"], (float)Config.settings["persistentVars"]["windowColor"]["b"], VideoSettingsPC.main.uiOpacitySlider.value);
         }
 
     }

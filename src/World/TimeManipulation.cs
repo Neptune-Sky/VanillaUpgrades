@@ -1,10 +1,6 @@
 ﻿using HarmonyLib;
-using SFS.Achievements;
 using SFS.UI;
 using SFS.World;
-using SFS.WorldBase;
-using System;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {
@@ -46,7 +42,7 @@ namespace VanillaUpgrades
 
         public static void SlowTime()
         {
-            if (!(bool)Config.settings["allowTimeSlowdown"]) return;
+            if (!Config.settingsData.allowTimeSlowdown) return;
             if (timeDecelIndex <= 5) timeDecelIndex++; else return;
             double speed;
             bool defaultMessage = true;
@@ -75,8 +71,22 @@ namespace VanillaUpgrades
             WorldTime.main.SetState(speed, true, defaultMessage);
             if (!defaultMessage) MsgDrawer.main.Log("Time frozen");
         }
+
+        public static void ToggleChange()
+        {
+            if (!Config.settingsData.allowTimeSlowdown && timeDecelIndex != 0)
+            {
+                WorldTime.main.SetState(1, true, false);
+                timeDecelIndex = 0;
+            }
+
+            if (timeDecelIndex != 0 && WorldTime.main.timewarpIndex != 0)
+            {
+                timeDecelIndex = 0;
+            }
+        }
     }
-    public class TimeManipulation : MonoBehaviour
+    public static class TimeManipulation
     {
         public static void StopTimewarp(bool showmsg)
         {

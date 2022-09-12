@@ -1,10 +1,7 @@
 ﻿using HarmonyLib;
 using SFS.Achievements;
-using SFS.UI;
 using SFS.World;
 using SFS.WorldBase;
-using System;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {
@@ -14,7 +11,7 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix(Planet planet, Planet planet_Old)
         {
-            if (planet.parentBody == planet_Old && (bool)Config.settings["stopTimewarpOnEncounter"])
+            if (planet.parentBody == planet_Old && Config.settingsData.stopTimewarpOnEncounter)
             {
                 WorldTime.main.SetState(2, false, false);
                 
