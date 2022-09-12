@@ -34,7 +34,6 @@
   <ItemGroup>
     <Compile Include="src\World\ToggleTorque.cs" />
     <Compile Include="src\World\WorldManager.cs" />
-    <Compile Include="src\Build\DVCalc.cs" />
     <Compile Include="src\ErrorNotification.cs" />
     <Compile Include="src\World\FaceDirection.cs" />
     <Compile Include="src\Global\HideGUI.cs" />

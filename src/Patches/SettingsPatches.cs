@@ -1,12 +1,7 @@
 ﻿using HarmonyLib;
-using Newtonsoft.Json.Linq;
 using SFS;
-using SFS.Parsers.Json;
 using SFS.Builds;
 using SFS.UI;
-using System;
-using System.IO;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {

@@ -39,8 +39,12 @@ namespace VanillaUpgrades
             int elementWidth = size.x - 60;
             
             Builder.CreateLabel(box, elementWidth, 50, 0, 0, "GUI");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showBuildGui, () => Config.settingsData.showBuildGui.Value ^= true, 0, 0, "Show Build Settings");
-            Builder.CreateSeparator(box, elementWidth - 20);
+            if (!Main.buildSettingsPresent)
+            {
+                Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showBuildGui, () => Config.settingsData.showBuildGui.Value ^= true, 0, 0, "Show Build Settings");
+                Builder.CreateSeparator(box, elementWidth - 20);
+            }
+
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAdvanced, () => Config.settingsData.showAdvanced.Value ^= true, 0, 0, "Show Advanced Info");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.horizontalMode, () => Config.settingsData.horizontalMode.Value ^= true, 0, 0, "Horizontal Mode");
             Builder.CreateSeparator(box, elementWidth - 20);
@@ -48,8 +52,7 @@ namespace VanillaUpgrades
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAverager, () => Config.settingsData.showAverager ^= true, 0, 0, "Averager Default");
             Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showTime, () => Config.settingsData.showTime.Value ^= true, 0, 0, "Show Clock While Timewarping");
-            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.worldTime, () => Config.settingsData.worldTime.Value ^= true, 0, 0, "Show World Time in Clock");
-            Builder.CreateSeparator(box, elementWidth - 20);
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showWorldTime, () => Config.settingsData.showWorldTime.Value ^= true, 0, 0, "Show World Time in Clock");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysShowTime, () => Config.settingsData.alwaysShowTime.Value ^= true, 0, 0, "Always Show World Clock");
 
             return box.gameObject;
@@ -122,7 +125,7 @@ namespace VanillaUpgrades
 
             CustomUI.LeftAlignedLabel(container, elementWidth - 70, ToggleHeight, "Window Scale");
 
-            NumberInput scale = CustomUI.CreateData(1, 0.5, 2);
+            NumberInput scale = CustomUI.CreateData(1, 0.5, 2, 4);
             void MakeNumber(string text)
             {
                 scale = CustomUI.Numberify(scale);
@@ -161,8 +164,8 @@ namespace VanillaUpgrades
             holder.SetActive(false);
 
             this.uniqueName = uniqueName;
-            Vector2 position = Config.settingsData.windowsSavedPosition.GetValueOrDefault(uniqueName, new Vector2(posX, posY));
-            BuildBase(width, height, (int)position.x, (int)position.y, title, attachMode);
+            Vector2Int position = Config.settingsData.windowsSavedPosition.GetValueOrDefault(uniqueName, new Vector2Int(posX, posY));
+            BuildBase(width, height, position.x, position.y, title, attachMode);
         }
 
         void BuildBase(int width, int height, int posX, int posY, string title, Builder.SceneToAttach attachMode)
@@ -170,7 +173,7 @@ namespace VanillaUpgrades
             // Window
             mainWindow = Builder.CreateWindow(holder.transform, windowID, width, height, posX, posY, false, true, 1, title);
             mainWindow.CreateLayoutGroup(Type.Horizontal, TextAnchor.UpperLeft, padding: new RectOffset(20, 20, 20, 20));
-            mainWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () => SavePosition(mainWindow.Position);
+            mainWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () => WindowManager.Save(uniqueName, mainWindow);
             
             // Categories Buttons
             categoriesButtonsBox = Builder.CreateBox(mainWindow, 150, 10, opacity: 0.15f);
@@ -225,14 +228,6 @@ namespace VanillaUpgrades
                     button.gameObject.GetComponent<ButtonPC>().SetSelected(false);
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(currentDataScreen.transform as RectTransform);
-        }
-
-        void SavePosition(Vector2 position)
-        {
-            if (Config.settingsData.windowsSavedPosition.ContainsKey(uniqueName))
-                Config.settingsData.windowsSavedPosition[uniqueName] = position;
-            else 
-                Config.settingsData.windowsSavedPosition.Add(uniqueName, position);
         }
         
         public void AddMenu(string name, Func<Transform, GameObject> createWindowFunc)

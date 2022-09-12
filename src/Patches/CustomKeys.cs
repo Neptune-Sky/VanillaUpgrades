@@ -17,9 +17,9 @@ namespace VanillaUpgrades
         public static CustomKeybinds keybinds = new CustomKeybinds();
     }
 
-    public class CustomKeybinds
+    public class CustomKeybinds : Settings<CustomKeybinds.DefaultData>
     {
-        //protected override string FileName => "VanillaUpgradesKeybinds";
+        protected override string FileName => "VanillaUpgradesKeybinds";
 
         public static DefaultData custom_keys = new DefaultData();
         public class DefaultData
@@ -28,7 +28,7 @@ namespace VanillaUpgrades
 
             public Key Toggle_Symmetry = KeyCode.J;
 
-            public Key Toggle_Interior = KeyCode.K;      
+            public Key Toggle_Interior = KeyCode.K;
 
             public Key Launch = KeyCode.L;
 
@@ -52,7 +52,6 @@ namespace VanillaUpgrades
 
         }
 
-        /*
         // Loads automatically(?), no need for a hook here
         protected override void OnLoad()
         {
@@ -79,7 +78,7 @@ namespace VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Toggle_Symmetry, defaultData.Toggle_Symmetry, "Toggle symmetry mode" });
             createTraverse.GetValue(new object[] { custom_keys.Toggle_Interior, defaultData.Toggle_Interior, "Toggle interior view" });
             createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
-            createTraverse.GetValue(new object[] { custom_keys.CalcToggle, defaultData.CalcToggle, "Toggle ΔV Calulator" });
+            // createTraverse.GetValue(new object[] { custom_keys.CalcToggle, defaultData.CalcToggle, "Toggle ΔV Calulator" });
             createSpaceTraverse.GetValue();
             createTextTraverse.GetValue("World View");
             createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
@@ -95,7 +94,7 @@ namespace VanillaUpgrades
             createTraverse.GetValue(new object[] { custom_keys.Retrograde, defaultData.Retrograde, "Face retrograde" });
             createTraverse.GetValue(new object[] { custom_keys.Rad_In, defaultData.Rad_In, "Face radial in" });
             createTraverse.GetValue(new object[] { custom_keys.Rad_Out, defaultData.Rad_Out, "Face radial out" });
-
+            */
 
             createSpaceTraverse.GetValue();
         }
@@ -104,11 +103,8 @@ namespace VanillaUpgrades
         {
             Save();
         }
-        */
 
     }
-
-    /*
 
     // Save hook for... Saving
     [HarmonyPatch(typeof(Settings<Data>), "Save")]
@@ -144,12 +140,12 @@ namespace VanillaUpgrades
         {
             KeysNode keysNode = BuildManager.main.build_Input.keysNode;
 
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, () => BuildSettings.Launch());
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Symmetry, () => BuildManager.main.ToggleSymmetryMode());
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Interior, () => InteriorManager.main.ToggleInteriorView());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, BuildSettings.Launch);
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Symmetry, BuildManager.main.ToggleSymmetryMode);
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Interior, InteriorManager.main.ToggleInteriorView);
 
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, () => OpacityChanger.HideUI());
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.CalcToggle, () => DVCalc.toggleCalc());
+            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, OpacityChanger.HideUI);
+            // keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.CalcToggle, DVCalc.toggleCalc);
         }
     }
 
@@ -167,11 +163,28 @@ namespace VanillaUpgrades
             // GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
             GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.ToggleTorque, new Action(ToggleTorque.toggleTorque));
+            /*
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
+            {
+                FaceDirection.Mode(1);
+            });
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Retrograde, delegate
+            {
+                FaceDirection.Mode(2);
+            });
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_In, delegate
+            {
+                FaceDirection.Mode(3);
+            });
+            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_Out, delegate
+            {
+                FaceDirection.Mode(4);
+            });
+            */
         }
     }
-    */
 
-
+    /*
     public class MyKeybindings : ModKeybindings
     {
         // protected override string FileName => "VanillaUpgradesKeybinds";
@@ -190,6 +203,7 @@ namespace VanillaUpgrades
             CreateUI_Keybinding(someKey, KeyCode.J, "Some Key");
         }
     }
+    */
 
 
 }

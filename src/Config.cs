@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFS.IO;
-using UnityEngine;
 using SFS.Parsers.Json;
 using SFS.Variables;
-using SFS.UI.ModGUI;
+using UnityEngine;
 
 namespace VanillaUpgrades
 {
@@ -23,7 +22,7 @@ namespace VanillaUpgrades
         public bool guiHidden;
 
         // GUI
-        public Dictionary<string, Vector2> windowsSavedPosition = new Dictionary<string, Vector2>(); //name MUST be unique
+        public Dictionary<string, Vector2Int> windowsSavedPosition = new Dictionary<string, Vector2Int>(); //name MUST be unique
 
         public Bool_Local showBuildGui = new Bool_Local { Value = true };
         public Bool_Local showAdvanced = new Bool_Local { Value = true };
@@ -31,7 +30,7 @@ namespace VanillaUpgrades
         public bool showCalc;
         public bool showAverager;
         public Bool_Local showTime = new Bool_Local { Value = true };
-        public Bool_Local worldTime = new Bool_Local { Value = true };
+        public Bool_Local showWorldTime = new Bool_Local { Value = true };
         public Bool_Local alwaysShowTime = new Bool_Local();
 
         // Units

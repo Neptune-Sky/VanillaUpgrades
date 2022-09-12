@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using HarmonyLib;
-using SFS.World;
-using SFS;
+﻿using HarmonyLib;
 using SFS.UI;
+using SFS.World;
 
 namespace VanillaUpgrades
 {

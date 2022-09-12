@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using SFS;
-using SFS.World;
+﻿using SFS.World;
 
 namespace VanillaUpgrades
 {
@@ -21,7 +14,7 @@ namespace VanillaUpgrades
 
         public static void Setup()
         {
-            PlayerController.main.player.OnChange += () => currentRocket = (PlayerController.main.player.Value as Rocket);
+            PlayerController.main.player.OnChange += () => currentRocket = PlayerController.main.player.Value as Rocket;
             Config.settingsData.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
         }
     }

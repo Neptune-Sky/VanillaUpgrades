@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using HarmonyLib;
 using ModLoader;
 using ModLoader.Helpers;
@@ -34,14 +33,17 @@ namespace VanillaUpgrades
         public override void Load()
         {
             ConfigUI.Setup();
-            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager2), typeof(WindowManager), typeof(ErrorNotification));
+            mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
         }
 
         void SubscribeToScenes()
         {
-            SceneHelper.OnBuildSceneLoaded += () => buildObject = new GameObject("ASoDBuildObject", typeof(BuildSettings), typeof(DVCalc));
+            SceneHelper.OnBuildSceneLoaded += () =>
+            {
+                BuildSettings.Setup();
+            };
             SceneHelper.OnWorldSceneLoaded += () =>
             {
                 WorldManager.Setup();
@@ -78,6 +80,7 @@ namespace VanillaUpgrades
             if (modList.FindIndex(e => { return e.ModNameID == "BuildSettings"; }) != -1)
             {
                 Main.buildSettingsPresent = true;
+                Debug.Log("VanillaUpgrades: BuildSettings mod was detected, disabling own Build Settings features to avoid conflicts.");
             }
         }
     }

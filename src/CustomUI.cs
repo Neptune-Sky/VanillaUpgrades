@@ -1,9 +1,7 @@
-﻿using SFS.UI.ModGUI;
-using System.Globalization;
+﻿using System.Globalization;
+using SFS.UI.ModGUI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Type = SFS.UI.ModGUI.Type;
 
 namespace VanillaUpgrades
 {
@@ -15,11 +13,13 @@ namespace VanillaUpgrades
         public double currentVal;
         public double min;
         public double max;
+        public int maxChars;
     }
+
     public class CustomUI
     {
 
-        public static NumberInput CreateData(double defaultVal, double min, double max)
+        public static NumberInput CreateData(double defaultVal, double min, double max, int maxChars)
         {
             return new NumberInput
             {
@@ -28,7 +28,8 @@ namespace VanillaUpgrades
                 defaultVal = defaultVal,
                 currentVal = defaultVal,
                 min = min,
-                max = max
+                max = max,
+                maxChars = maxChars
             };
         }
 
@@ -50,7 +51,7 @@ namespace VanillaUpgrades
             }
 
 
-            if (data.textInput.Text.Length > 3)
+            if (data.textInput.Text.Length > data.maxChars)
             {
                 data.textInput.Text = data.oldText;
             }
@@ -85,6 +86,17 @@ namespace VanillaUpgrades
             Label label = Builder.CreateLabel(parent, width, height, text: labelText);
             label.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
             return label;
+        }
+
+        public static GameObject ZeroedHolder(Builder.SceneToAttach mode, string name)
+        {
+            GameObject holder = Builder.CreateHolder(mode, name);
+            var rectTransform = holder.gameObject.AddComponent<RectTransform>();
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.zero;
+            rectTransform.sizeDelta = Vector2.zero;
+            rectTransform.position = Vector2.zero;
+            return holder;
         }
     }
 }

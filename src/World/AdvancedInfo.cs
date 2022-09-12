@@ -2,14 +2,13 @@
 using SFS.UI;
 using SFS.UI.ModGUI;
 using SFS.World;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace VanillaUpgrades
 {
     public class AdvancedInfo : MonoBehaviour
     {
+        private const string posKey = "AdvancedInfoWindow";
         readonly int windowID = Builder.GetRandomID();
 
         public GameObject windowHolder;
@@ -29,12 +28,7 @@ namespace VanillaUpgrades
 
         void Awake()
         {
-            windowHolder = Builder.CreateHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
-            RectTransform rect = windowHolder.gameObject.AddComponent<RectTransform>();
-            Vector2 zero = Vector2.zero;
-            rect.anchorMax = zero;
-            rect.anchorMin = zero;
-            rect.position = zero;
+            windowHolder = CustomUI.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
 
             CreateWindow();
             VerticalGUI(); 
@@ -47,7 +41,7 @@ namespace VanillaUpgrades
             {
                 advancedInfoWindow.rectTransform.localScale = new Vector2(Config.settingsData.persistentVars.windowScale, Config.settingsData.persistentVars.windowScale);
                 WindowManager.ClampWindow(advancedInfoWindow);
-                WindowManager.Save("AdvancedInfoWindow", advancedInfoWindow);
+                WindowManager.Save(posKey, advancedInfoWindow);
             };
 
             if (!Config.settingsData.showAdvanced) windowHolder.SetActive(false);
@@ -60,9 +54,9 @@ namespace VanillaUpgrades
                 windowHolder.SetActive(Config.settingsData.showAdvanced); 
             };
 
-            Vector2 pos = Config.settingsData.windowsSavedPosition.GetValueOrDefault("AdvancedInfoWindow", new Vector2(200, 1200));
+            Vector2Int pos = Config.settingsData.windowsSavedPosition.GetValueOrDefault(posKey, new Vector2Int(200, 1200));
 
-            advancedInfoWindow = Builder.CreateWindow(windowHolder.gameObject.transform, windowID, 220, 350, (int)pos.x, (int)pos.y, true, true, 1, "Advanced Info");
+            advancedInfoWindow = Builder.CreateWindow(windowHolder.gameObject.transform, windowID, 220, 350, pos.x, pos.y, true, true, 1, "Advanced Info");
 
             RectTransform titleSize = advancedInfoWindow.rectTransform.Find("Title") as RectTransform;
             titleSize.sizeDelta = new Vector2(titleSize.sizeDelta.x, 30);
@@ -72,7 +66,7 @@ namespace VanillaUpgrades
             advancedInfoWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () =>
             {
                 WindowManager.ClampWindow(advancedInfoWindow);
-                WindowManager.Save("AdvancedInfoWindow", advancedInfoWindow);
+                WindowManager.Save(posKey, advancedInfoWindow);
             };
 
             vertical = Builder.CreateContainer(advancedInfoWindow);
@@ -113,7 +107,6 @@ namespace VanillaUpgrades
                 vertical.gameObject.SetActive(true);
                 advancedInfoWindow.Size = new Vector2(220, 350);
             }
-            LayoutRebuilder.ForceRebuildLayoutImmediate(advancedInfoWindow.rectTransform);
         }
 
         void VerticalGUI()
