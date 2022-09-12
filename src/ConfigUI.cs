@@ -48,9 +48,11 @@ namespace VanillaUpgrades
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAdvanced, () => Config.settingsData.showAdvanced.Value ^= true, 0, 0, "Show Advanced Info");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.horizontalMode, () => Config.settingsData.horizontalMode.Value ^= true, 0, 0, "Horizontal Mode");
             Builder.CreateSeparator(box, elementWidth - 20);
+            /*
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showCalc, () => Config.settingsData.showCalc ^= true, 0, 0, "Show dV Calc by Default");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showAverager, () => Config.settingsData.showAverager ^= true, 0, 0, "Averager Default");
             Builder.CreateSeparator(box, elementWidth - 20);
+            */           
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showTime, () => Config.settingsData.showTime.Value ^= true, 0, 0, "Show Clock While Timewarping");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.showWorldTime, () => Config.settingsData.showWorldTime.Value ^= true, 0, 0, "Show World Time in Clock");
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settingsData.alwaysShowTime, () => Config.settingsData.alwaysShowTime.Value ^= true, 0, 0, "Always Show World Clock");

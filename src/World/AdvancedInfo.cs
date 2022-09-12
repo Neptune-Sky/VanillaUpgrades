@@ -107,6 +107,7 @@ namespace VanillaUpgrades
                 vertical.gameObject.SetActive(true);
                 advancedInfoWindow.Size = new Vector2(220, 350);
             }
+            WindowManager.ClampWindow(advancedInfoWindow);
         }
 
         void VerticalGUI()
