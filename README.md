@@ -16,7 +16,6 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 **New UI:**
 - Toggles for disabling adaptation and snapping in the build grid.
-- Manual delta V calculator in build mode. Can be toggled with C.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
 - World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
 
@@ -39,7 +38,6 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 **New Settings:**
 
-- Toggle for all shake effects.
 - Toggles for explosion shake and effects.
 
 Mod features can be individually disabled in the config window in the game's settings menu. 
