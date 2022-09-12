@@ -9,14 +9,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (!Config.settingsData.explosionShake)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return Config.settingsData.explosionShake;
 
         }
     }
@@ -27,11 +20,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix()
         {
-            if (!Config.settingsData.explosions)
-            {
-                return false;
-            }
-            return true;
+            return Config.settingsData.explosions;
         }
     }
 
@@ -41,11 +30,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix()
         {
-            if (!Config.settingsData.explosions)
-            {
-                return true;
-            }
-            return true;
+            return Config.settingsData.explosions;
         }
     }
 
