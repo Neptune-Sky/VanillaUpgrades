@@ -181,7 +181,7 @@ namespace VanillaUpgrades
                 eccentricity.Text = "0.000";
             }
 
-            var trueAngle = WorldManager.currentRocket.partHolder.transform.eulerAngles.z;
+            float trueAngle = WorldManager.currentRocket.partHolder.transform.eulerAngles.z;
 
             if (trueAngle > 180) angle.Text = (360 - trueAngle).ToString("F1") + "°";
             else angle.Text = (-trueAngle).ToString("F1") + "°";
