@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Globalization;
+using HarmonyLib;
 using SFS.Translations;
 
 namespace VanillaUpgrades
@@ -13,7 +14,7 @@ namespace VanillaUpgrades
 
             if (a >= 100000000 && !double.IsInfinity(a))
             {
-                __result = (a / 1000000).Round(0.1).ToString(1, true) + "Mm";
+                __result = (a / 1000000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "Mm";
                 return false;
             }
             return true;
@@ -35,10 +36,10 @@ namespace VanillaUpgrades
             {
                 if (a > 2997924 && Config.settingsData.cUnits)
                 {
-                    __result = (a / 299792458).Round(0.001).ToString(3, true) + "c";
+                    __result = (a / 299792458).Round(0.001).ToString("F3", CultureInfo.InvariantCulture) + "c";
                     return false;
                 }
-                __result = (a / 1000).Round(0.1).ToString(1, true) + "km/s";
+                __result = (a / 1000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "km/s";
                 return false;
             }
             return true;
@@ -55,8 +56,7 @@ namespace VanillaUpgrades
 
             if (a >= 10000 && !float.IsInfinity(a) && Config.settingsData.ktUnits)
             {
-                var newVar = (a / 1000).Round(0.01f).ToString(2, forceDecimal) + "k";
-                __result = Loc.main.Mass.Inject(newVar, "value");
+                __result = (a / 1000).Round(0.01f).ToString(forceDecimal ? "F1" : "F", CultureInfo.InvariantCulture) + "kt";
                 return false;
             }
             return true;
@@ -71,12 +71,11 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         static bool Prefix(this float a, ref string __result)
         {
-            if (!Config.settingsData.ktUnits) return false;
+            if (!Config.settingsData.ktUnits) return true;
 
             if (a >= 10000 && !float.IsInfinity(a) && Config.settingsData.ktUnits)
             {
-                var newVar = (a / 1000).Round(0.01f).ToString(2, false) + "k";
-                __result = Loc.main.Thrust.Inject(newVar, "value");
+                __result = (a / 1000).Round(0.01f).ToString("F", CultureInfo.InvariantCulture) + "kt";
                 return false;
             }
             return true;
