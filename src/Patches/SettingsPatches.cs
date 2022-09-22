@@ -25,7 +25,7 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void Postfix()
         {
-            ConfigUI.window.Disable();
+            ConfigUI.window?.Disable();
             Main.menuOpen = false;
             Config.Save();
             if (Main.buildObject != null)

@@ -69,6 +69,8 @@ namespace VanillaUpgrades
 
         public static void Save()
         {
+            if (settingsData == null)
+                Load();
             Path.WriteText(JsonWrapper.ToJson(settingsData, true));
         }
 
