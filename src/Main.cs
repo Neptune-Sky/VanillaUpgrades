@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using ModLoader;
 using ModLoader.Helpers;
@@ -17,7 +18,8 @@ namespace VanillaUpgrades
         public override string MinimumGameVersionNecessary => "1.5.7";
         public override string ModVersion => "v4.0.1";
         public override string Description => "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
-        // public override Func<ModKeybindings> OnLoadKeybindings => MyKeybindings.Setup;
+
+        public override Action LoadKeybindings => VU_Keybindings.LoadKeybindings;
 
         public override void Early_Load()
         {

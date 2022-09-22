@@ -66,7 +66,7 @@ namespace VanillaUpgrades
     {
         public static bool disableTorque;
 
-        public static void toggleTorque()
+        public static void Toggle()
         {
             string enabled;
 

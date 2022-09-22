@@ -1,209 +1,87 @@
-﻿using HarmonyLib;
-using SFS.Builds;
-using SFS.Input;
-using SFS.IO;
-using SFS.World;
+﻿using SFS.Builds;
 using SFS;
-using System;
 using ModLoader;
+using ModLoader.Helpers;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
+// ReSharper disable InconsistentNaming
 
 namespace VanillaUpgrades
 {
-
-    public static class KeybindsHolder
+    public class VU_Keybindings : ModKeybindings
     {
-        public static CustomKeybinds keybinds = new CustomKeybinds();
-    }
-
-    public class CustomKeybinds : Settings<CustomKeybinds.DefaultData>
-    {
-        protected override string FileName => "VanillaUpgradesKeybinds";
-
-        public static DefaultData custom_keys = new DefaultData();
-        public class DefaultData
-        {
-            public Key Hide_UI = KeyCode.F2;
-
-            public Key Toggle_Symmetry = KeyCode.J;
-
-            public Key Toggle_Interior = KeyCode.K;
-
-            public Key Launch = KeyCode.L;
-
-            public Key CalcToggle = KeyCode.C;
-
-            public Key Stop_Timewarp = KeyCode.Slash;
-
-            public Key Timewarp_To = KeyCode.Semicolon;
-
-            public Key ToggleTorque = KeyCode.T;
-
-            public Key Throttle01 = KeyCode.C;
-
-            public Key Prograde = KeyCode.Alpha1;
-
-            public Key Retrograde = KeyCode.Alpha2;
-
-            public Key Rad_In = KeyCode.Alpha3;
-
-            public Key Rad_Out = KeyCode.Alpha4;
-
-        }
-
-        // Loads automatically(?), no need for a hook here
-        protected override void OnLoad()
-        {
-            custom_keys = settings;
-        }
-
-        public void AwakeHook(KeybindingsPC __instance)
-        {
-
-            // Load the saved and default keys
-            Load();
-            DefaultData defaultData = new DefaultData();
-
-            // Reflection needed since these are private
-            Traverse createTraverse = Traverse.Create(__instance).Method("Create", new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
-            Traverse createSpaceTraverse = Traverse.Create(__instance).Method("CreateSpace");
-            Traverse createTextTraverse = Traverse.Create(__instance).Method("CreateText", "VanillaUpgrades Keybinds");
-
-            // Finally actually call the code
-            createTextTraverse.GetValue("VanillaUpgrades Keybinds");
-            createTraverse.GetValue(new object[] { custom_keys.Hide_UI, defaultData.Hide_UI, "Hide UI" });
-            createSpaceTraverse.GetValue();
-            createTextTraverse.GetValue("Build Mode");
-            createTraverse.GetValue(new object[] { custom_keys.Toggle_Symmetry, defaultData.Toggle_Symmetry, "Toggle symmetry mode" });
-            createTraverse.GetValue(new object[] { custom_keys.Toggle_Interior, defaultData.Toggle_Interior, "Toggle interior view" });
-            createTraverse.GetValue(new object[] { custom_keys.Launch, defaultData.Launch, "Launch" });
-            // createTraverse.GetValue(new object[] { custom_keys.CalcToggle, defaultData.CalcToggle, "Toggle ΔV Calulator" });
-            createSpaceTraverse.GetValue();
-            createTextTraverse.GetValue("World View");
-            createTraverse.GetValue(new object[] { custom_keys.Stop_Timewarp, defaultData.Stop_Timewarp, "Stop_Timewarp" });
-            //createTraverse.GetValue(new object[] { custom_keys.Timewarp_To, defaultData.Timewarp_To, "Timewarp_To" });
-            createTraverse.GetValue(new object[] { custom_keys.Throttle01, defaultData.Throttle01, "Throttle_To_0.1%" });
-            createTraverse.GetValue(new object[] { custom_keys.ToggleTorque, defaultData.ToggleTorque, "Toggle torque" });
-            createTextTraverse.GetValue("__________________________________________");
-            createSpaceTraverse.GetValue();
-            createSpaceTraverse.GetValue();
-
-            /* Pissed me off, will work on it later.
-            createTraverse.GetValue(new object[] { custom_keys.Prograde, defaultData.Prograde, "Face prograde" });
-            createTraverse.GetValue(new object[] { custom_keys.Retrograde, defaultData.Retrograde, "Face retrograde" });
-            createTraverse.GetValue(new object[] { custom_keys.Rad_In, defaultData.Rad_In, "Face radial in" });
-            createTraverse.GetValue(new object[] { custom_keys.Rad_Out, defaultData.Rad_Out, "Face radial out" });
-            */
-
-            createSpaceTraverse.GetValue();
-        }
-
-        public void SaveData()
-        {
-            Save();
-        }
-
-    }
-
-    // Save hook for... Saving
-    [HarmonyPatch(typeof(Settings<Data>), "Save")]
-    public class KeybindsSaveHook
-    {
-        [HarmonyPostfix]
-        public static void SaveHook(Settings<Data> __instance)
-        {
-            // This works. I don't know why. At least it sucessfully prevents infinite loops
-            if (__instance is KeybindingsPC)
-            {
-                KeybindsHolder.keybinds.SaveData();
-            }
-        }
-    }
-
-    // Awake hook to add the menu items
-    [HarmonyPatch(typeof(KeybindingsPC), "Awake")]
-    public class KeybindsAwakeHook
-    {
-        [HarmonyPrefix]
-        public static void Prefix(KeybindingsPC __instance)
-        {
-            KeybindsHolder.keybinds.AwakeHook(__instance);
-        }
-    }
-
-    [HarmonyPatch(typeof(BuildMenus), "Start")]
-    public static class AddBuildKeybinds
-    {
-        [HarmonyPrefix]
-        public static void Prefix(ref BuildMenus __instance)
-        {
-            KeysNode keysNode = BuildManager.main.build_Input.keysNode;
-
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Launch, BuildSettings.Launch);
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Symmetry, BuildManager.main.ToggleSymmetryMode);
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Toggle_Interior, InteriorManager.main.ToggleInteriorView);
-
-            keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, OpacityChanger.HideUI);
-            // keysNode.AddOnKeyDown(CustomKeybinds.custom_keys.CalcToggle, DVCalc.toggleCalc);
-        }
-    }
-
-    [HarmonyPatch(typeof(GameManager), "Start")]
-    public class AddWorldKeybinds
-    {
-        [HarmonyPostfix]
-        public static void Postfix()
-        {
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Stop_Timewarp, delegate
-            {
-                TimeManipulation.StopTimewarp(true);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Throttle01, new Action(WorldManager.Throttle01));
-            // GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Timewarp_To, new Action(TimewarpToClass.TimewarpTo));
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Hide_UI, new Action(OpacityChanger.HideUI));
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.ToggleTorque, new Action(ToggleTorque.toggleTorque));
-            /*
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Prograde, delegate
-            {
-                FaceDirection.Mode(1);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Retrograde, delegate
-            {
-                FaceDirection.Mode(2);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_In, delegate
-            {
-                FaceDirection.Mode(3);
-            });
-            GameManager.AddOnKeyDown(CustomKeybinds.custom_keys.Rad_Out, delegate
-            {
-                FaceDirection.Mode(4);
-            });
-            */
-        }
-    }
-
-    /*
-    public class MyKeybindings : ModKeybindings
-    {
-        // protected override string FileName => "VanillaUpgradesKeybinds";
-        Key someKey = KeyCode.J;
-
-        public static MyKeybindings Setup()
-        {
-            MyKeybindings keybindings = SetupKeybindings<MyKeybindings>(Main.main);
-            AddOnKeyDown_Build(keybindings.someKey, () => Debug.Log("Do something"));
-            return keybindings;
-        }
+        #region Keys
+        Key Hide_UI = KeyCode.F2;
         
+        Key Toggle_Symmetry = KeyCode.J;
+        
+        Key Toggle_Interior = KeyCode.K;
+        
+        Key Launch = KeyCode.L;
+        
+        Key CalcToggle = KeyCode.C;
+        
+        Key Stop_Timewarp = KeyCode.Slash;
+        
+        Key Timewarp_To = KeyCode.Semicolon;
+        
+        Key ToggleTorque = KeyCode.T;
+        
+        Key Throttle01 = KeyCode.C;
+        
+        Key Prograde = KeyCode.Alpha1;
+        
+        Key Retrograde = KeyCode.Alpha2;
+        
+        Key Rad_In = KeyCode.Alpha3;
+        
+        Key Rad_Out = KeyCode.Alpha4;
+        #endregion
+
+        static VU_Keybindings main;
+        
+        public static void LoadKeybindings()
+        {
+            main = SetupKeybindings<VU_Keybindings>(Main.main);
+            
+            SceneHelper.OnBuildSceneLoaded += OnBuildLoad;
+            SceneHelper.OnWorldSceneLoaded += OnWorldLoad;
+            
+            AddStaticKeybindings();
+        }
+
+        static void AddStaticKeybindings()
+        {
+            AddOnKeyDown(main.Hide_UI, OpacityChanger.HideUI);
+        }
+        static void OnBuildLoad()
+        {
+            AddOnKeyDown_Build(main.Launch, BuildSettings.Launch);
+            AddOnKeyDown_Build(main.Toggle_Symmetry, BuildManager.main.ToggleSymmetryMode);
+            AddOnKeyDown_Build(main.Toggle_Interior, InteriorManager.main.ToggleInteriorView);
+        }
+        static void OnWorldLoad()
+        {
+            AddOnKeyDown_World(main.Stop_Timewarp, () => TimeManipulation.StopTimewarp(true));
+            AddOnKeyDown_World(main.Throttle01, WorldManager.Throttle01);
+            AddOnKeyDown_World(main.ToggleTorque, VanillaUpgrades.ToggleTorque.Toggle);
+        }
+
         public override void CreateUI()
         {
-            CreateUI_Text("Vanilla Upgrades");
-            CreateUI_Keybinding(someKey, KeyCode.J, "Some Key");
+            CreateUI_Text("VanillaUpgrades Keybindings");
+            CreateUI_Keybinding(Hide_UI, KeyCode.F2, "Hide UI");
+            CreateUI_Space();
+            CreateUI_Text("Build Mode");
+            CreateUI_Keybinding(Toggle_Symmetry, KeyCode.J, "Toggle symmetry mode");
+            CreateUI_Keybinding(Toggle_Interior, KeyCode.K, "Toggle interior view");
+            CreateUI_Keybinding(Launch, KeyCode.L,  "Launch");
+            CreateUI_Space();
+            CreateUI_Text("World View");
+            CreateUI_Keybinding(Stop_Timewarp, KeyCode.Slash, "Stop Timewarp");
+            CreateUI_Keybinding(Throttle01, KeyCode.C, "Throttle To 0.1%");
+            CreateUI_Keybinding(ToggleTorque, KeyCode.T, "Toggle torque");
+            CreateUI_Space();
         }
     }
-    */
-
-
 }
