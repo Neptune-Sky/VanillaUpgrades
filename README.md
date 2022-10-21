@@ -31,6 +31,7 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - L to launch and skip warnings in build space
 - Z to toggle symmetry
 - X to toggle interior view
+- Tab to open the part category menu
 - Slash to instantly stop timewarp
 - C to set thrust to 0.1%
 - T to toggle torque
@@ -47,8 +48,6 @@ Tons more will be added in the future.
 \*Inconsistent. If I find a better implementation I will use it.
 
 # Installation
-
-Starting from version 3.0, this mod only supports the official modloader. Use v2.3.5 for the old third-party loader.
 
 1. Download the latest zip.
 2. Use the "Open Mods Folder" button in-game. 
