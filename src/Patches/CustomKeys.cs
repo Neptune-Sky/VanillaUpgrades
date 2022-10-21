@@ -4,38 +4,34 @@ using ModLoader;
 using ModLoader.Helpers;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
-// ReSharper disable InconsistentNaming
+using System;
 
 namespace VanillaUpgrades
 {
     public class VU_Keybindings : ModKeybindings
     {
+
         #region Keys
-        Key Hide_UI = KeyCode.F2;
+
+        public Key Hide_UI = KeyCode.F2;
+
+        public Key Toggle_Symmetry = KeyCode.Z;
         
-        Key Toggle_Symmetry = KeyCode.J;
+        public Key Toggle_Interior = KeyCode.X;
+
+        public Key Launch = KeyCode.L;
+
+        public Key OpenCategories = KeyCode.Tab;
         
-        Key Toggle_Interior = KeyCode.K;
+        public Key CalcToggle = KeyCode.C;
         
-        Key Launch = KeyCode.L;
+        public Key Stop_Timewarp = KeyCode.Slash;
         
-        Key CalcToggle = KeyCode.C;
+        public Key Timewarp_To = KeyCode.Semicolon;
+
+        public Key ToggleTorque = KeyCode.T;
         
-        Key Stop_Timewarp = KeyCode.Slash;
-        
-        Key Timewarp_To = KeyCode.Semicolon;
-        
-        Key ToggleTorque = KeyCode.T;
-        
-        Key Throttle01 = KeyCode.C;
-        
-        Key Prograde = KeyCode.Alpha1;
-        
-        Key Retrograde = KeyCode.Alpha2;
-        
-        Key Rad_In = KeyCode.Alpha3;
-        
-        Key Rad_Out = KeyCode.Alpha4;
+        public Key Throttle01 = KeyCode.C;
         #endregion
 
         static VU_Keybindings main;
@@ -56,7 +52,8 @@ namespace VanillaUpgrades
         }
         static void OnBuildLoad()
         {
-            AddOnKeyDown_Build(main.Launch, BuildSettings.Launch);
+            AddOnKeyDown_Build(main.Launch, KeybindMethods.Launch);
+            AddOnKeyDown_Build(main.OpenCategories, OpenPickCategories.inst.expandMenu.ToggleExpanded);
             AddOnKeyDown_Build(main.Toggle_Symmetry, BuildManager.main.ToggleSymmetryMode);
             AddOnKeyDown_Build(main.Toggle_Interior, InteriorManager.main.ToggleInteriorView);
         }
@@ -73,8 +70,9 @@ namespace VanillaUpgrades
             CreateUI_Keybinding(Hide_UI, KeyCode.F2, "Hide UI");
             CreateUI_Space();
             CreateUI_Text("Build Mode");
-            CreateUI_Keybinding(Toggle_Symmetry, KeyCode.J, "Toggle symmetry mode");
-            CreateUI_Keybinding(Toggle_Interior, KeyCode.K, "Toggle interior view");
+            CreateUI_Keybinding(Toggle_Symmetry, KeyCode.Z, "Toggle symmetry mode");
+            CreateUI_Keybinding(Toggle_Interior, KeyCode.X, "Toggle interior view");
+            CreateUI_Keybinding(OpenCategories, KeyCode.Tab, "Open Pick Categories");
             CreateUI_Keybinding(Launch, KeyCode.L,  "Launch");
             CreateUI_Space();
             CreateUI_Text("World View");

@@ -81,10 +81,10 @@ namespace VanillaUpgrades
             return data;
         }
 
-        public static Label LeftAlignedLabel(Transform parent, int width, int height, string labelText = "")
+        public static Label AlignedLabel(Transform parent, int width, int height, string labelText = "", TextAlignmentOptions textAlignment = TextAlignmentOptions.MidlineLeft)
         {
             Label label = Builder.CreateLabel(parent, width, height, text: labelText);
-            label.gameObject.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
+            label.gameObject.GetComponent<TextMeshProUGUI>().alignment = textAlignment;
             return label;
         }
 

@@ -62,13 +62,13 @@ namespace VanillaUpgrades
 
             worldTimeContainer = Builder.CreateContainer(clockWindow);
             worldTimeContainer.CreateLayoutGroup(SFS.UI.ModGUI.Type.Vertical, TextAnchor.UpperCenter, 0);
-            CustomUI.LeftAlignedLabel(worldTimeContainer, 280, 28, "World Time:");
-            worldTimeLabel = CustomUI.LeftAlignedLabel(worldTimeContainer, 280, 32);
+            CustomUI.AlignedLabel(worldTimeContainer, 280, 28, "World Time:");
+            worldTimeLabel = CustomUI.AlignedLabel(worldTimeContainer, 280, 32);
 
             timewarpContainer = Builder.CreateContainer(clockWindow);
             timewarpContainer.CreateLayoutGroup(SFS.UI.ModGUI.Type.Vertical, TextAnchor.UpperCenter, 0);
-            CustomUI.LeftAlignedLabel(timewarpContainer, 280, 28, "Timewarp Span:");
-            timewarpTimeLabel = CustomUI.LeftAlignedLabel(timewarpContainer, 280, 32);
+            CustomUI.AlignedLabel(timewarpContainer, 280, 28, "Timewarp Span:");
+            timewarpTimeLabel = CustomUI.AlignedLabel(timewarpContainer, 280, 32);
 
 
             ToggleChecks();

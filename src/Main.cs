@@ -15,8 +15,8 @@ namespace VanillaUpgrades
         public override string ModNameID => "VanUp";
         public override string DisplayName => "Vanilla Upgrades";
         public override string Author => "ASoD";
-        public override string MinimumGameVersionNecessary => "1.5.7";
-        public override string ModVersion => "v4.0.1";
+        public override string MinimumGameVersionNecessary => "1.5.8";
+        public override string ModVersion => "v4.1";
         public override string Description => "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
 
         public override Action LoadKeybindings => VU_Keybindings.LoadKeybindings;
@@ -34,6 +34,8 @@ namespace VanillaUpgrades
 
         public override void Load()
         {
+            ModLoader.IO.Console.commands.Add(Command);
+
             ConfigUI.Setup();
             mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
@@ -70,6 +72,17 @@ namespace VanillaUpgrades
         public static Harmony patcher;
 
         public static FolderPath modFolder;
+
+        bool Command(string str)
+        {
+            if (str.StartsWith("vu"))
+            {
+                Debug.Log("Hi");
+
+                return true;
+            }
+            return false;
+        }
     }
 
     [HarmonyPatch(typeof(Loader), "Initialize_Load")]

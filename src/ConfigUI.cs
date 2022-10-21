@@ -125,17 +125,19 @@ namespace VanillaUpgrades
             Container container = Builder.CreateContainer(box);
             container.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-            CustomUI.LeftAlignedLabel(container, elementWidth - 70, ToggleHeight, "Window Scale");
+            CustomUI.AlignedLabel(container, elementWidth - 225, ToggleHeight, "Window Scale");
 
-            NumberInput scale = CustomUI.CreateData(1, 0.5, 2, 4);
-            void MakeNumber(string text)
-            {
-                scale = CustomUI.Numberify(scale);
-                Config.settingsData.persistentVars.windowScale.Value = (float)scale.currentVal;
-                return;
-            }
-            scale.currentVal = Config.settingsData.persistentVars.windowScale.Value;
-            scale.textInput = Builder.CreateTextInput(container, 70, 40, 0, 0, scale.currentVal.ToString(), MakeNumber);
+            Container SliderLabel = Builder.CreateContainer(container);
+            SliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
+
+            Builder.CreateSlider(SliderLabel, 225, Config.settingsData.persistentVars.windowScale.Value, (0.5f, 1.5f), false, 
+                (val) => {
+                    Config.settingsData.persistentVars.windowScale.Value = val;
+                }, 
+                (val) => 
+                {
+                    return Math.Round(val * 100).ToString() + "%";
+                });
 
             return box.gameObject;
         }

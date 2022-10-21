@@ -54,6 +54,8 @@
     <Compile Include="src\ConfigUI.cs" />
     <Compile Include="src\World\AdvancedInfo.cs" />
     <Compile Include="src\CustomUI.cs" />
+    <Compile Include="src\World\AutoThrottle.cs" />
+    <Compile Include="src\Build\KeyMethods.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -197,6 +199,9 @@
     </Reference>
     <Reference Include="Unity.RemoteConfig.Editor.Core">
       <HintPath>References\Unity.RemoteConfig.Editor.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Analytics">
+      <HintPath>References\Unity.Services.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Authentication">
       <HintPath>References\Unity.Services.Authentication.dll</HintPath>

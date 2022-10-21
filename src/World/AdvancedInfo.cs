@@ -39,7 +39,7 @@ namespace VanillaUpgrades
             Config.settingsData.horizontalMode.OnChange += CheckHorizontalToggle;
             Config.settingsData.persistentVars.windowScale.OnChange += () =>
             {
-                advancedInfoWindow.rectTransform.localScale = new Vector2(Config.settingsData.persistentVars.windowScale, Config.settingsData.persistentVars.windowScale);
+                advancedInfoWindow.rectTransform.localScale = new Vector2(Config.settingsData.persistentVars.windowScale.Value, Config.settingsData.persistentVars.windowScale.Value);
                 WindowManager.ClampWindow(advancedInfoWindow);
                 WindowManager.Save(posKey, advancedInfoWindow);
             };
@@ -85,6 +85,7 @@ namespace VanillaUpgrades
 
         void OnPlayerChange()
         {
+            if (PlayerController.main == null) return;
             if (WorldManager.currentRocket == null)
             {
                 windowHolder.SetActive(false);
@@ -114,23 +115,23 @@ namespace VanillaUpgrades
         {
             Builder.CreateSeparator(vertical, 205);
 
-            CustomUI.LeftAlignedLabel(vertical, 140, 30, "Apoapsis:");
-            apoapsisVertical = CustomUI.LeftAlignedLabel(vertical, 175, 30);
+            CustomUI.AlignedLabel(vertical, 140, 30, "Apoapsis:");
+            apoapsisVertical = CustomUI.AlignedLabel(vertical, 175, 30);
 
             Builder.CreateSpace(vertical, 0, 10);
 
-            CustomUI.LeftAlignedLabel(vertical, 140, 30, "Periapsis:");
-            periapsisVertical = CustomUI.LeftAlignedLabel(vertical, 175, 30);
+            CustomUI.AlignedLabel(vertical, 140, 30, "Periapsis:");
+            periapsisVertical = CustomUI.AlignedLabel(vertical, 175, 30);
 
             Builder.CreateSpace(vertical, 0, 10);
 
-            CustomUI.LeftAlignedLabel(vertical, 140, 30, "Eccentricity:");
-            eccentricityVertical = CustomUI.LeftAlignedLabel(vertical, 175, 30);
+            CustomUI.AlignedLabel(vertical, 140, 30, "Eccentricity:");
+            eccentricityVertical = CustomUI.AlignedLabel(vertical, 175, 30);
 
             Builder.CreateSpace(vertical, 0, 10);
 
-            CustomUI.LeftAlignedLabel(vertical, 140, 30, "Angle:");
-            angleVertical = CustomUI.LeftAlignedLabel(vertical, 175, 30);
+            CustomUI.AlignedLabel(vertical, 140, 30, "Angle:");
+            angleVertical = CustomUI.AlignedLabel(vertical, 175, 30);
         }
 
         void HorizontalGUI()
@@ -139,26 +140,26 @@ namespace VanillaUpgrades
             Container apoapsisContainer = Builder.CreateContainer(horizontal);
             apoapsisContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-            CustomUI.LeftAlignedLabel(apoapsisContainer, 150, 30, "Apoapsis:");
-            apoapsisHorizontal = CustomUI.LeftAlignedLabel(apoapsisContainer, 175, 30);
+            CustomUI.AlignedLabel(apoapsisContainer, 150, 30, "Apoapsis:");
+            apoapsisHorizontal = CustomUI.AlignedLabel(apoapsisContainer, 175, 30);
 
             Container periapsisContainer = Builder.CreateContainer(horizontal);
             periapsisContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-            CustomUI.LeftAlignedLabel(periapsisContainer, 150, 30, "Periapsis:");
-            periapsisHorizontal = CustomUI.LeftAlignedLabel(periapsisContainer, 175, 30);
+            CustomUI.AlignedLabel(periapsisContainer, 150, 30, "Periapsis:");
+            periapsisHorizontal = CustomUI.AlignedLabel(periapsisContainer, 175, 30);
 
             Container eccentricityContainer = Builder.CreateContainer(horizontal);
             eccentricityContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-            CustomUI.LeftAlignedLabel(eccentricityContainer, 150, 30, "Eccentricity:");
-            eccentricityHorizontal = CustomUI.LeftAlignedLabel(eccentricityContainer, 175, 30);
+            CustomUI.AlignedLabel(eccentricityContainer, 150, 30, "Eccentricity:");
+            eccentricityHorizontal = CustomUI.AlignedLabel(eccentricityContainer, 175, 30);
 
             Container angleContainer = Builder.CreateContainer(horizontal);
             angleContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-            CustomUI.LeftAlignedLabel(angleContainer, 150, 30, "Angle:");
-            angleHorizontal = CustomUI.LeftAlignedLabel(angleContainer, 175, 30);
+            CustomUI.AlignedLabel(angleContainer, 150, 30, "Angle:");
+            angleHorizontal = CustomUI.AlignedLabel(angleContainer, 175, 30);
         }
 
         void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angle)

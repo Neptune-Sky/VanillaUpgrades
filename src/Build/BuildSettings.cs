@@ -104,6 +104,7 @@ namespace VanillaUpgrades
 
         static void ScaleWindow(Window input)
         {
+            if (windowHolder == null) return;
             input.rectTransform.localScale = new Vector2(Config.settingsData.persistentVars.windowScale.Value, Config.settingsData.persistentVars.windowScale.Value);
             WindowManager.ClampWindow(input);
             WindowManager.Save(posKey, input);
@@ -133,10 +134,6 @@ namespace VanillaUpgrades
             ScaleWindow(window);
         }
 
-        public static void Launch()
-        {
-            BuildState.main.UpdatePersistent();
-            Base.sceneLoader.LoadWorldScene(true);
-        }
+
     }
 }

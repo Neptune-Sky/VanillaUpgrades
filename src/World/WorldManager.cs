@@ -4,7 +4,7 @@ namespace VanillaUpgrades
 {
     public class WorldManager
     {
-        public static Rocket currentRocket = (PlayerController.main.player.Value as Rocket);
+        public static Rocket currentRocket;
 
         public static void Throttle01()
         {
@@ -12,9 +12,15 @@ namespace VanillaUpgrades
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 
+        static void UpdatePlayer()
+        {
+            currentRocket = PlayerController.main.player.Value != null ? PlayerController.main.player.Value as Rocket : null;
+        }
+
         public static void Setup()
         {
-            PlayerController.main.player.OnChange += () => currentRocket = PlayerController.main.player.Value as Rocket;
+            UpdatePlayer();
+            PlayerController.main.player.OnChange += UpdatePlayer;
             Config.settingsData.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
         }
     }
