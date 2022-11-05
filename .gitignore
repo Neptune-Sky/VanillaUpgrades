@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 ASoD's VanillaUpgrades.csproj
 References
+
+.idea/

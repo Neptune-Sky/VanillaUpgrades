@@ -1,50 +1,47 @@
-﻿using HarmonyLib;
-using SFS.Builds;
+﻿using SFS.Builds;
 using SFS.World;
-using UnityEngine;
 
-namespace VanillaUpgrades
+namespace VanillaUpgrades;
+
+[HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
+public class MoreCameraMove
 {
-    [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
-    public class MoreCameraMove
+    [HarmonyPrefix]
+    public static bool Prefix(ref Vector2 __result, Vector2 newValue)
     {
-        [HarmonyPrefix]
-        public static bool Prefix(ref Vector2 __result, Vector2 newValue)
-        {
-            if (!Config.settingsData.moreCameraMove) return true;
-            if (PlayerController.main.player.Value == null) return true;
-            PlayerController.main.player.Value.ClampTrackingOffset(ref newValue, -30);
-            __result = newValue;
-            return false;
-        }
-
+        if (!Config.settingsData.moreCameraMove) return true;
+        if (PlayerController.main.player.Value == null) return true;
+        PlayerController.main.player.Value.ClampTrackingOffset(ref newValue, -30);
+        __result = newValue;
+        return false;
     }
+}
 
-    [HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
-    public class MoreCameraZoom
+[HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
+public class MoreCameraZoom
+{
+    [HarmonyPrefix]
+    static bool Prefix(ref float __result, float newValue)
     {
-        [HarmonyPrefix]
-        static bool Prefix(ref float __result, float newValue)
-        {
-            if (!Config.settingsData.moreCameraZoom) return true;
-            if (PlayerController.main.player.Value == null) return true;
-            __result = Mathf.Clamp(newValue, 0.05f, 2.5E+10f);
-            return false;
-        }
+        if (!Config.settingsData.moreCameraZoom) return true;
+        if (PlayerController.main.player.Value == null) return true;
+        __result = Mathf.Clamp(newValue, 0.05f, 2.5E+10f);
+        return false;
     }
+}
 
-    [HarmonyPatch(typeof(BuildManager), "Awake")]
-    public static class PatchZoomLimits
+[HarmonyPatch(typeof(BuildManager), "Awake")]
+public static class PatchZoomLimits
+{
+    public static BuildManager inst;
+
+    [HarmonyPrefix]
+    public static void Prefix(ref BuildManager __instance)
     {
-        public static BuildManager inst;
-        [HarmonyPrefix]
-        public static void Prefix(ref BuildManager __instance)
+        if (Config.settingsData.moreCameraZoom)
         {
-            if (Config.settingsData.moreCameraZoom)
-            {
-                __instance.buildCamera.maxCameraDistance = 300;
-                __instance.buildCamera.minCameraDistance = 0.1f;
-            }
+            __instance.buildCamera.maxCameraDistance = 300;
+            __instance.buildCamera.minCameraDistance = 0.1f;
         }
     }
 }

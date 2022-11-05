@@ -1,37 +1,33 @@
-﻿using HarmonyLib;
-using SFS.World;
+﻿using SFS.World;
 
-namespace VanillaUpgrades
+namespace VanillaUpgrades;
+
+[HarmonyPatch(typeof(PlayerController), "CreateShakeEffect")]
+public class RemoveShake
 {
-    [HarmonyPatch(typeof(PlayerController), "CreateShakeEffect")]
-    public class RemoveShake
+    [HarmonyPrefix]
+    public static bool Prefix()
     {
-        [HarmonyPrefix]
-        public static bool Prefix()
-        {
-            return Config.settingsData.explosionShake;
-
-        }
+        return Config.settingsData.explosionShake;
     }
+}
 
-    [HarmonyPatch(typeof(EffectManager), "CreateExplosion")]
-    public class StopExplosions
+[HarmonyPatch(typeof(EffectManager), "CreateExplosion")]
+public class StopExplosions
+{
+    [HarmonyPrefix]
+    static bool Prefix()
     {
-        [HarmonyPrefix]
-        static bool Prefix()
-        {
-            return Config.settingsData.explosions;
-        }
+        return Config.settingsData.explosions;
     }
+}
 
-    [HarmonyPatch(typeof(EffectManager), "CreatePartOverheatEffect")]
-    public class StopEntryExplosions
+[HarmonyPatch(typeof(EffectManager), "CreatePartOverheatEffect")]
+public class StopEntryExplosions
+{
+    [HarmonyPrefix]
+    static bool Prefix()
     {
-        [HarmonyPrefix]
-        static bool Prefix()
-        {
-            return Config.settingsData.explosions;
-        }
+        return Config.settingsData.explosions;
     }
-
 }

@@ -1,0 +1,11 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using UnityEngine;
+global using UnityEngine.UI;
+global using ModLoader;
+global using ModLoader.Helpers;
+global using SFS;
+global using SFS.UI.ModGUI;
+global using HarmonyLib;
