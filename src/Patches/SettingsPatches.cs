@@ -7,10 +7,8 @@ namespace VanillaUpgrades;
 public class ShowSettings
 {
     [HarmonyPostfix]
-    public static void Postfix(BasicMenu __instance)
+    public static void Postfix()
     {
-        if (__instance.gameObject.HasComponent<VideoSettingsPC>()) ConfigUI.window.Enable();
-
         Main.menuOpen = true;
     }
 }
@@ -21,12 +19,11 @@ public class HideSettings
     [HarmonyPostfix]
     public static void Postfix()
     {
-        ConfigUI.window?.Disable();
         Main.menuOpen = false;
         Config.Save();
         if (Main.buildObject != null)
         {
-            if (Config.settingsData.moreCameraZoom)
+            if (Config.settings.moreCameraZoom)
             {
                 if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
                 BuildManager.main.buildCamera.maxCameraDistance = 300;

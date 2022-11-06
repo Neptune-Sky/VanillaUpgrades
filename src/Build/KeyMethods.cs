@@ -3,7 +3,7 @@
 namespace VanillaUpgrades;
 
 [HarmonyPatch(typeof(PickCategoriesMenu), "Start")]
-class OpenPickCategories
+static class OpenPickCategories
 {
     public static PickCategoriesMenu inst;
 
@@ -13,15 +13,11 @@ class OpenPickCategories
     }
 }
 
-public class KeybindMethods
+public static class KeyMethods
 {
     public static void Launch()
     {
         BuildState.main.UpdatePersistent();
         Base.sceneLoader.LoadWorldScene(true);
-    }
-
-    public static void OpenPickCategory()
-    {
     }
 }

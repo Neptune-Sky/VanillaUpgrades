@@ -43,7 +43,7 @@ public static class TimeDecelMain
 
     public static void SlowTime()
     {
-        if (!Config.settingsData.allowTimeSlowdown) return;
+        if (!Config.settings.allowTimeSlowdown) return;
         if (timeDecelIndex <= 5) timeDecelIndex++;
         else return;
         double speed;
@@ -76,7 +76,7 @@ public static class TimeDecelMain
 
     public static void ToggleChange()
     {
-        if (!Config.settingsData.allowTimeSlowdown && timeDecelIndex != 0)
+        if (!Config.settings.allowTimeSlowdown && timeDecelIndex != 0)
         {
             WorldTime.main.SetState(1, true, false);
             timeDecelIndex = 0;

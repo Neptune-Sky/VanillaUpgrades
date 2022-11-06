@@ -10,7 +10,7 @@ public class StopTimewarpOnEncounter
     [HarmonyPostfix]
     public static void Postfix(Planet planet, Planet planet_Old)
     {
-        if (planet.parentBody == planet_Old && Config.settingsData.stopTimewarpOnEncounter)
+        if (planet.parentBody == planet_Old && Config.settings.stopTimewarpOnEncounter)
         {
             WorldTime.main.SetState(2, false, false);
 

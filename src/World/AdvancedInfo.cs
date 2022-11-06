@@ -1,16 +1,14 @@
-﻿using SFS.UI;
-using SFS.World;
-using VanillaUpgrades.Utility;
+﻿using SFS.World;
+using UITools;
 using Type = SFS.UI.ModGUI.Type;
 
 namespace VanillaUpgrades;
 
 public class AdvancedInfo : MonoBehaviour
 {
-    const string posKey = "AdvancedInfoWindow";
+    const string PositionKey = "VU.AdvancedInfoWindow";
 
     public GameObject windowHolder;
-    readonly int windowID = Builder.GetRandomID();
     public Window advancedInfoWindow;
     Label angleHorizontal;
     Label angleVertical;
@@ -27,7 +25,7 @@ public class AdvancedInfo : MonoBehaviour
 
     void Awake()
     {
-        windowHolder = CustomUI.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
+        windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
 
         CreateWindow();
         VerticalGUI();
@@ -35,24 +33,17 @@ public class AdvancedInfo : MonoBehaviour
         CheckHorizontalToggle();
 
         PlayerController.main.player.OnChange += OnPlayerChange;
-        Config.settingsData.horizontalMode.OnChange += CheckHorizontalToggle;
-        Config.settingsData.persistentVars.windowScale.OnChange += () =>
-        {
-            advancedInfoWindow.rectTransform.localScale = new Vector2(
-                Config.settingsData.persistentVars.windowScale.Value,
-                Config.settingsData.persistentVars.windowScale.Value);
-            WindowManager.ClampWindow(advancedInfoWindow);
-            WindowManager.Save(posKey, advancedInfoWindow);
-        };
+        Config.settings.horizontalMode.OnChange += CheckHorizontalToggle;
+        Config.settings.persistentVars.windowScale.OnChange += () => advancedInfoWindow.ScaleWindow();
 
-        if (!Config.settingsData.showAdvanced) windowHolder.SetActive(false);
+        if (!Config.settings.showAdvanced) windowHolder.SetActive(false);
     }
 
     void Update()
     {
         if (WorldManager.currentRocket == null) return;
 
-        if (Config.settingsData.horizontalMode)
+        if (Config.settings.horizontalMode)
             RefreshLabels(apoapsisHorizontal, periapsisHorizontal, eccentricityHorizontal, angleHorizontal);
         else
             RefreshLabels(apoapsisVertical, periapsisVertical, eccentricityVertical, angleVertical);
@@ -60,27 +51,18 @@ public class AdvancedInfo : MonoBehaviour
 
     void CreateWindow()
     {
-        Config.settingsData.showAdvanced.OnChange += () =>
-        {
-            windowHolder.SetActive(Config.settingsData.showAdvanced);
-        };
+        Config.settings.showAdvanced.OnChange += () => { windowHolder.SetActive(Config.settings.showAdvanced); };
 
-        Vector2Int pos =
-            Config.settingsData.windowsSavedPosition.GetValueOrDefault(posKey, new Vector2Int(200, 1200));
-
-        advancedInfoWindow = Builder.CreateWindow(windowHolder.gameObject.transform, windowID, 220, 350, pos.x,
-            pos.y, true, true, 1, "Advanced Info");
+        advancedInfoWindow = Builder.CreateWindow(windowHolder.gameObject.transform, 0, 220, 350, 200, 1200, true,
+            false, 1, "Advanced Info");
+        advancedInfoWindow.RegisterPermanentSaving(PositionKey);
 
         RectTransform titleSize = advancedInfoWindow.rectTransform.Find("Title") as RectTransform;
         titleSize.sizeDelta = new Vector2(titleSize.sizeDelta.x, 30);
 
         advancedInfoWindow.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperLeft, 0, new RectOffset(5, 0, 0, 0));
 
-        advancedInfoWindow.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () =>
-        {
-            WindowManager.ClampWindow(advancedInfoWindow);
-            WindowManager.Save(posKey, advancedInfoWindow);
-        };
+        advancedInfoWindow.RegisterOnDropListener(() => advancedInfoWindow.ClampWindow());
 
         vertical = Builder.CreateContainer(advancedInfoWindow);
         vertical.CreateLayoutGroup(Type.Vertical, TextAnchor.MiddleLeft, 0);
@@ -91,10 +73,8 @@ public class AdvancedInfo : MonoBehaviour
         vertical.rectTransform.localScale = new Vector2(1, 0.99f);
         horizontal.rectTransform.localScale = new Vector2(1, 0.98f);
 
-        advancedInfoWindow.rectTransform.localScale = new Vector2(Config.settingsData.persistentVars.windowScale,
-            Config.settingsData.persistentVars.windowScale);
-
-        WindowManager.ClampWindow(advancedInfoWindow);
+        advancedInfoWindow.ScaleWindow();
+        advancedInfoWindow.ClampWindow();
     }
 
     void OnPlayerChange()
@@ -106,12 +86,12 @@ public class AdvancedInfo : MonoBehaviour
             return;
         }
 
-        if (Config.settingsData.showAdvanced) windowHolder.SetActive(true);
+        if (Config.settings.showAdvanced) windowHolder.SetActive(true);
     }
 
     void CheckHorizontalToggle()
     {
-        if (Config.settingsData.horizontalMode)
+        if (Config.settings.horizontalMode)
         {
             vertical.gameObject.SetActive(false);
             horizontal.gameObject.SetActive(true);
@@ -124,30 +104,30 @@ public class AdvancedInfo : MonoBehaviour
             advancedInfoWindow.Size = new Vector2(220, 350);
         }
 
-        WindowManager.ClampWindow(advancedInfoWindow);
+        advancedInfoWindow.ClampWindow();
     }
 
     void VerticalGUI()
     {
         Builder.CreateSeparator(vertical, 205);
 
-        CustomUI.AlignedLabel(vertical, 140, 30, "Apoapsis:");
-        apoapsisVertical = CustomUI.AlignedLabel(vertical, 175, 30);
+        UIExtensions.AlignedLabel(vertical, 140, 30, "Apoapsis:");
+        apoapsisVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
 
         Builder.CreateSpace(vertical, 0, 10);
 
-        CustomUI.AlignedLabel(vertical, 140, 30, "Periapsis:");
-        periapsisVertical = CustomUI.AlignedLabel(vertical, 175, 30);
+        UIExtensions.AlignedLabel(vertical, 140, 30, "Periapsis:");
+        periapsisVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
 
         Builder.CreateSpace(vertical, 0, 10);
 
-        CustomUI.AlignedLabel(vertical, 140, 30, "Eccentricity:");
-        eccentricityVertical = CustomUI.AlignedLabel(vertical, 175, 30);
+        UIExtensions.AlignedLabel(vertical, 140, 30, "Eccentricity:");
+        eccentricityVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
 
         Builder.CreateSpace(vertical, 0, 10);
 
-        CustomUI.AlignedLabel(vertical, 140, 30, "Angle:");
-        angleVertical = CustomUI.AlignedLabel(vertical, 175, 30);
+        UIExtensions.AlignedLabel(vertical, 140, 30, "Angle:");
+        angleVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
     }
 
     void HorizontalGUI()
@@ -156,26 +136,26 @@ public class AdvancedInfo : MonoBehaviour
         Container apoapsisContainer = Builder.CreateContainer(horizontal);
         apoapsisContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-        CustomUI.AlignedLabel(apoapsisContainer, 150, 30, "Apoapsis:");
-        apoapsisHorizontal = CustomUI.AlignedLabel(apoapsisContainer, 175, 30);
+        UIExtensions.AlignedLabel(apoapsisContainer, 150, 30, "Apoapsis:");
+        apoapsisHorizontal = UIExtensions.AlignedLabel(apoapsisContainer, 175, 30);
 
         Container periapsisContainer = Builder.CreateContainer(horizontal);
         periapsisContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-        CustomUI.AlignedLabel(periapsisContainer, 150, 30, "Periapsis:");
-        periapsisHorizontal = CustomUI.AlignedLabel(periapsisContainer, 175, 30);
+        UIExtensions.AlignedLabel(periapsisContainer, 150, 30, "Periapsis:");
+        periapsisHorizontal = UIExtensions.AlignedLabel(periapsisContainer, 175, 30);
 
         Container eccentricityContainer = Builder.CreateContainer(horizontal);
         eccentricityContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-        CustomUI.AlignedLabel(eccentricityContainer, 150, 30, "Eccentricity:");
-        eccentricityHorizontal = CustomUI.AlignedLabel(eccentricityContainer, 175, 30);
+        UIExtensions.AlignedLabel(eccentricityContainer, 150, 30, "Eccentricity:");
+        eccentricityHorizontal = UIExtensions.AlignedLabel(eccentricityContainer, 175, 30);
 
         Container angleContainer = Builder.CreateContainer(horizontal);
         angleContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-        CustomUI.AlignedLabel(angleContainer, 150, 30, "Angle:");
-        angleHorizontal = CustomUI.AlignedLabel(angleContainer, 175, 30);
+        UIExtensions.AlignedLabel(angleContainer, 150, 30, "Angle:");
+        angleHorizontal = UIExtensions.AlignedLabel(angleContainer, 175, 30);
     }
 
     void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angle)

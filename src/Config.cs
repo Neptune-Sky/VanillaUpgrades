@@ -1,6 +1,6 @@
 ﻿using SFS.IO;
-using SFS.Parsers.Json;
 using SFS.Variables;
+using UITools;
 
 namespace VanillaUpgrades;
 
@@ -22,8 +22,6 @@ public class SettingsData
     public Bool_Local showBuildGui = new() { Value = true };
     public Bool_Local showAdvanced = new() { Value = true };
     public Bool_Local horizontalMode = new();
-    public bool showCalc;
-    public bool showAverager;
     public Bool_Local showTime = new() { Value = true };
     public Bool_Local showWorldTime = new() { Value = true };
     public Bool_Local alwaysShowTime = new();
@@ -36,7 +34,6 @@ public class SettingsData
 
     // Misc
     public bool explosions = true;
-    public bool explosionShake = true;
     public bool stopTimewarpOnEncounter = true;
     public bool moreCameraZoom = true;
     public bool moreCameraMove = true;
@@ -50,25 +47,28 @@ public class SettingsData
         windowsSavedPosition = new(); //name MUST be unique
 }
 
-public static class Config
+public class Config : ModSettings<SettingsData>
 {
-    static readonly FilePath Path = Main.modFolder.ExtendToFile("Config.txt");
+    static Config main;
 
-    public static SettingsData settingsData;
+    Action saveAction;
+
+    protected override FilePath SettingsFile { get; } = Main.modFolder.ExtendToFile("Config.txt");
 
     public static void Load()
     {
-        if (!JsonWrapper.TryLoadJson(Path, out settingsData) && Path.FileExists())
-            ErrorNotification.Error("An error occured while trying to load Config, so it was reset to defaults.");
-
-        settingsData = settingsData ?? new SettingsData();
-        Save();
+        main = new Config();
+        main.Initialize();
     }
 
     public static void Save()
     {
-        if (settingsData == null)
-            Load();
-        Path.WriteText(JsonWrapper.ToJson(settingsData, true));
+        main.saveAction?.Invoke();
+    }
+
+    protected override void RegisterOnVariableChange(Action onChange)
+    {
+        saveAction = onChange;
+        Application.quitting += onChange;
     }
 }

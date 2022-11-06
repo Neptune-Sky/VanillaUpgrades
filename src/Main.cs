@@ -32,6 +32,8 @@ public class Main : Mod
 
     public override Action LoadKeybindings => VU_Keybindings.LoadKeybindings;
 
+    public override Dictionary<string, string> Dependencies { get; } = new() { {"UITools", "1.0"} };
+
     public override void Early_Load()
     {
         main = this;
@@ -48,7 +50,7 @@ public class Main : Mod
         Console.commands.Add(Command);
 
         ConfigUI.Setup();
-        mainObject = new GameObject("ASoDMainObject", typeof(WindowManager), typeof(ErrorNotification));
+        mainObject = new GameObject("ASoDMainObject", typeof(ErrorNotification));
         Object.DontDestroyOnLoad(mainObject);
         mainObject.SetActive(true);
     }

@@ -9,14 +9,14 @@ public static class OpacityChangeListener
         if (!Main.menuOpen) return;
         if (VideoSettingsPC.main.uiOpacitySlider.value < 0.001)
         {
-            Config.settingsData.persistentVars.opacity = 1;
+            Config.settings.persistentVars.opacity = 1;
             VideoSettingsPC.main.uiOpacitySlider.value = 0;
-            Config.settingsData.guiHidden = true;
+            Config.settings.guiHidden = true;
         }
         else
         {
-            Config.settingsData.persistentVars.opacity = VideoSettingsPC.main.uiOpacitySlider.value;
-            Config.settingsData.guiHidden = false;
+            Config.settings.persistentVars.opacity = VideoSettingsPC.main.uiOpacitySlider.value;
+            Config.settings.guiHidden = false;
         }
 
         Config.Save();
@@ -25,16 +25,15 @@ public static class OpacityChangeListener
 
 public static class OpacityChanger
 {
-    public static bool hidden;
-    public static float uiOpacity = Config.settingsData.persistentVars.opacity;
+    static bool hidden;
 
     public static void HideUI()
     {
         hidden = !hidden;
         float toChange = 0;
-        if (hidden) toChange = Config.settingsData.persistentVars.opacity;
+        if (hidden) toChange = Config.settings.persistentVars.opacity;
         VideoSettingsPC.main.uiOpacitySlider.value = toChange;
-        Config.settingsData.guiHidden = hidden;
+        Config.settings.guiHidden = hidden;
         Config.Save();
     }
 }

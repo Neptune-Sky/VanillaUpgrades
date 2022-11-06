@@ -23,6 +23,6 @@ public class WorldManager
     {
         UpdatePlayer();
         PlayerController.main.player.OnChange += UpdatePlayer;
-        Config.settingsData.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
+        Config.settings.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
     }
 }

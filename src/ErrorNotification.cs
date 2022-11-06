@@ -1,5 +1,4 @@
 ﻿using SFS.UI;
-using Environment = System.Environment;
 
 namespace VanillaUpgrades;
 

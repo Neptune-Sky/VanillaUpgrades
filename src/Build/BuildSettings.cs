@@ -1,7 +1,6 @@
 using SFS.Builds;
 using SFS.Parts.Modules;
-using SFS.UI;
-using VanillaUpgrades.Utility;
+using UITools;
 using Type = SFS.UI.ModGUI.Type;
 
 namespace VanillaUpgrades;
@@ -12,8 +11,7 @@ class StopAdaptation
     [HarmonyPrefix]
     static bool Prefix()
     {
-        if (BuildSettings.noAdaptation && !BuildSettings.noAdaptOverride) return false;
-        return true;
+        return !BuildSettings.noAdaptation || BuildSettings.noAdaptOverride;
     }
 }
 
@@ -38,9 +36,7 @@ class FixCucumber
 {
     static bool Prefix()
     {
-        if (BuildSettings.noAdaptation && !BuildSettings.noAdaptOverride) return false;
-
-        return true;
+        return !BuildSettings.noAdaptation || BuildSettings.noAdaptOverride;
     }
 }
 
@@ -50,86 +46,60 @@ public class KillMagnet
     [HarmonyPrefix]
     static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
     {
-        if (BuildSettings.snapping)
-        {
-            __result = new List<Vector2>();
-            return false;
-        }
-
-        return true;
+        if (!BuildSettings.snapping)
+            return true;
+        __result = new List<Vector2>();
+        return false;
     }
 }
 
 public static class BuildSettings
 {
-    const string posKey = "BuildSettingsWindow";
-    public static GameObject windowHolder;
+    const string PositionKey = "VU.BuildSettingsWindow";
 
-    static readonly int MainWindowID = Builder.GetRandomID();
+    const int Height = 170;
+
+    static GameObject windowHolder;
+
     static Window window;
-
-    static ToggleWithLabel snapToggle;
-
-    static ToggleWithLabel adaptToggle;
-    // static ToggleWithLabel calcToggle;
 
     public static bool snapping;
     public static bool noAdaptation;
     public static bool noAdaptOverride;
-
-    static readonly int height = 170;
-    static readonly string title = "Build Settings";
-    static readonly Vector2Int defaultPos = new(300, height);
+    static readonly Vector2Int DefaultPos = new(300, Height);
 
     public static void Setup()
     {
-        ShowGUI();
-        ScaleWindow(window);
-        OnToggle();
-        Config.settingsData.showBuildGui.OnChange += OnToggle;
-        Config.settingsData.showBuildGui.Value &= !Main.buildSettingsPresent;
-
-        Config.settingsData.persistentVars.windowScale.OnChange += () => ScaleWindow(window);
+        CreateGUI();
+        Config.settings.showBuildGui.OnChange += OnToggle;
+        Config.settings.showBuildGui.Value &= !Main.buildSettingsPresent;
+        Config.settings.persistentVars.windowScale.OnChange += () => window.ScaleWindow();
     }
 
     static void OnToggle()
     {
-        windowHolder.SetActive(Config.settingsData.showBuildGui);
+        windowHolder.SetActive(Config.settings.showBuildGui);
     }
 
-    static void ScaleWindow(Window input)
+    static void CreateGUI()
     {
-        if (windowHolder == null) return;
-        input.rectTransform.localScale = new Vector2(Config.settingsData.persistentVars.windowScale.Value,
-            Config.settingsData.persistentVars.windowScale.Value);
-        WindowManager.ClampWindow(input);
-        WindowManager.Save(posKey, input);
-    }
+        windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "Build Settings");
 
-    static void ShowGUI()
-    {
-        Vector2Int pos = Config.settingsData.windowsSavedPosition.GetValueOrDefault(posKey, defaultPos);
-        windowHolder = CustomUI.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "Build Settings");
-
-        window = Builder.CreateWindow(windowHolder.transform, MainWindowID, 375, height, pos.x, pos.y, true, true,
-            0.95f, title);
-        window.gameObject.GetComponent<DraggableWindowModule>().OnDropAction += () =>
-        {
-            WindowManager.ClampWindow(window);
-            WindowManager.Save(posKey, window);
-        };
+        window = Builder.CreateWindow(windowHolder.transform, 0, 375, Height, DefaultPos.x, DefaultPos.y, true, false,
+            0.95f, "Build Settings");
+        window.RegisterPermanentSaving(PositionKey);
+        window.RegisterOnDropListener(() => window.ClampWindow());
 
         window.CreateLayoutGroup(Type.Vertical, padding: new RectOffset(0, 0, 7, 0));
 
         if (!Main.buildSettingsPresent)
         {
-            snapToggle = Builder.CreateToggleWithLabel(window, 320, 35, () => !snapping, () => snapping = !snapping,
-                0, 0, "Snap to Parts");
-            adaptToggle = Builder.CreateToggleWithLabel(window, 320, 35, () => !noAdaptation,
-                () => noAdaptation = !noAdaptation, 0, 0, "Part Adaptation");
+            Builder.CreateToggleWithLabel(window, 320, 35, () => !snapping, () => snapping ^= true, 0, 0,
+                "Snap to Parts");
+            Builder.CreateToggleWithLabel(window, 320, 35, () => !noAdaptation, () => noAdaptation ^= true, 0, 0,
+                "Part Adaptation");
         }
-        // calcToggle = Builder.CreateToggleWithLabel(window, 320, 35, () => DVCalc.showCalc, DVCalc.toggleCalc, 0, 0, "ΔV Calculator");
 
-        ScaleWindow(window);
+        window.ScaleWindow();
     }
 }

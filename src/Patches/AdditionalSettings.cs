@@ -2,23 +2,13 @@
 
 namespace VanillaUpgrades;
 
-[HarmonyPatch(typeof(PlayerController), "CreateShakeEffect")]
-public class RemoveShake
-{
-    [HarmonyPrefix]
-    public static bool Prefix()
-    {
-        return Config.settingsData.explosionShake;
-    }
-}
-
 [HarmonyPatch(typeof(EffectManager), "CreateExplosion")]
 public class StopExplosions
 {
     [HarmonyPrefix]
     static bool Prefix()
     {
-        return Config.settingsData.explosions;
+        return Config.settings.explosions;
     }
 }
 
@@ -28,6 +18,6 @@ public class StopEntryExplosions
     [HarmonyPrefix]
     static bool Prefix()
     {
-        return Config.settingsData.explosions;
+        return Config.settings.explosions;
     }
 }
