@@ -10,7 +10,6 @@ using Type = SFS.UI.ModGUI.Type;
 namespace VanillaUpgrades
 {
 
-
     [HarmonyPatch(typeof(PartGrid), "UpdateAdaptation")]
     class StopAdaptation
     {
@@ -36,6 +35,7 @@ namespace VanillaUpgrades
             BuildSettings.noAdaptOverride = false;
         }
     }
+
 
     [HarmonyPatch(typeof(AdaptModule), "UpdateAdaptation")]
     class FixCucumber
@@ -80,6 +80,11 @@ namespace VanillaUpgrades
             Config.settings.showBuildGui.OnChange += OnToggle;
             Config.settings.showBuildGui.Value &= !Main.buildSettingsPresent;
             Config.settings.persistentVars.windowScale.OnChange += () => window.ScaleWindow();
+            if (Config.settings.moreCameraZoom)
+            {
+                BuildManager.main.buildCamera.maxCameraDistance = 300;
+                BuildManager.main.buildCamera.minCameraDistance = 0.1f;
+            }
         }
 
         static void OnToggle()

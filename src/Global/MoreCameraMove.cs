@@ -31,21 +31,5 @@ namespace VanillaUpgrades
             return false;
         }
     }
-
-    [HarmonyPatch(typeof(BuildManager), "Awake")]
-    public static class PatchZoomLimits
-    {
-        public static BuildManager inst;
-
-        [HarmonyPrefix]
-        public static void Prefix(ref BuildManager __instance)
-        {
-            if (Config.settings.moreCameraZoom)
-            {
-                __instance.buildCamera.maxCameraDistance = 300;
-                __instance.buildCamera.minCameraDistance = 0.1f;
-            }
-        }
-    }
 }
 
