@@ -1,82 +1,85 @@
 ﻿using System.Globalization;
+using HarmonyLib;
 
-namespace VanillaUpgrades;
-
-[HarmonyPatch(typeof(Units), nameof(Units.ToDistanceString))]
-public static class DistanceUnits
+namespace VanillaUpgrades
 {
-    [HarmonyPrefix]
-    static bool Prefix(this double a, ref string __result)
+    [HarmonyPatch(typeof(Units), nameof(Units.ToDistanceString))]
+    public static class DistanceUnits
     {
-        if (!Config.settings.mmUnits) return true;
-
-        if (a >= 100000000 && !double.IsInfinity(a))
+        [HarmonyPrefix]
+        static bool Prefix(this double a, ref string __result)
         {
-            __result = (a / 1000000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "Mm";
-            return false;
-        }
+            if (!Config.settings.mmUnits) return true;
 
-        return true;
-    }
-}
-
-[HarmonyPatch(typeof(Units), nameof(Units.ToVelocityString))]
-public static class VelocityUnits
-{
-    [HarmonyPrefix]
-    static bool Prefix(this double a, ref string __result)
-    {
-        if (!Config.settings.kmsUnits && !Config.settings.cUnits) return true;
-
-        if (a >= 10000 && !double.IsInfinity(a))
-        {
-            if (a > 2997924 && Config.settings.cUnits)
+            if (a >= 100000000 && !double.IsInfinity(a))
             {
-                __result = (a / 299792458).Round(0.001).ToString("F3", CultureInfo.InvariantCulture) + "c";
+                __result = (a / 1000000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "Mm";
                 return false;
             }
 
-            __result = (a / 1000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "km/s";
-            return false;
+            return true;
         }
-
-        return true;
     }
-}
 
-[HarmonyPatch(typeof(Units), nameof(Units.ToMassString))]
-public static class KtMass
-{
-    [HarmonyPrefix]
-    static bool Prefix(this float a, bool forceDecimal, ref string __result)
+    [HarmonyPatch(typeof(Units), nameof(Units.ToVelocityString))]
+    public static class VelocityUnits
     {
-        if (!Config.settings.ktUnits) return true;
-
-        if (a >= 10000 && !float.IsInfinity(a) && Config.settings.ktUnits)
+        [HarmonyPrefix]
+        static bool Prefix(this double a, ref string __result)
         {
-            __result = (a / 1000).Round(0.01f).ToString(forceDecimal ? "F1" : "F", CultureInfo.InvariantCulture) +
-                       "kt";
-            return false;
+            if (!Config.settings.kmsUnits && !Config.settings.cUnits) return true;
+
+            if (a >= 10000 && !double.IsInfinity(a))
+            {
+                if (a > 2997924 && Config.settings.cUnits)
+                {
+                    __result = (a / 299792458).Round(0.001).ToString("F3", CultureInfo.InvariantCulture) + "c";
+                    return false;
+                }
+
+                __result = (a / 1000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "km/s";
+                return false;
+            }
+
+            return true;
         }
-
-        return true;
     }
-}
 
-[HarmonyPatch(typeof(Units), nameof(Units.ToThrustString))]
-public static class KtThrust
-{
-    [HarmonyPrefix]
-    static bool Prefix(this float a, ref string __result)
+    [HarmonyPatch(typeof(Units), nameof(Units.ToMassString))]
+    public static class KtMass
     {
-        if (!Config.settings.ktUnits) return true;
-
-        if (a >= 10000 && !float.IsInfinity(a) && Config.settings.ktUnits)
+        [HarmonyPrefix]
+        static bool Prefix(this float a, bool forceDecimal, ref string __result)
         {
-            __result = (a / 1000).Round(0.01f).ToString("F", CultureInfo.InvariantCulture) + "kt";
-            return false;
-        }
+            if (!Config.settings.ktUnits) return true;
 
-        return true;
+            if (a >= 10000 && !float.IsInfinity(a) && Config.settings.ktUnits)
+            {
+                __result = (a / 1000).Round(0.01f).ToString(forceDecimal ? "F1" : "F", CultureInfo.InvariantCulture) +
+                           "kt";
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(Units), nameof(Units.ToThrustString))]
+    public static class KtThrust
+    {
+        [HarmonyPrefix]
+        static bool Prefix(this float a, ref string __result)
+        {
+            if (!Config.settings.ktUnits) return true;
+
+            if (a >= 10000 && !float.IsInfinity(a) && Config.settings.ktUnits)
+            {
+                __result = (a / 1000).Round(0.01f).ToString("F", CultureInfo.InvariantCulture) + "kt";
+                return false;
+            }
+
+            return true;
+        }
     }
 }
+

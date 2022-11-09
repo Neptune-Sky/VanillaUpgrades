@@ -1,47 +1,51 @@
-﻿using SFS.Builds;
+﻿using HarmonyLib;
+using SFS.Builds;
 using SFS.World;
+using UnityEngine;
 
-namespace VanillaUpgrades;
-
-[HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
-public class MoreCameraMove
+namespace VanillaUpgrades
 {
-    [HarmonyPrefix]
-    public static bool Prefix(ref Vector2 __result, Vector2 newValue)
+    [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
+    public class MoreCameraMove
     {
-        if (!Config.settings.moreCameraMove) return true;
-        if (PlayerController.main.player.Value == null) return true;
-        PlayerController.main.player.Value.ClampTrackingOffset(ref newValue, -30);
-        __result = newValue;
-        return false;
-    }
-}
-
-[HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
-public class MoreCameraZoom
-{
-    [HarmonyPrefix]
-    static bool Prefix(ref float __result, float newValue)
-    {
-        if (!Config.settings.moreCameraZoom) return true;
-        if (PlayerController.main.player.Value == null) return true;
-        __result = Mathf.Clamp(newValue, 0.05f, 2.5E+10f);
-        return false;
-    }
-}
-
-[HarmonyPatch(typeof(BuildManager), "Awake")]
-public static class PatchZoomLimits
-{
-    public static BuildManager inst;
-
-    [HarmonyPrefix]
-    public static void Prefix(ref BuildManager __instance)
-    {
-        if (Config.settings.moreCameraZoom)
+        [HarmonyPrefix]
+        public static bool Prefix(ref Vector2 __result, Vector2 newValue)
         {
-            __instance.buildCamera.maxCameraDistance = 300;
-            __instance.buildCamera.minCameraDistance = 0.1f;
+            if (!Config.settings.moreCameraMove) return true;
+            if (PlayerController.main.player.Value == null) return true;
+            PlayerController.main.player.Value.ClampTrackingOffset(ref newValue, -30);
+            __result = newValue;
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
+    public class MoreCameraZoom
+    {
+        [HarmonyPrefix]
+        static bool Prefix(ref float __result, float newValue)
+        {
+            if (!Config.settings.moreCameraZoom) return true;
+            if (PlayerController.main.player.Value == null) return true;
+            __result = Mathf.Clamp(newValue, 0.05f, 2.5E+10f);
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(BuildManager), "Awake")]
+    public static class PatchZoomLimits
+    {
+        public static BuildManager inst;
+
+        [HarmonyPrefix]
+        public static void Prefix(ref BuildManager __instance)
+        {
+            if (Config.settings.moreCameraZoom)
+            {
+                __instance.buildCamera.maxCameraDistance = 300;
+                __instance.buildCamera.minCameraDistance = 0.1f;
+            }
         }
     }
 }
+

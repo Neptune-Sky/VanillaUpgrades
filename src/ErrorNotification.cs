@@ -1,23 +1,28 @@
-﻿using SFS.UI;
+﻿using System;
+using System.Text;
+using SFS.UI;
+using UnityEngine;
 
-namespace VanillaUpgrades;
-
-public class ErrorNotification : MonoBehaviour
+namespace VanillaUpgrades
 {
-    public static StringBuilder errors = new();
-
-    void Start()
+    public class ErrorNotification : MonoBehaviour
     {
-        if (errors.Length != 0)
+        public static StringBuilder errors = new ();
+
+        void Start()
         {
-            errors.Insert(0,
-                "An error occured while loading VanillaUpgrades." + Environment.NewLine + Environment.NewLine);
-            Menu.read.ShowReport(errors, () => errors.Clear());
+            if (errors.Length != 0)
+            {
+                errors.Insert(0,
+                    "An error occured while loading VanillaUpgrades." + Environment.NewLine + Environment.NewLine);
+                Menu.read.ShowReport(errors, () => errors.Clear());
+            }
+        }
+
+        public static void Error(string error)
+        {
+            errors.AppendLine($"- {error}");
         }
     }
-
-    public static void Error(string error)
-    {
-        errors.AppendLine($"- {error}");
-    }
 }
+

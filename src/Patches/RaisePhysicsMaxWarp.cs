@@ -1,36 +1,39 @@
-﻿using SFS.World;
+﻿using HarmonyLib;
+using SFS.World;
 
-namespace VanillaUpgrades;
-
-[HarmonyPatch(typeof(WorldTime), "GetTimewarpSpeed_Physics")]
-public class AddMoreIndexes
+namespace VanillaUpgrades
 {
-    [HarmonyPrefix]
-    public static bool Prefix(ref double __result, int timewarpIndex_Physics)
+    [HarmonyPatch(typeof(WorldTime), "GetTimewarpSpeed_Physics")]
+    public class AddMoreIndexes
     {
-        if (Config.settings.higherPhysicsWarp)
+        [HarmonyPrefix]
+        public static bool Prefix(ref double __result, int timewarpIndex_Physics)
         {
-            __result = new[] { 1, 2, 3, 5, 10, 25 }[timewarpIndex_Physics];
-            return false;
-        }
+            if (Config.settings.higherPhysicsWarp)
+            {
+                __result = new[] { 1, 2, 3, 5, 10, 25 }[timewarpIndex_Physics];
+                return false;
+            }
 
-        return true;
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(WorldTime))]
+    [HarmonyPatch("MaxPhysicsIndex", MethodType.Getter)]
+    public class AllowUsingIndexes
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(ref int __result)
+        {
+            if (Config.settings.higherPhysicsWarp)
+            {
+                __result = 5;
+                return false;
+            }
+
+            return true;
+        }
     }
 }
 
-[HarmonyPatch(typeof(WorldTime))]
-[HarmonyPatch("MaxPhysicsIndex", MethodType.Getter)]
-public class AllowUsingIndexes
-{
-    [HarmonyPrefix]
-    public static bool Prefix(ref int __result)
-    {
-        if (Config.settings.higherPhysicsWarp)
-        {
-            __result = 5;
-            return false;
-        }
-
-        return true;
-    }
-}

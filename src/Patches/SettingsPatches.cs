@@ -1,40 +1,43 @@
-﻿using SFS.Builds;
+﻿using HarmonyLib;
+using SFS.Builds;
 using SFS.UI;
 
-namespace VanillaUpgrades;
-
-[HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnOpen))]
-public class ShowSettings
+namespace VanillaUpgrades
 {
-    [HarmonyPostfix]
-    public static void Postfix()
+    [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnOpen))]
+    public class ShowSettings
     {
-        Main.menuOpen = true;
-    }
-}
-
-[HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnClose))]
-public class HideSettings
-{
-    [HarmonyPostfix]
-    public static void Postfix()
-    {
-        Main.menuOpen = false;
-        Config.Save();
-        if (Main.buildObject != null)
+        [HarmonyPostfix]
+        public static void Postfix()
         {
-            if (Config.settings.moreCameraZoom)
+            Main.menuOpen = true;
+        }
+    }
+
+    [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnClose))]
+    public class HideSettings
+    {
+        [HarmonyPostfix]
+        public static void Postfix()
+        {
+            Main.menuOpen = false;
+            Config.Save();
+            if (Main.buildObject != null)
             {
-                if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
-                BuildManager.main.buildCamera.maxCameraDistance = 300;
-                BuildManager.main.buildCamera.minCameraDistance = 0.1f;
-            }
-            else
-            {
-                if (BuildManager.main.buildCamera.maxCameraDistance == 60) return;
-                BuildManager.main.buildCamera.maxCameraDistance = 60;
-                BuildManager.main.buildCamera.minCameraDistance = 10f;
+                if (Config.settings.moreCameraZoom)
+                {
+                    if (BuildManager.main.buildCamera.maxCameraDistance == 300) return;
+                    BuildManager.main.buildCamera.maxCameraDistance = 300;
+                    BuildManager.main.buildCamera.minCameraDistance = 0.1f;
+                }
+                else
+                {
+                    if (BuildManager.main.buildCamera.maxCameraDistance == 60) return;
+                    BuildManager.main.buildCamera.maxCameraDistance = 60;
+                    BuildManager.main.buildCamera.minCameraDistance = 10f;
+                }
             }
         }
     }
 }
+

@@ -1,20 +1,23 @@
-﻿using SFS.Achievements;
+﻿using HarmonyLib;
+using SFS.Achievements;
 using SFS.World;
 using SFS.WorldBase;
 
-namespace VanillaUpgrades;
-
-[HarmonyPatch(typeof(AchievementsModule), "Log_Planet")]
-public class StopTimewarpOnEncounter
+namespace VanillaUpgrades
 {
-    [HarmonyPostfix]
-    public static void Postfix(Planet planet, Planet planet_Old)
+    [HarmonyPatch(typeof(AchievementsModule), "Log_Planet")]
+    public class StopTimewarpOnEncounter
     {
-        if (planet.parentBody == planet_Old && Config.settings.stopTimewarpOnEncounter)
+        [HarmonyPostfix]
+        public static void Postfix(Planet planet, Planet planet_Old)
         {
-            WorldTime.main.SetState(2, false, false);
+            if (planet.parentBody == planet_Old && Config.settings.stopTimewarpOnEncounter)
+            {
+                WorldTime.main.SetState(2, false, false);
 
-            TimeManipulation.StopTimewarp(false);
+                TimeManipulation.StopTimewarp(false);
+            }
         }
     }
 }
+

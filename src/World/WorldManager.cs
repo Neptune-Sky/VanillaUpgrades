@@ -1,28 +1,30 @@
 ﻿using SFS.World;
 
-namespace VanillaUpgrades;
-
-public class WorldManager
+namespace VanillaUpgrades
 {
-    public static Rocket currentRocket;
-
-    public static void Throttle01()
+    public class WorldManager
     {
-        if (currentRocket == null) return;
-        currentRocket.throttle.throttlePercent.Value = 0.0005f;
-    }
+        public static Rocket currentRocket;
 
-    static void UpdatePlayer()
-    {
-        currentRocket = PlayerController.main.player.Value != null
-            ? PlayerController.main.player.Value as Rocket
-            : null;
-    }
+        public static void Throttle01()
+        {
+            if (currentRocket == null) return;
+            currentRocket.throttle.throttlePercent.Value = 0.0005f;
+        }
 
-    public static void Setup()
-    {
-        UpdatePlayer();
-        PlayerController.main.player.OnChange += UpdatePlayer;
-        Config.settings.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
+        static void UpdatePlayer()
+        {
+            currentRocket = PlayerController.main.player.Value != null
+                ? PlayerController.main.player.Value as Rocket
+                : null;
+        }
+
+        public static void Setup()
+        {
+            UpdatePlayer();
+            PlayerController.main.player.OnChange += UpdatePlayer;
+            Config.settings.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
+        }
     }
 }
+
