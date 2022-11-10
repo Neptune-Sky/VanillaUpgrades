@@ -11,23 +11,23 @@ namespace VanillaUpgrades
     public class PersistentVars
     {
         public float opacity = 1;
-        public Color windowColor = new (0.007843138f, 0.09019608f, 0.18039216f, 1f);
-        public Float_Local windowScale = new () { Value = 1 };
+        public Color windowColor = new Color(0.007843138f, 0.09019608f, 0.18039216f, 1f);
+        public Float_Local windowScale = new Float_Local { Value = 1 };
     }
 
     [Serializable]
     public class SettingsData
     {
         // random vars
-        public PersistentVars persistentVars = new ();
+        public PersistentVars persistentVars = new PersistentVars();
         public bool guiHidden;
 
-        public Bool_Local showBuildGui = new () { Value = true };
-        public Bool_Local showAdvanced = new () { Value = true };
-        public Bool_Local horizontalMode = new ();
-        public Bool_Local showTime = new () { Value = true };
-        public Bool_Local showWorldTime = new () { Value = true };
-        public Bool_Local alwaysShowTime = new ();
+        public Bool_Local showBuildGui = new Bool_Local { Value = true };
+        public Bool_Local showAdvanced = new Bool_Local { Value = true };
+        public Bool_Local horizontalMode = new Bool_Local();
+        public Bool_Local showTime = new Bool_Local { Value = true };
+        public Bool_Local showWorldTime = new Bool_Local { Value = true };
+        public Bool_Local alwaysShowTime = new Bool_Local();
 
         // Units
         public bool mmUnits = true;
@@ -42,12 +42,12 @@ namespace VanillaUpgrades
         public bool moreCameraMove = true;
 
         // Cheats
-        public Bool_Local allowTimeSlowdown = new ();
+        public Bool_Local allowTimeSlowdown = new Bool_Local();
         public bool higherPhysicsWarp;
 
         // GUI
         public Dictionary<string, Vector2Int>
-            windowsSavedPosition = new (); //name MUST be unique
+            windowsSavedPosition = new Dictionary<string, Vector2Int>(); //name MUST be unique
     }
 
     public class Config : ModSettings<SettingsData>
