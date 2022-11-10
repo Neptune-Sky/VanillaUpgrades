@@ -7,7 +7,7 @@ namespace VanillaUpgrades
 {
     public class ErrorNotification : MonoBehaviour
     {
-        public static StringBuilder errors = new ();
+        public static StringBuilder errors = new StringBuilder();
 
         void Start()
         {
