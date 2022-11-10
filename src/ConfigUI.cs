@@ -17,9 +17,9 @@ namespace VanillaUpgrades
             ("GUI", transform1 => GetGUISettings(transform1, ConfigurationMenu.ContentSize)),
             ("Units", transform1 => GetUnitsSettings(transform1, ConfigurationMenu.ContentSize)),
             ("Misc", transform1 => GetMiscSettings(transform1, ConfigurationMenu.ContentSize)),
-            ("Cheats", transform1 => GetCheatsSettings(transform1, ConfigurationMenu.ContentSize)),
-            ("Windows", transform1 => GetWindowSettings(transform1, ConfigurationMenu.ContentSize))
+            ("Cheats", transform1 => GetCheatsSettings(transform1, ConfigurationMenu.ContentSize))
             });
+            // ("Windows", transform1 => GetWindowSettings(transform1, ConfigurationMenu.ContentSize))
         }
 
         static GameObject GetGUISettings(Transform parent, Vector2Int size)
@@ -30,6 +30,22 @@ namespace VanillaUpgrades
             int elementWidth = size.x - 60;
 
             Builder.CreateLabel(box, elementWidth, 50, 0, 0, "GUI");
+
+            Container container = Builder.CreateContainer(box);
+            container.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
+
+            UIExtensions.AlignedLabel(container, elementWidth - 225, ToggleHeight, "Window Scale");
+
+            Container SliderLabel = Builder.CreateContainer(container);
+            SliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
+
+            Builder.CreateSlider(SliderLabel, 225, Config.settings.persistentVars.windowScale.Value, (0.5f, 1.5f),
+                false,
+                val => { Config.settings.persistentVars.windowScale.Value = val; },
+                val => Math.Round(val * 100) + "%");
+
+            Builder.CreateSeparator(box, elementWidth - 20);
+
             if (!Main.buildSettingsPresent)
             {
                 Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.showBuildGui,
@@ -117,6 +133,7 @@ namespace VanillaUpgrades
             return box.gameObject;
         }
 
+        /*
         static GameObject GetWindowSettings(Transform parent, Vector2Int size)
         {
             Box box = Builder.CreateBox(parent, size.x, size.y);
@@ -141,6 +158,7 @@ namespace VanillaUpgrades
 
             return box.gameObject;
         }
+        */
     }
 }
 
