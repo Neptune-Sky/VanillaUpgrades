@@ -30,16 +30,16 @@ namespace VanillaUpgrades
         public static FolderPath modFolder;
         public override string ModNameID => "VanUp";
         public override string DisplayName => "Vanilla Upgrades";
-        public override string Author => "ASoD";
-        public override string MinimumGameVersionNecessary => "1.5.8";
-        public override string ModVersion => "v4.1";
+        public override string Author => "StarMods";
+        public override string MinimumGameVersionNecessary => "1.5.8.5";
+        public override string ModVersion => "v5.0";
 
         public override string Description =>
             "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
 
         public override Action LoadKeybindings => VU_Keybindings.LoadKeybindings;
 
-        public override Dictionary<string, string> Dependencies { get; } = new () { { "UITools", "1.0" } };
+        public override Dictionary<string, string> Dependencies { get; } = new Dictionary<string, string> { { "UITools", "1.0" } };
 
         public override void Early_Load()
         {
