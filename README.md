@@ -8,13 +8,13 @@ If you use any of my code for your mods, all I ask is that you give credit for t
 
 The goal of this mod is to upgrade the vanilla experience with tons of quality of life stuff. Current features are:
 
+**New Functionality:**
 
 - Greatly increased zoom-in/movement limits of the camera in world/build views.
 - Timewarp now stops when entering a planet's SoI.*
-- Time slowdown, you can now use decimal timewarps and even freeze time completely. (Off by default, due to cheaty nature.)
-- Physics timewarp up to 25x on all difficulties (Off by default, due to cheaty nature.)
 
 **New UI:**
+
 - Toggles for disabling adaptation and snapping in the build grid.
 - New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
 - World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
@@ -25,6 +25,11 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 - Adds `km/s` as a velocity unit
 - % speed of light (`c`) as a velocity unit
 - Adds `kt` as a mass and thrust unit
+
+**New Cheats:**
+
+- Time slowdown, you can now use decimal timewarps and even freeze time completely.
+- Physics timewarp up to 25x on all difficulties.
 
 **New Keybinds:**
 
@@ -49,9 +54,9 @@ Tons more will be added in the future.
 
 # Installation
 
-1. Download the latest zip.
+1. Download the latest DLL.
 2. Use the "Open Mods Folder" button in-game. 
-3. Extract the entire folder from the zip to the mods folder. Do not remove the DLL.
+3. Drag and drop the dll from your downloads into the mods folder, then restart the game.
 
 
 **This mod is untested on Mac.** Use at your own risk.
