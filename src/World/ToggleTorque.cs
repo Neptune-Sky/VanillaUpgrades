@@ -73,6 +73,7 @@ namespace VanillaUpgrades
 
         public static void Toggle()
         {
+            if (!PlayerController.main.HasControl(MsgDrawer.main)) return;
             string enabled;
 
             disableTorque = !disableTorque;

@@ -1,4 +1,5 @@
-﻿using SFS.World;
+﻿using SFS.UI;
+using SFS.World;
 
 namespace VanillaUpgrades
 {
@@ -8,7 +9,7 @@ namespace VanillaUpgrades
 
         public static void Throttle01()
         {
-            if (currentRocket == null) return;
+            if (currentRocket == null || !PlayerController.main.HasControl(MsgDrawer.main)) return;
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 

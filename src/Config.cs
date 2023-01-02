@@ -44,10 +44,6 @@ namespace VanillaUpgrades
         // Cheats
         public Bool_Local allowTimeSlowdown = new Bool_Local();
         public bool higherPhysicsWarp;
-
-        // GUI
-        public Dictionary<string, Vector2Int>
-            windowsSavedPosition = new Dictionary<string, Vector2Int>(); //name MUST be unique
     }
 
     public class Config : ModSettings<SettingsData>

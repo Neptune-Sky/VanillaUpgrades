@@ -99,7 +99,7 @@ namespace VanillaUpgrades
             window = Builder.CreateWindow(windowHolder.transform, 0, 375, Height, DefaultPos.x, DefaultPos.y, true, false,
                 0.95f, "Build Settings");
             window.RegisterPermanentSaving(PositionKey);
-            window.RegisterOnDropListener(() => window.ClampWindow());
+            window.RegisterOnDropListener(window.ClampWindow);
 
             window.CreateLayoutGroup(Type.Vertical, padding: new RectOffset(0, 0, 7, 0));
 

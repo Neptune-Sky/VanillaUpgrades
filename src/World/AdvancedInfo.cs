@@ -64,7 +64,7 @@ namespace VanillaUpgrades
 
             advancedInfoWindow.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperLeft, 0, new RectOffset(5, 0, 0, 0));
 
-            advancedInfoWindow.RegisterOnDropListener(() => advancedInfoWindow.ClampWindow());
+            advancedInfoWindow.RegisterOnDropListener(advancedInfoWindow.ClampWindow);
 
             vertical = Builder.CreateContainer(advancedInfoWindow);
             vertical.CreateLayoutGroup(Type.Vertical, TextAnchor.MiddleLeft, 0);
@@ -89,6 +89,7 @@ namespace VanillaUpgrades
             }
 
             if (Config.settings.showAdvanced) windowHolder.SetActive(true);
+            ToggleTorque.disableTorque = false;
         }
 
         void CheckHorizontalToggle()

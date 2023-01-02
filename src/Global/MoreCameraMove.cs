@@ -1,15 +1,16 @@
 ﻿using HarmonyLib;
 using SFS.Builds;
+using SFS.Variables;
 using SFS.World;
 using UnityEngine;
 
 namespace VanillaUpgrades
 {
+
     [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
     public class MoreCameraMove
     {
-        [HarmonyPrefix]
-        public static bool Prefix(ref Vector2 __result, Vector2 newValue)
+        static bool Prefix(ref Vector2 __result, Vector2 newValue)
         {
             if (!Config.settings.moreCameraMove) return true;
             if (PlayerController.main.player.Value == null) return true;
@@ -22,7 +23,6 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
     public class MoreCameraZoom
     {
-        [HarmonyPrefix]
         static bool Prefix(ref float __result, float newValue)
         {
             if (!Config.settings.moreCameraZoom) return true;
