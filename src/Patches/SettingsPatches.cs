@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using SFS.Builds;
 using SFS.UI;
+using UnityEngine.SceneManagement;
 
 namespace VanillaUpgrades
 {
@@ -22,7 +23,7 @@ namespace VanillaUpgrades
         {
             Main.menuOpen = false;
             Config.Save();
-            if (Main.buildObject != null)
+            if (SceneManager.GetActiveScene().name == "Build_PC")
             {
                 if (Config.settings.moreCameraZoom)
                 {
@@ -39,5 +40,28 @@ namespace VanillaUpgrades
             }
         }
     }
-}
+    /*
+    [HarmonyDebug]
+    [HarmonyPatch(typeof(BuildManager), "ExitToHub")]
+    public static class ExitToMainMenu_Build
+    {
+        static bool Prefix()
+        {
 
+            MenuGenerator.ShowChoices(null, ButtonBuilder.CreateButton(null, () => "Space Center", () =>
+            {
+                BuildState.main.UpdatePersistent();
+                Base.sceneLoader.LoadHubScene();
+            }, CloseMode.Current), ButtonBuilder.CreateButton(null, () => "Main Menu", () =>
+            {
+                BuildState.main.UpdatePersistent();
+                Base.sceneLoader.LoadHomeScene(null);
+            }, CloseMode.Current));
+
+            Debug.Log("fuck");
+            return false;
+        }
+    }*/
+
+
+}

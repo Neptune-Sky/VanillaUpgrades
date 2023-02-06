@@ -1,5 +1,8 @@
-﻿using SFS.UI.ModGUI;
+﻿using System;
+using System.Globalization;
+using SFS.UI.ModGUI;
 using SFS.World;
+using SFS.WorldBase;
 using UITools;
 using UnityEngine;
 using Type = SFS.UI.ModGUI.Type;
@@ -11,15 +14,22 @@ namespace VanillaUpgrades
         const string PositionKey = "VU.AdvancedInfoWindow";
 
         public GameObject windowHolder;
-        public Window advancedInfoWindow;
+        Window advancedInfoWindow;
+        
         Label angleHorizontal;
-        Label angleVertical;
-        Label apoapsisHorizontal;
+        private Label angleVertical;
 
+        Label angleTitleHorizontal;
+        Label angleTitleVertical;
+        
+        Label apoapsisHorizontal;
         Label apoapsisVertical;
+        
         Label eccentricityHorizontal;
         Label eccentricityVertical;
+        
         Container horizontal;
+        
         Label periapsisHorizontal;
         Label periapsisVertical;
 
@@ -46,9 +56,9 @@ namespace VanillaUpgrades
             if (WorldManager.currentRocket == null) return;
 
             if (Config.settings.horizontalMode)
-                RefreshLabels(apoapsisHorizontal, periapsisHorizontal, eccentricityHorizontal, angleHorizontal);
+                RefreshLabels(apoapsisHorizontal, periapsisHorizontal, eccentricityHorizontal, angleTitleHorizontal,angleHorizontal);
             else
-                RefreshLabels(apoapsisVertical, periapsisVertical, eccentricityVertical, angleVertical);
+                RefreshLabels(apoapsisVertical, periapsisVertical, eccentricityVertical, angleTitleVertical,angleVertical);
         }
 
         void CreateWindow()
@@ -129,7 +139,7 @@ namespace VanillaUpgrades
 
             Builder.CreateSpace(vertical, 0, 10);
 
-            UIExtensions.AlignedLabel(vertical, 140, 30, "Angle:");
+            angleTitleVertical = UIExtensions.AlignedLabel(vertical, 140, 30, "Angle:");
             angleVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
         }
 
@@ -157,24 +167,26 @@ namespace VanillaUpgrades
             Container angleContainer = Builder.CreateContainer(horizontal);
             angleContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
-            UIExtensions.AlignedLabel(angleContainer, 150, 30, "Angle:");
+            angleTitleHorizontal = UIExtensions.AlignedLabel(angleContainer, 150, 30, "Angle:");
             angleHorizontal = UIExtensions.AlignedLabel(angleContainer, 175, 30);
         }
 
-        void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angle)
+        void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angleTitle, Label angle)
         {
-            if (WorldManager.currentRocket.physics.GetTrajectory().paths[0] is Orbit orbit)
+            var rocket = WorldManager.currentRocket;
+            if (rocket.physics.GetTrajectory().paths[0] is Orbit orbit)
             {
-                apoapsis.Text = (orbit.apoapsis - WorldManager.currentRocket.location.planet.Value.Radius)
+                apoapsis.Text = (orbit.apoapsis - rocket.location.planet.Value.Radius)
                     .ToDistanceString();
 
                 double truePeriapsis =
-                    orbit.periapsis < WorldManager.currentRocket.location.planet.Value.Radius
+                    orbit.periapsis < rocket.location.planet.Value.Radius
                         ? 0
-                        : orbit.periapsis - WorldManager.currentRocket.location.planet.Value.Radius;
+                        : orbit.periapsis - rocket.location.planet.Value.Radius;
                 periapsis.Text = truePeriapsis.ToDistanceString();
 
-                eccentricity.Text = orbit.ecc.ToString("F3");
+                eccentricity.Text = orbit.ecc.ToString("F3", CultureInfo.InvariantCulture);
+                
             }
             else
             {
@@ -183,10 +195,23 @@ namespace VanillaUpgrades
                 eccentricity.Text = "0.000";
             }
 
-            float trueAngle = WorldManager.currentRocket.partHolder.transform.eulerAngles.z;
+            float globalAngle = rocket.partHolder.transform.eulerAngles.z;
+            Location location = rocket.location.Value;
+            
+            Vector2 orbitAngleVector = new Vector2(Mathf.Cos((float)location.position.AngleRadians), Mathf.Sin((float)location.position.AngleRadians)).Rotate_Radians(270 * Mathf.Deg2Rad);
+            Vector2 facing = new Vector2(Mathf.Cos(globalAngle * Mathf.Deg2Rad), Mathf.Sin(globalAngle * Mathf.Deg2Rad));
+            float trueAngle = Vector2.SignedAngle(facing, orbitAngleVector);
+            
+            if (location.TerrainHeight < location.planet.TimewarpRadius_Ascend - rocket.location.planet.Value.Radius)
+            {
+                angle.Text = trueAngle.ToString("F1", CultureInfo.InvariantCulture) + "°";
+                angleTitle.Text = "Local Angle:";
+                return;
+            }
+            if (globalAngle > 180) angle.Text = (360 - globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
+            else angle.Text = (-globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
 
-            if (trueAngle > 180) angle.Text = (360 - trueAngle).ToString("F1") + "°";
-            else angle.Text = (-trueAngle).ToString("F1") + "°";
+            angleTitle.Text = "Angle:";
         }
     }
 }
