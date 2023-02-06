@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades
 {
-    public abstract class Main : Mod, IUpdatable
+    public class Main : Mod, IUpdatable
     {
 
         public static Main main;
