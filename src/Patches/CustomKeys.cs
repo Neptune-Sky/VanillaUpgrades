@@ -29,7 +29,7 @@ namespace VanillaUpgrades
         static void OnBuildLoad()
         {
             AddOnKeyDown_Build(main.Launch, KeyMethods.Launch);
-            AddOnKeyDown_Build(main.OpenCategories, OpenPickCategories.inst.expandMenu.ToggleExpanded);
+            AddOnKeyDown_Build(main.OpenCategories, KeyMethods.pickCategoriesMenu.expandMenu.ToggleExpanded);
             AddOnKeyDown_Build(main.Toggle_Symmetry, BuildManager.main.ToggleSymmetryMode);
             AddOnKeyDown_Build(main.Toggle_Interior, InteriorManager.main.ToggleInteriorView);
         }

@@ -4,20 +4,15 @@ using SFS.Builds;
 
 namespace VanillaUpgrades
 {
-
     [HarmonyPatch(typeof(PickCategoriesMenu), "Start")]
-    static class OpenPickCategories
+    public static class KeyMethods
     {
-        public static PickCategoriesMenu inst;
+        public static PickCategoriesMenu pickCategoriesMenu;
 
         static void Prefix(PickCategoriesMenu __instance)
         {
-            inst = __instance;
+            pickCategoriesMenu = __instance;
         }
-    }
-
-    public static class KeyMethods
-    {
         public static void Launch()
         {
             BuildState.main.UpdatePersistent();

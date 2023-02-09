@@ -33,6 +33,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="src\Build\ReplacePickCategories.cs" />
         <Compile Include="src\Utility\Extensions.cs" />
         <Compile Include="src\Utility\UIExtensions.cs" />
         <Compile Include="src\World\ToggleTorque.cs" />

@@ -29,7 +29,7 @@ namespace VanillaUpgrades
         public override string DisplayName => "Vanilla Upgrades";
         public override string Author => "StarMods";
         public override string MinimumGameVersionNecessary => "1.5.9.8";
-        public override string ModVersion => "v5.0.2";
+        public override string ModVersion => "v5.0.3";
 
         public override string Description =>
             "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
