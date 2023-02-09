@@ -14,10 +14,6 @@ using Type = SFS.UI.ModGUI.Type;
 
 namespace VanillaUpgrades
 {
-    public static class PickCategoriesWindow
-    {
-        
-    }
     [HarmonyPatch(typeof(PickCategoriesMenu))]
     static class ReplacePickCategories
     {
