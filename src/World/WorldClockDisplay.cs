@@ -9,23 +9,23 @@ namespace VanillaUpgrades
 {
     public class WorldClockDisplay : MonoBehaviour
     {
-        const string PositionKey = "VU.WorldClockWindow";
+        private const string PositionKey = "VU.WorldClockWindow";
 
         public long subtractor;
 
-        readonly string defaultTime = "000d 00h 00m 00s";
-        GameObject clockHolder;
-        Window clockWindow;
+        private readonly string defaultTime = "000d 00h 00m 00s";
+        private GameObject clockHolder;
+        private Window clockWindow;
 
-        string timestamp;
-        Container timewarpContainer;
-        string timewarpTime;
+        private string timestamp;
+        private Container timewarpContainer;
+        private string timewarpTime;
 
-        Label timewarpTimeLabel;
-        Container worldTimeContainer;
-        Label worldTimeLabel;
+        private Label timewarpTimeLabel;
+        private Container worldTimeContainer;
+        private Label worldTimeLabel;
 
-        void Awake()
+        private void Awake()
         {
             clockHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "Clock Holder");
             WorldTime.main.realtimePhysics.OnChange += OnTimewarpButton;
@@ -61,7 +61,7 @@ namespace VanillaUpgrades
             }
         }
 
-        void ShowGUI()
+        private void ShowGUI()
         {
             Vector2Int pos = new ((int) UIExtensions.CanvasPixelSize.x, (int)UIExtensions.CanvasPixelSize.y - 70);
 
@@ -94,7 +94,7 @@ namespace VanillaUpgrades
             clockWindow.ClampWindow();
         }
 
-        void OnTimewarpButton()
+        private void OnTimewarpButton()
         {
             if (Config.settings.alwaysShowTime || !Config.settings.showTime) return;
             int timewarpIndex = WorldTime.main.timewarpIndex;
@@ -108,7 +108,7 @@ namespace VanillaUpgrades
             }
         }
 
-        void ToggleChecks()
+        private void ToggleChecks()
         {
             if (!Config.settings.showTime ||
                 (WorldTime.main.timewarpIndex == 0 && !Config.settings.alwaysShowTime))
@@ -123,7 +123,7 @@ namespace VanillaUpgrades
                 clockWindow.Size = new Vector2(clockWindow.Size.x, 220);
         }
 
-        static string TimeSpanConv(TimeSpan span)
+        private static string TimeSpanConv(TimeSpan span)
         {
             long milleniaNum = (long)span.Days / 365 / 1000;
             long yearNum = (long)span.Days / 365 - milleniaNum * 1000;

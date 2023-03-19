@@ -28,7 +28,7 @@ namespace VanillaUpgrades
 
     public static class OpacityChanger
     {
-        static bool hidden;
+        private static bool hidden;
 
         public static void HideUI()
         {

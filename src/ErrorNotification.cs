@@ -9,7 +9,7 @@ namespace VanillaUpgrades
     {
         public static StringBuilder errors = new StringBuilder();
 
-        void Start()
+        private void Start()
         {
             if (errors.Length != 0)
             {

@@ -7,7 +7,7 @@ namespace VanillaUpgrades
     public class StopExplosions
     {
         [HarmonyPrefix]
-        static bool Prefix()
+        private static bool Prefix()
         {
             return Config.settings.explosions;
         }
@@ -17,7 +17,7 @@ namespace VanillaUpgrades
     public class StopEntryExplosions
     {
         [HarmonyPrefix]
-        static bool Prefix()
+        private static bool Prefix()
         {
             return Config.settings.explosions;
         }

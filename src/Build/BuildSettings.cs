@@ -11,26 +11,26 @@ namespace VanillaUpgrades
 {
 
     [HarmonyPatch(typeof(PartGrid), "UpdateAdaptation")]
-    class StopAdaptation
+    internal class StopAdaptation
     {
         [HarmonyPrefix]
-        static bool Prefix()
+        private static bool Prefix()
         {
             return !BuildSettings.noAdaptation || BuildSettings.noAdaptOverride;
         }
     }
 
     [HarmonyPatch(typeof(HoldGrid), "TakePart_PickGrid")]
-    class AdaptPartPicker
+    internal class AdaptPartPicker
     {
         [HarmonyPrefix]
-        static void Prefix()
+        private static void Prefix()
         {
             BuildSettings.noAdaptOverride = true;
         }
 
         [HarmonyPostfix]
-        static void Postfix()
+        private static void Postfix()
         {
             BuildSettings.noAdaptOverride = false;
         }
@@ -38,9 +38,9 @@ namespace VanillaUpgrades
 
 
     [HarmonyPatch(typeof(AdaptModule), "UpdateAdaptation")]
-    class FixCucumber
+    internal class FixCucumber
     {
-        static bool Prefix()
+        private static bool Prefix()
         {
             return !BuildSettings.noAdaptation || BuildSettings.noAdaptOverride;
         }
@@ -50,7 +50,7 @@ namespace VanillaUpgrades
     public class KillMagnet
     {
         [HarmonyPrefix]
-        static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
+        private static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
         {
             if (!BuildSettings.snapping)
                 return true;
@@ -61,18 +61,18 @@ namespace VanillaUpgrades
 
     public static class BuildSettings
     {
-        const string PositionKey = "VU.BuildSettingsWindow";
+        private const string PositionKey = "VU.BuildSettingsWindow";
 
-        const int Height = 170;
+        private const int Height = 170;
 
-        static GameObject windowHolder;
+        private static GameObject windowHolder;
 
-        static Window window;
+        private static Window window;
 
         public static bool snapping;
         public static bool noAdaptation;
         public static bool noAdaptOverride;
-        static readonly Vector2Int DefaultPos = new (300, Height);
+        private static readonly Vector2Int DefaultPos = new (300, Height);
 
         public static void Setup()
         {
@@ -87,12 +87,12 @@ namespace VanillaUpgrades
             }
         }
 
-        static void OnToggle()
+        private static void OnToggle()
         {
             windowHolder.SetActive(Config.settings.showBuildGui);
         }
 
-        static void CreateGUI()
+        private static void CreateGUI()
         {
             windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "Build Settings");
 

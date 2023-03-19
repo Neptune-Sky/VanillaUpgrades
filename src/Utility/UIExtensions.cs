@@ -7,7 +7,7 @@ namespace VanillaUpgrades
 {
     public static class UIExtensions
     {
-        static RectTransform canvas;
+        private static RectTransform canvas;
 
         public static Vector2 CanvasPixelSize
         {
@@ -37,7 +37,7 @@ namespace VanillaUpgrades
             return holder;
         }
 
-        static RectTransform GetCanvasRect()
+        private static RectTransform GetCanvasRect()
         {
             GameObject temp = Builder.CreateHolder(Builder.SceneToAttach.BaseScene, "TEMP");
             RectTransform result = temp.transform.parent as RectTransform;

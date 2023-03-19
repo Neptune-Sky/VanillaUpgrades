@@ -10,7 +10,7 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
     public class MoreCameraMove
     {
-        static bool Prefix(ref Vector2 __result, Vector2 newValue)
+        private static bool Prefix(ref Vector2 __result, Vector2 newValue)
         {
             if (!Config.settings.moreCameraMove) return true;
             if (PlayerController.main.player.Value == null) return true;
@@ -23,7 +23,7 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
     public class MoreCameraZoom
     {
-        static bool Prefix(ref float __result, float newValue)
+        private static bool Prefix(ref float __result, float newValue)
         {
             if (!Config.settings.moreCameraZoom) return true;
             if (PlayerController.main.player.Value == null) return true;

@@ -8,7 +8,7 @@ namespace VanillaUpgrades
 {
     public static class ConfigUI
     {
-        const int ToggleHeight = 32;
+        private const int ToggleHeight = 32;
 
         public static void Setup()
         {
@@ -22,7 +22,7 @@ namespace VanillaUpgrades
             // ("Windows", transform1 => GetWindowSettings(transform1, ConfigurationMenu.ContentSize))
         }
 
-        static GameObject GetGUISettings(Transform parent, Vector2Int size)
+        private static GameObject GetGUISettings(Transform parent, Vector2Int size)
         {
             Box box = Builder.CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
@@ -68,7 +68,7 @@ namespace VanillaUpgrades
             return box.gameObject;
         }
 
-        static GameObject GetUnitsSettings(Transform parent, Vector2Int size)
+        private static GameObject GetUnitsSettings(Transform parent, Vector2Int size)
         {
             Box box = Builder.CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
@@ -76,13 +76,16 @@ namespace VanillaUpgrades
             int elementWidth = size.x - 60;
 
             Builder.CreateLabel(box, elementWidth, 50, 0, 0, "Units");
-
+            
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.mmUnits,
                 () => Config.settings.mmUnits ^= true, 0, 0, "Megameters (Mm)");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.gmUnits,
+                () => Config.settings.mmUnits ^= true, 0, 0, "Gigameters (Gm)");
+            Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.lyUnits,
+                () => Config.settings.mmUnits ^= true, 0, 0, "Lightyears (ly)");
             Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.kmsUnits,
                 () => Config.settings.kmsUnits ^= true, 0, 0, "Kilometers/Second (km/s)");
-            Builder.CreateSeparator(box, elementWidth - 20);
             Builder.CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.cUnits,
                 () => Config.settings.cUnits ^= true, 0, 0, "% Speed of Light (c)");
             Builder.CreateSeparator(box, elementWidth - 20);
@@ -92,7 +95,7 @@ namespace VanillaUpgrades
             return box.gameObject;
         }
 
-        static GameObject GetMiscSettings(Transform parent, Vector2Int size)
+        private static GameObject GetMiscSettings(Transform parent, Vector2Int size)
         {
             Box box = Builder.CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
@@ -116,7 +119,7 @@ namespace VanillaUpgrades
             return box.gameObject;
         }
 
-        static GameObject GetCheatsSettings(Transform parent, Vector2Int size)
+        private static GameObject GetCheatsSettings(Transform parent, Vector2Int size)
         {
             Box box = Builder.CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));

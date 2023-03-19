@@ -8,7 +8,7 @@ namespace VanillaUpgrades
     public class TorquePatch
     {
         [HarmonyPrefix]
-        static bool Prefix(bool useStopRotation)
+        private static bool Prefix(bool useStopRotation)
         {
             if (ToggleTorque.disableTorque && useStopRotation && !WorldManager.currentRocket.arrowkeys.rcs.Value)
                 return false;
@@ -21,7 +21,7 @@ namespace VanillaUpgrades
     public class ClearWorld
     {
         [HarmonyPrefix]
-        static void Prefix()
+        private static void Prefix()
         {
             ToggleTorque.disableTorque = false;
         }
@@ -31,7 +31,7 @@ namespace VanillaUpgrades
     public class ExitToBuild
     {
         [HarmonyPrefix]
-        static void Prefix()
+        private static void Prefix()
         {
             ToggleTorque.disableTorque = false;
         }
@@ -41,7 +41,7 @@ namespace VanillaUpgrades
     public class ExitToHub
     {
         [HarmonyPrefix]
-        static void Prefix()
+        private static void Prefix()
         {
             ToggleTorque.disableTorque = false;
         }
@@ -51,7 +51,7 @@ namespace VanillaUpgrades
     public class RevertLaunch
     {
         [HarmonyPrefix]
-        static void Prefix()
+        private static void Prefix()
         {
             ToggleTorque.disableTorque = false;
         }
@@ -61,7 +61,7 @@ namespace VanillaUpgrades
     public class RevertBuild
     {
         [HarmonyPrefix]
-        static void Prefix()
+        private static void Prefix()
         {
             ToggleTorque.disableTorque = false;
         }

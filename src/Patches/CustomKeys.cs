@@ -9,7 +9,7 @@ namespace VanillaUpgrades
 {
     public class VU_Keybindings : ModKeybindings
     {
-        static VU_Keybindings main;
+        private static VU_Keybindings main;
 
         public static void LoadKeybindings()
         {
@@ -21,12 +21,12 @@ namespace VanillaUpgrades
             AddStaticKeybindings();
         }
 
-        static void AddStaticKeybindings()
+        private static void AddStaticKeybindings()
         {
             AddOnKeyDown(main.Hide_UI, OpacityChanger.HideUI);
         }
 
-        static void OnBuildLoad()
+        private static void OnBuildLoad()
         {
             AddOnKeyDown_Build(main.Launch, KeyMethods.Launch);
             AddOnKeyDown_Build(main.OpenCategories, KeyMethods.pickCategoriesMenu.expandMenu.ToggleExpanded);
@@ -34,7 +34,7 @@ namespace VanillaUpgrades
             AddOnKeyDown_Build(main.Toggle_Interior, InteriorManager.main.ToggleInteriorView);
         }
 
-        static void OnWorldLoad()
+        private static void OnWorldLoad()
         {
             AddOnKeyDown_World(main.Stop_Timewarp, () => TimeManipulation.StopTimewarp(true));
             AddOnKeyDown_World(main.Throttle01, WorldManager.Throttle01);

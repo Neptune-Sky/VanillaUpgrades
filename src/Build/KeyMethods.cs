@@ -9,7 +9,7 @@ namespace VanillaUpgrades
     {
         public static PickCategoriesMenu pickCategoriesMenu;
 
-        static void Prefix(PickCategoriesMenu __instance)
+        private static void Prefix(PickCategoriesMenu __instance)
         {
             pickCategoriesMenu = __instance;
         }

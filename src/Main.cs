@@ -42,6 +42,7 @@ namespace VanillaUpgrades
 
         public override void Early_Load()
         {
+            Application.runInBackground = true;
             main = this;
             modFolder = new FolderPath(ModFolder);
             patcher = new Harmony("mods.ASoD.VanUp");
@@ -61,7 +62,7 @@ namespace VanillaUpgrades
             mainObject.SetActive(true);
         }
 
-        void SubscribeToScenes()
+        private void SubscribeToScenes()
         {
             SceneHelper.OnBuildSceneLoaded += BuildSettings.Setup;
             SceneHelper.OnWorldSceneLoaded += () =>
@@ -71,12 +72,12 @@ namespace VanillaUpgrades
             };
         }
 
-        void OnQuit()
+        private void OnQuit()
         {
             Config.Save();
         }
 
-        bool Command(string str)
+        private bool Command(string str)
         {
             if (str.StartsWith("vu"))
             {
@@ -90,9 +91,9 @@ namespace VanillaUpgrades
     }
 
     [HarmonyPatch(typeof(Loader), "Initialize_Load")]
-    class ModCheck
+    internal class ModCheck
     {
-        static void Postfix(List<Mod> ___loadedMods)
+        private static void Postfix(List<Mod> ___loadedMods)
         {
             List<Mod> modList = ___loadedMods;
 

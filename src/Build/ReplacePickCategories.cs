@@ -15,14 +15,14 @@ using Type = SFS.UI.ModGUI.Type;
 namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(PickCategoriesMenu))]
-    static class ReplacePickCategories
+    internal static class ReplacePickCategories
     {
         public static Window window;
         public static PickCategoriesMenu inst;
 
         [HarmonyPrefix]
         [HarmonyPatch("Start")]
-        static void Start(PickCategoriesMenu __instance)
+        private static void Start(PickCategoriesMenu __instance)
         {
             inst = __instance;
         }
@@ -30,7 +30,7 @@ namespace VanillaUpgrades
         private static int categories;
         [HarmonyPrefix]
         [HarmonyPatch("SetupElements")]
-        static bool SetupElements(PickGridUI.CategoryParts[] picklists)
+        private static bool SetupElements(PickGridUI.CategoryParts[] picklists)
         {
             categories = picklists.Length;
             if (categories <= 24) return true;
@@ -71,7 +71,7 @@ namespace VanillaUpgrades
         // ReSharper disable once RedundantAssignment
         [HarmonyPrefix]
         [HarmonyPatch("SelectCategory")]
-        static bool SelectCategory(PickGridUI.CategoryParts newSelected, ref PickGridUI.CategoryParts ___selected)
+        private static bool SelectCategory(PickGridUI.CategoryParts newSelected, ref PickGridUI.CategoryParts ___selected)
         {
             if (categories <= 24) return true;
             inst.expandMenu.Close();

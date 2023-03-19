@@ -11,31 +11,31 @@ namespace VanillaUpgrades
 {
     public class AdvancedInfo : MonoBehaviour
     {
-        const string PositionKey = "VU.AdvancedInfoWindow";
+        private const string PositionKey = "VU.AdvancedInfoWindow";
 
         public GameObject windowHolder;
-        Window advancedInfoWindow;
-        
-        Label angleHorizontal;
+        private Window advancedInfoWindow;
+
+        private Label angleHorizontal;
         private Label angleVertical;
 
-        Label angleTitleHorizontal;
-        Label angleTitleVertical;
-        
-        Label apoapsisHorizontal;
-        Label apoapsisVertical;
-        
-        Label eccentricityHorizontal;
-        Label eccentricityVertical;
-        
-        Container horizontal;
-        
-        Label periapsisHorizontal;
-        Label periapsisVertical;
+        private Label angleTitleHorizontal;
+        private Label angleTitleVertical;
 
-        Container vertical;
+        private Label apoapsisHorizontal;
+        private Label apoapsisVertical;
 
-        void Awake()
+        private Label eccentricityHorizontal;
+        private Label eccentricityVertical;
+
+        private Container horizontal;
+
+        private Label periapsisHorizontal;
+        private Label periapsisVertical;
+
+        private Container vertical;
+
+        private void Awake()
         {
             windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
 
@@ -51,7 +51,7 @@ namespace VanillaUpgrades
             if (!Config.settings.showAdvanced) windowHolder.SetActive(false);
         }
 
-        void Update()
+        private void Update()
         {
             if (WorldManager.currentRocket == null) return;
 
@@ -61,7 +61,7 @@ namespace VanillaUpgrades
                 RefreshLabels(apoapsisVertical, periapsisVertical, eccentricityVertical, angleTitleVertical,angleVertical);
         }
 
-        void CreateWindow()
+        private void CreateWindow()
         {
             Config.settings.showAdvanced.OnChange += () => { windowHolder.SetActive(Config.settings.showAdvanced); };
 
@@ -89,7 +89,7 @@ namespace VanillaUpgrades
             advancedInfoWindow.ClampWindow();
         }
 
-        void OnPlayerChange()
+        private void OnPlayerChange()
         {
             if (PlayerController.main == null) return;
             if (WorldManager.currentRocket == null)
@@ -102,7 +102,7 @@ namespace VanillaUpgrades
             ToggleTorque.disableTorque = false;
         }
 
-        void CheckHorizontalToggle()
+        private void CheckHorizontalToggle()
         {
             if (Config.settings.horizontalMode)
             {
@@ -120,7 +120,7 @@ namespace VanillaUpgrades
             advancedInfoWindow.ClampWindow();
         }
 
-        void VerticalGUI()
+        private void VerticalGUI()
         {
             Builder.CreateSeparator(vertical, 205);
 
@@ -143,7 +143,7 @@ namespace VanillaUpgrades
             angleVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
         }
 
-        void HorizontalGUI()
+        private void HorizontalGUI()
         {
             Builder.CreateSeparator(horizontal, 335);
             Container apoapsisContainer = Builder.CreateContainer(horizontal);
@@ -171,7 +171,7 @@ namespace VanillaUpgrades
             angleHorizontal = UIExtensions.AlignedLabel(angleContainer, 175, 30);
         }
 
-        void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angleTitle, Label angle)
+        private void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angleTitle, Label angle)
         {
             var rocket = WorldManager.currentRocket;
             if (rocket.physics.GetTrajectory().paths[0] is Orbit orbit)
