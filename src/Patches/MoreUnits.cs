@@ -6,87 +6,94 @@ using SFS.UI;
 namespace VanillaUpgrades
 {
     [HarmonyPatch(typeof(Units), nameof(Units.ToDistanceString))]
-    public static class DistanceUnits
+    internal static class DistanceUnits
     {
         [HarmonyPrefix]
-        static bool Prefix(this double a, ref string __result)
+        private static bool Prefix(this double a, ref string __result)
         {
-            if (!Config.settings.mmUnits) return true;
-
-            if (a >= 100000000 && !double.IsInfinity(a))
+            if (double.IsInfinity(a)) return true;
+            switch (a)
             {
-                __result = (a / 1000000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "Mm";
-                return false;
+                case >= 9460730472580800 when Config.settings.lyUnits:
+                    __result = (a / 946073047258080).ToString("F1", CultureInfo.InvariantCulture) + "ly";
+                    return false;
+                case >= 100000000000 when Config.settings.gmUnits:
+                    __result = (a / 1000000000).ToString("F1", CultureInfo.InvariantCulture) + "Gm";
+                    return false;
+                case >= 100000000 when Config.settings.mmUnits:
+                    __result = (a / 1000000).ToString("F1", CultureInfo.InvariantCulture) + "Mm";
+                    return false;
+                default:
+                    return true;
             }
-
-            return true;
         }
     }
 
     [HarmonyPatch(typeof(Units), nameof(Units.ToVelocityString))]
-    public static class VelocityUnits
+    internal static class VelocityUnits
     {
         [HarmonyPrefix]
-        static bool Prefix(this double a, ref string __result)
+        private static bool Prefix(this double a, ref string __result)
         {
-            if (!Config.settings.kmsUnits && !Config.settings.cUnits) return true;
-
-            if (a >= 10000 && !double.IsInfinity(a))
+            if (double.IsInfinity(a)) return true;
+            switch (a)
             {
-                if (a > 2997924 && Config.settings.cUnits)
-                {
-                    __result = (a / 299792458).Round(0.001).ToString("F3", CultureInfo.InvariantCulture) + "c";
+                case >= 2997924 when Config.settings.cUnits:
+                    __result = (a / 299792458).ToString("F3", CultureInfo.InvariantCulture) + "c";
                     return false;
-                }
-
-                __result = (a / 1000).Round(0.1).ToString("F1", CultureInfo.InvariantCulture) + "km/s";
-                return false;
+                case >= 10000 when Config.settings.kmsUnits:
+                    __result = (a / 1000).ToString("F1", CultureInfo.InvariantCulture) + "km/s";
+                    return false;
+                default:
+                    return true;
             }
-
-            return true;
         }
     }
 
     [HarmonyPatch(typeof(Units), nameof(Units.ToMassString))]
-    public static class KtMass
+    internal static class KtMass
     {
-        static bool Prefix(this float a, bool forceDecimal, ref string __result)
+        private static bool Prefix(this float a, bool forceDecimal, ref string __result)
         {
-            if (!Config.settings.ktUnits) return true;
-
-            if (a >= 10000 && !float.IsInfinity(a))
+            if (float.IsInfinity(a)) return true;
+            switch (a)
             {
-                string b = (a / 1000).Round(0.01f).ToString(forceDecimal ? "F1" : "F", CultureInfo.InvariantCulture);
-                __result = Loc.main.Mass.Inject(b + "k", "value");
-                return false;
+                case >= 10000 when Config.settings.ktUnits:
+                {
+                    var b = (a / 1000).ToString(forceDecimal ? "F1" : "F", CultureInfo.InvariantCulture);
+                    __result = Loc.main.Mass.Inject(b + "k", "value");
+                    return false;
+                }
+                default:
+                    return true;
             }
-
-            return true;
         }
     }
 
     [HarmonyPatch(typeof(Units), nameof(Units.ToThrustString))]
-    public static class KtThrust
+    internal static class KtThrust
     {
-        static bool Prefix(this float a, ref string __result)
+        private static bool Prefix(this float a, ref string __result)
         {
-            if (!Config.settings.ktUnits) return true;
-
-            if (a >= 10000 && !float.IsInfinity(a))
+            if (float.IsInfinity(a)) return true;
+            switch (a)
             {
-                string b = (a / 1000).Round(0.01f).ToString("F", CultureInfo.InvariantCulture);
-                __result = Loc.main.Thrust.Inject(b + "k", "value");
-                return false;
+                case >= 10000 when Config.settings.ktUnits:
+                {
+                    var b = (a / 1000).ToString("F1", CultureInfo.InvariantCulture);
+                    __result = Loc.main.Thrust.Inject(b + "k", "value");
+                    return false;
+                }
+                default:
+                    return true;
             }
-
-            return true;
         }
     }
 
     [HarmonyPatch(typeof(SFS.Builds.BuildStatsDrawer), "Draw")]
-    static class KtMassThrustBuild
+    internal static class KtMassThrustBuild
     {
-        static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText, ref TextAdapter ___thrustText)
+        private static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText, ref TextAdapter ___thrustText)
         {
             if (___mass > 10000 && Config.settings.ktUnits)
             {
@@ -94,7 +101,7 @@ namespace VanillaUpgrades
             }
             if (___thrust > 10000 && Config.settings.ktUnits)
             {
-                ___thrustText.Text = (___thrust / 1000).ToString() + "kt";
+                ___thrustText.Text = (___thrust / 1000).ToString("F") + "kt";
             }
         }
     }
