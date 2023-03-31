@@ -45,6 +45,10 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 **New Settings:**
 
 - Toggles for explosion shake and effects.
+- Allow the game to run while it isn't focused.
+
+**Vanilla Bug Fixes:**
+- While windowed or using multiple monitors, the game will no longer zoom the camera if you scroll outside of the game window.
 
 Mod features can be individually disabled in the config window in the game's settings menu. 
 
