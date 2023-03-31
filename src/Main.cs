@@ -29,7 +29,7 @@ namespace VanillaUpgrades
         public override string DisplayName => "Vanilla Upgrades";
         public override string Author => "StarMods";
         public override string MinimumGameVersionNecessary => "1.5.9.8";
-        public override string ModVersion => "v5.0.3";
+        public override string ModVersion => "v5.1";
 
         public override string Description =>
             "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
@@ -42,7 +42,6 @@ namespace VanillaUpgrades
 
         public override void Early_Load()
         {
-            Application.runInBackground = true;
             main = this;
             modFolder = new FolderPath(ModFolder);
             patcher = new Harmony("mods.ASoD.VanUp");
@@ -55,8 +54,10 @@ namespace VanillaUpgrades
         public override void Load()
         {
             Console.commands.Add(Command);
-
             ConfigUI.Setup();
+            Application.runInBackground = Config.settings.allowBackgroundProcess;
+            Config.settings.allowBackgroundProcess.OnChange +=
+                () => Application.runInBackground = Config.settings.allowBackgroundProcess;
             mainObject = new GameObject("ASoDMainObject", typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);

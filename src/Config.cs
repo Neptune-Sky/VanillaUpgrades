@@ -42,6 +42,7 @@ namespace VanillaUpgrades
         public bool stopTimewarpOnEncounter = true;
         public bool moreCameraZoom = true;
         public bool moreCameraMove = true;
+        public Bool_Local allowBackgroundProcess = new();
 
         // Cheats
         public Bool_Local allowTimeSlowdown = new();
