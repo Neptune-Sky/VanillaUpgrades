@@ -41,7 +41,7 @@
         <Compile Include="src\World\WorldManager.cs" />
         <Compile Include="src\ErrorNotification.cs" />
         <Compile Include="src\Global\HideGUI.cs" />
-        <Compile Include="src\Patches\SettingsPatches.cs" />
+        <Compile Include="src\Patches\MenuPatches.cs" />
         <Compile Include="src\Patches\CustomKeys.cs" />
         <Compile Include="src\Build\BuildSettings.cs" />
         <Compile Include="src\Main.cs" />
@@ -49,7 +49,7 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="src\Patches\MoreUnits.cs" />
         <Compile Include="src\Patches\RaisePhysicsMaxWarp.cs" />
-        <Compile Include="src\World\StopTimewarpOnEncounter.cs" />
+        <Compile Include="src\World\Patches.cs" />
         <Compile Include="src\World\TimeManipulation.cs" />
         <Compile Include="src\Patches\AdditionalSettings.cs" />
         <Compile Include="src\World\WorldClockDisplay.cs" />
