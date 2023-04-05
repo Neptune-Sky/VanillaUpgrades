@@ -64,7 +64,7 @@ namespace VanillaUpgrades
             mainObject.SetActive(true);
         }
 
-        private void SubscribeToScenes()
+        private static void SubscribeToScenes()
         {
             SceneHelper.OnBuildSceneLoaded += BuildSettings.Setup;
             SceneHelper.OnWorldSceneLoaded += () =>
@@ -74,12 +74,12 @@ namespace VanillaUpgrades
             };
         }
 
-        private void OnQuit()
+        private static void OnQuit()
         {
             Config.Save();
         }
 
-        private bool Command(string str)
+        private static bool Command(string str)
         {
             if (str.StartsWith("vu"))
             {
