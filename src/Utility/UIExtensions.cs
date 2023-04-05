@@ -1,7 +1,6 @@
 ﻿using SFS.UI.ModGUI;
 using TMPro;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades
 {
@@ -29,7 +28,7 @@ namespace VanillaUpgrades
         public static GameObject ZeroedHolder(Builder.SceneToAttach mode, string name)
         {
             GameObject holder = Builder.CreateHolder(mode, name);
-            RectTransform rectTransform = holder.gameObject.AddComponent<RectTransform>();
+            var rectTransform = holder.gameObject.AddComponent<RectTransform>();
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.zero;
             rectTransform.sizeDelta = Vector2.zero;
@@ -40,7 +39,7 @@ namespace VanillaUpgrades
         private static RectTransform GetCanvasRect()
         {
             GameObject temp = Builder.CreateHolder(Builder.SceneToAttach.BaseScene, "TEMP");
-            RectTransform result = temp.transform.parent as RectTransform;
+            var result = temp.transform.parent as RectTransform;
             Object.Destroy(temp);
             return result;
         }

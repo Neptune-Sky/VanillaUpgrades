@@ -10,10 +10,7 @@ namespace VanillaUpgrades
         [HarmonyPrefix]
         private static bool Prefix(bool useStopRotation)
         {
-            if (ToggleTorque.disableTorque && useStopRotation && !WorldManager.currentRocket.arrowkeys.rcs.Value)
-                return false;
-
-            return true;
+            return !ToggleTorque.disableTorque || !useStopRotation || WorldManager.currentRocket.arrowkeys.rcs.Value;
         }
     }
 

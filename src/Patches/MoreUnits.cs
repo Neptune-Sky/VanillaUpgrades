@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using HarmonyLib;
+using SFS.Builds;
 using SFS.Translations;
 using SFS.UI;
 
@@ -90,7 +91,7 @@ namespace VanillaUpgrades
         }
     }
 
-    [HarmonyPatch(typeof(SFS.Builds.BuildStatsDrawer), "Draw")]
+    [HarmonyPatch(typeof(BuildStatsDrawer), "Draw")]
     internal static class KtMassThrustBuild
     {
         private static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText, ref TextAdapter ___thrustText)

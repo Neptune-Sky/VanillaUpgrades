@@ -4,12 +4,10 @@ using HarmonyLib;
 using SFS.Builds;
 using SFS.UI;
 using SFS.UI.ModGUI;
-using TMPro;
 using UnityEngine;
-using static SFS.UI.ModGUI.Builder;
 using UnityEngine.UI;
+using static SFS.UI.ModGUI.Builder;
 using Button = SFS.UI.ModGUI.Button;
-using Object = UnityEngine.Object;
 using Type = SFS.UI.ModGUI.Type;
 
 namespace VanillaUpgrades
@@ -17,8 +15,8 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(PickCategoriesMenu))]
     internal static class ReplacePickCategories
     {
-        public static Window window;
-        public static PickCategoriesMenu inst;
+        private static Window window;
+        private static PickCategoriesMenu inst;
 
         [HarmonyPrefix]
         [HarmonyPatch("Start")]
@@ -50,7 +48,7 @@ namespace VanillaUpgrades
             window.EnableScrolling(Type.Vertical);
             foreach (PickGridUI.CategoryParts categoryParts in picklists)
             {
-                var button = CreateButton(window, 225, 50, text: categoryParts.tag.displayName.Field);
+                Button button = CreateButton(window, 225, 50, text: categoryParts.tag.displayName.Field);
                 button.gameObject.GetComponentInChildren<TextAdapter>().transform.localScale = new Vector3(0.8f, 0.85f);
                 button.OnClick += () =>
                 {

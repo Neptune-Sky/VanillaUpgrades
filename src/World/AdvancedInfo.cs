@@ -1,11 +1,8 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using SFS.UI.ModGUI;
 using SFS.World;
-using SFS.WorldBase;
 using UITools;
 using UnityEngine;
-using Type = SFS.UI.ModGUI.Type;
 
 namespace VanillaUpgrades
 {
@@ -69,7 +66,7 @@ namespace VanillaUpgrades
                 false, 1, "Advanced Info");
             advancedInfoWindow.RegisterPermanentSaving(PositionKey);
 
-            RectTransform titleSize = advancedInfoWindow.rectTransform.Find("Title") as RectTransform;
+            var titleSize = advancedInfoWindow.rectTransform.Find("Title") as RectTransform;
             titleSize.sizeDelta = new Vector2(titleSize.sizeDelta.x, 30);
 
             advancedInfoWindow.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperLeft, 0, new RectOffset(5, 0, 0, 0));
@@ -171,9 +168,9 @@ namespace VanillaUpgrades
             angleHorizontal = UIExtensions.AlignedLabel(angleContainer, 175, 30);
         }
 
-        private void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angleTitle, Label angle)
+        private static void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angleTitle, Label angle)
         {
-            var rocket = WorldManager.currentRocket;
+            Rocket rocket = WorldManager.currentRocket;
             if (rocket.physics.GetTrajectory().paths[0] is Orbit orbit)
             {
                 apoapsis.Text = (orbit.apoapsis - rocket.location.planet.Value.Radius)
@@ -199,7 +196,7 @@ namespace VanillaUpgrades
             Location location = rocket.location.Value;
             
             Vector2 orbitAngleVector = new Vector2(Mathf.Cos((float)location.position.AngleRadians), Mathf.Sin((float)location.position.AngleRadians)).Rotate_Radians(270 * Mathf.Deg2Rad);
-            Vector2 facing = new Vector2(Mathf.Cos(globalAngle * Mathf.Deg2Rad), Mathf.Sin(globalAngle * Mathf.Deg2Rad));
+            var facing = new Vector2(Mathf.Cos(globalAngle * Mathf.Deg2Rad), Mathf.Sin(globalAngle * Mathf.Deg2Rad));
             float trueAngle = Vector2.SignedAngle(facing, orbitAngleVector);
             
             if (location.TerrainHeight < location.planet.TimewarpRadius_Ascend - rocket.location.planet.Value.Radius)

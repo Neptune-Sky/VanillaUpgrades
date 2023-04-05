@@ -1,6 +1,4 @@
 ﻿using HarmonyLib;
-using SFS.Builds;
-using SFS.Variables;
 using SFS.World;
 using UnityEngine;
 

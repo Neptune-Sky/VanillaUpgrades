@@ -3,7 +3,7 @@ using SFS.World;
 
 namespace VanillaUpgrades
 {
-    public class WorldManager
+    internal static class WorldManager
     {
         public static Rocket currentRocket;
 
@@ -24,7 +24,7 @@ namespace VanillaUpgrades
         {
             UpdatePlayer();
             PlayerController.main.player.OnChange += UpdatePlayer;
-            Config.settings.allowTimeSlowdown.OnChange += TimeDecelMain.ToggleChange;
+            Config.settings.allowTimeSlowdown.OnChange += TimeManipulation.ToggleChange;
         }
     }
 }

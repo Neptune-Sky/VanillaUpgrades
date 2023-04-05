@@ -69,7 +69,7 @@ namespace VanillaUpgrades
                 true, false, 1, "World Clock");
             clockWindow.RegisterOnDropListener(() => clockWindow.ClampWindow());
             clockWindow.RegisterPermanentSaving(PositionKey);
-            RectTransform titleSize = clockWindow.rectTransform.Find("Title") as RectTransform;
+            var titleSize = clockWindow.rectTransform.Find("Title") as RectTransform;
             titleSize.sizeDelta = new Vector2(titleSize.sizeDelta.x, 30);
 
             clockWindow.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 10,
