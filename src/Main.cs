@@ -97,14 +97,10 @@ namespace VanillaUpgrades
     {
         private static void Postfix(List<Mod> ___loadedMods)
         {
-            var modList = ___loadedMods;
-
-            if (modList.FindIndex(e => e.ModNameID == "BuildSettings") != -1)
-            {
-                Main.buildSettingsPresent = true;
-                Debug.Log(
-                    "VanillaUpgrades: BuildSettings mod was detected, disabling own Build Settings features to avoid conflicts.");
-            }
+            if (___loadedMods.FindIndex(e => e.ModNameID == "BuildSettings") == -1) return;
+            Main.buildSettingsPresent = true;
+            Debug.Log(
+                "VanillaUpgrades: BuildSettings mod was detected, disabling own Build Settings features to avoid conflicts.");
         }
     }
 }
