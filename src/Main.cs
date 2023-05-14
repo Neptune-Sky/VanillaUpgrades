@@ -81,14 +81,11 @@ namespace VanillaUpgrades
 
         private static bool Command(string str)
         {
-            if (str.StartsWith("vu"))
-            {
-                Debug.Log("Hi");
+            if (!str.StartsWith("vu")) return false;
+            Debug.Log("Hi");
 
-                return true;
-            }
+            return true;
 
-            return false;
         }
     }
 

@@ -4,6 +4,7 @@ using SFS;
 using SFS.Builds;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace VanillaUpgrades
 {

@@ -3,6 +3,8 @@ using SFS.UI.ModGUI;
 using SFS.World;
 using UITools;
 using UnityEngine;
+using VanillaUpgrades.Utility;
+using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
 
 namespace VanillaUpgrades
 {

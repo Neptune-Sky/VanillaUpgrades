@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace VanillaUpgrades
+namespace VanillaUpgrades.Utility
 {
     public static class UIExtensions
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
@@ -10,9 +8,7 @@ using SFS.Input;
 using SFS.Translations;
 using SFS.UI;
 using SFS.World;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades
 {

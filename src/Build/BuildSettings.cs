@@ -5,6 +5,8 @@ using SFS.Parts.Modules;
 using SFS.UI.ModGUI;
 using UITools;
 using UnityEngine;
+using VanillaUpgrades.Utility;
+using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
 
 namespace VanillaUpgrades
 {

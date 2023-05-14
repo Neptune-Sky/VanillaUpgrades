@@ -137,9 +137,6 @@
         <Reference Include="System.IO.Compression.FileSystem">
           <HintPath>References\System.IO.Compression.FileSystem.dll</HintPath>
         </Reference>
-        <Reference Include="System.Net.Http">
-          <HintPath>References\System.Net.Http.dll</HintPath>
-        </Reference>
         <Reference Include="System.Numerics">
           <HintPath>References\System.Numerics.dll</HintPath>
         </Reference>

@@ -3,7 +3,9 @@ using SFS.UI.ModGUI;
 using SFS.World;
 using UITools;
 using UnityEngine;
+using VanillaUpgrades.Utility;
 using Type = SFS.UI.ModGUI.Type;
+using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
 
 namespace VanillaUpgrades
 {
