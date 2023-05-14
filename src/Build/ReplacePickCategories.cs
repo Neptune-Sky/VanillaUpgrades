@@ -28,13 +28,13 @@ namespace VanillaUpgrades
         private static int categories;
         [HarmonyPrefix]
         [HarmonyPatch("SetupElements")]
-        private static bool SetupElements(PickGridUI.CategoryParts[] picklists)
+        private static bool SetupElements(IReadOnlyCollection<PickGridUI.CategoryParts> picklists)
         {
-            categories = picklists.Length;
+            categories = picklists.Count;
             if (categories <= 24) return true;
             List<Button> buttons = new();
             GameObject gameObject = inst.gameObject;
-            int rows = Math.Clamp(picklists.Length, 1, 24);
+            int rows = Math.Clamp(picklists.Count, 1, 24);
             window = CreateWindow(gameObject.transform, GetRandomID(), 240, 57 * rows, opacity: 0f);
             
             window.gameObject.transform.Find("Back (Game)").gameObject.SetActive(false);

@@ -76,11 +76,10 @@ namespace VanillaUpgrades
             Config.settings.showBuildGui.OnChange += OnToggle;
             Config.settings.showBuildGui.Value &= !Main.buildSettingsPresent;
             Config.settings.persistentVars.windowScale.OnChange += () => window.ScaleWindow();
-            if (Config.settings.moreCameraZoom)
-            {
-                BuildManager.main.buildCamera.maxCameraDistance = 300;
-                BuildManager.main.buildCamera.minCameraDistance = 0.1f;
-            }
+            
+            if (!Config.settings.moreCameraZoom) return;
+            BuildManager.main.buildCamera.maxCameraDistance = 300;
+            BuildManager.main.buildCamera.minCameraDistance = 0.1f;
         }
 
         private static void OnToggle()

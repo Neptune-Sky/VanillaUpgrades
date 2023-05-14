@@ -9,6 +9,7 @@ using SFS.Translations;
 using SFS.UI;
 using SFS.World;
 using UnityEngine.SceneManagement;
+// ReSharper disable UnusedMember.Global
 
 namespace VanillaUpgrades
 {
