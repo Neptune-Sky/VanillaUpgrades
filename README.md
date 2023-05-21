@@ -11,6 +11,7 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 **New Functionality:**
 
 - Greatly increased zoom-in/movement limits of the camera in world/build views.
+- Scrollable part picker categories in build mode.
 - Timewarp now stops when entering a planet's SoI.*
 
 **New UI:**
