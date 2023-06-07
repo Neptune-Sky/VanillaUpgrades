@@ -38,6 +38,7 @@ namespace VanillaUpgrades
 
         // Misc
         public bool explosions = true;
+        public bool morePrecisePercentages = true;
         public bool stopTimewarpOnEncounter = true;
         public bool moreCameraZoom = true;
         public bool moreCameraMove = true;

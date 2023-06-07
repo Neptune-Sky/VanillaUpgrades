@@ -35,6 +35,7 @@
     <ItemGroup>
         <Compile Include="src\Build\ReplacePickCategories.cs" />
         <Compile Include="src\Patches\BugFixes.cs" />
+        <Compile Include="src\Patches\PercentDecimals.cs" />
         <Compile Include="src\Utility\Extensions.cs" />
         <Compile Include="src\Utility\UIExtensions.cs" />
         <Compile Include="src\World\ToggleTorque.cs" />

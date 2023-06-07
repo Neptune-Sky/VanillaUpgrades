@@ -108,6 +108,9 @@ namespace VanillaUpgrades
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
                 () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
             CreateSeparator(box, elementWidth - 20);
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.morePrecisePercentages,
+                () => Config.settings.morePrecisePercentages ^= true, 0, 0, "More Precise Percentages");
+            CreateSeparator(box, elementWidth - 20);
             CreateToggleWithLabel(box, elementWidth, ToggleHeight,
                 () => Config.settings.stopTimewarpOnEncounter,
                 () => Config.settings.stopTimewarpOnEncounter ^= true, 0, 0, "Stop Timewarp On Encounter");
