@@ -7,11 +7,8 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(Rocket), "GetTurnAxis")]
     public class TorquePatch
     {
-        [HarmonyPrefix]
-        private static bool Prefix(bool useStopRotation)
-        {
-            return !ToggleTorque.disableTorque || !useStopRotation || WorldManager.currentRocket.arrowkeys.rcs.Value;
-        }
+        private static void Postfix(ref float __result) => 
+            __result = ToggleTorque.disableTorque && !WorldManager.currentRocket.arrowkeys.rcs.Value ? 0f : __result;
     }
 
     [HarmonyPatch(typeof(GameManager), "ClearWorld")]
@@ -64,20 +61,16 @@ namespace VanillaUpgrades
         }
     }
 
-    public class ToggleTorque
+    public static class ToggleTorque
     {
         public static bool disableTorque;
 
         public static void Toggle()
         {
             if (!PlayerController.main.HasControl(MsgDrawer.main)) return;
-            string enabled;
 
             disableTorque = !disableTorque;
-            if (disableTorque)
-                enabled = "Disabled";
-            else
-                enabled = "Enabled";
+            string enabled = disableTorque ? "Disabled" : "Enabled";
 
             MsgDrawer.main.Log("Torque " + enabled);
         }

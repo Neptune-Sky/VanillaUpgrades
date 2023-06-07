@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using SFS.Achievements;
+using SFS.Logs;
 using SFS.Translations;
 using SFS.UI;
 using SFS.World;
@@ -20,7 +20,7 @@ namespace VanillaUpgrades
             TimewarpTo = __instance;
         }
         
-        [HarmonyPatch(typeof(AchievementsModule), "Log_Planet")]
+        [HarmonyPatch(typeof(LogsModule), "Log_Planet")]
         [HarmonyPostfix]
         private static void StopTimewarp(Planet planet, Planet planet_Old)
         {
@@ -33,7 +33,7 @@ namespace VanillaUpgrades
     }
 
     [HarmonyPatch(typeof(Rocket), "CanTimewarp")]
-    class PhysicsTimewarpIfTurning
+    internal class PhysicsTimewarpIfTurning
     {
 
         private static void Postfix(ref bool __result)
