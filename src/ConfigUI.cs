@@ -82,9 +82,9 @@ namespace VanillaUpgrades
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.mmUnits,
                 () => Config.settings.mmUnits ^= true, 0, 0, "Megameters (Mm)");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.gmUnits,
-                () => Config.settings.mmUnits ^= true, 0, 0, "Gigameters (Gm)");
+                () => Config.settings.gmUnits ^= true, 0, 0, "Gigameters (Gm)");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.lyUnits,
-                () => Config.settings.mmUnits ^= true, 0, 0, "Lightyears (ly)");
+                () => Config.settings.lyUnits ^= true, 0, 0, "Lightyears (ly)");
             CreateSeparator(box, elementWidth - 20);
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.kmsUnits,
                 () => Config.settings.kmsUnits ^= true, 0, 0, "Kilometers/Second (km/s)");
