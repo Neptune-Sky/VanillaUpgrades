@@ -19,7 +19,6 @@ namespace VanillaUpgrades
     {
         // random vars
         public PersistentVars persistentVars = new();
-        public bool guiHidden;
 
         public Bool_Local showBuildGui = new() { Value = true };
         public Bool_Local showAdvanced = new() { Value = true };
