@@ -6,6 +6,7 @@ namespace VanillaUpgrades
     internal static class WorldManager
     {
         public static Rocket currentRocket;
+        
 
         public static void Throttle01()
         {

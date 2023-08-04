@@ -1,104 +1,94 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using SFS.UI;
 using SFS.UI.ModGUI;
 using SFS.World;
+using TMPro;
 using UITools;
 using UnityEngine;
+using UnityEngine.UI;
 using VanillaUpgrades.Utility;
+using Type = SFS.UI.ModGUI.Type;
 using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
 
 namespace VanillaUpgrades
 {
-    public class AdvancedInfo : MonoBehaviour
+    public partial class AdvancedInfo : MonoBehaviour
     {
         private const string PositionKey = "VU.AdvancedInfoWindow";
 
         public GameObject windowHolder;
         private Window advancedInfoWindow;
 
-        private Label angleHorizontal;
-        private Label angleVertical;
-
-        private Label angleTitleHorizontal;
-        private Label angleTitleVertical;
-
-        private Label apoapsisHorizontal;
-        private Label apoapsisVertical;
-
-        private Label eccentricityHorizontal;
-        private Label eccentricityVertical;
-
-        private Container horizontal;
-
-        private Label periapsisHorizontal;
-        private Label periapsisVertical;
+        private Dictionary<string, Label> infoLabels = new()
+        {
+            {"apopsisHorizontal", null},
+            {"apoapsisVertical", null},
+            {"periapsisHorizontal", null},
+            {"periapsisVertical", null},
+            {"eccentricityHorizontal", null},
+            {"eccentricityVertical", null},
+            {"angleHorizontal", null},
+            {"angleVertical", null},
+            {"angleTitleHorizontal", null},
+            {"angleTitleVertical", null},
+        };
+        private static Dictionary<string, TextAdapter> newStats = new()
+        { 
+            {"Apoapsis", null},
+            {"Periapsis", null},
+            {"Eccentricity", null},
+            {"Angle", null},
+            {"AngleTitle", null}
+        };
+        private static readonly List<GameObject> infoObjects = new();
 
         private Container vertical;
+        private Container horizontal;
 
         private void Awake()
         {
             windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
-
+            
+            AddToVanillaGUI();
             CreateWindow();
             VerticalGUI();
             HorizontalGUI();
             CheckHorizontalToggle();
+            
 
             PlayerController.main.player.OnChange += OnPlayerChange;
             Config.settings.horizontalMode.OnChange += CheckHorizontalToggle;
             Config.settings.persistentVars.windowScale.OnChange += () => advancedInfoWindow.ScaleWindow();
+            Config.settings.showAdvanced.OnChange += OnToggle;
+            Config.settings.showAdvancedInSeparateWindow.OnChange += OnToggle;
 
-            if (!Config.settings.showAdvanced) windowHolder.SetActive(false);
+            OnToggle();
         }
 
         private void Update()
         {
             if (WorldManager.currentRocket == null) return;
-
-            if (Config.settings.horizontalMode)
-                RefreshLabels(apoapsisHorizontal, periapsisHorizontal, eccentricityHorizontal, angleTitleHorizontal,angleHorizontal);
-            else
-                RefreshLabels(apoapsisVertical, periapsisVertical, eccentricityVertical, angleTitleVertical,angleVertical);
+            if (Config.settings.showAdvancedInSeparateWindow)
+                RefreshLabels(infoLabels);
+            else RefreshLabels(newStats) ;
+            
         }
-
-        private void CreateWindow()
-        {
-            Config.settings.showAdvanced.OnChange += () => { windowHolder.SetActive(Config.settings.showAdvanced); };
-
-            advancedInfoWindow = Builder.CreateWindow(windowHolder.gameObject.transform, 0, 220, 350, 200, 1200, true,
-                false, 1, "Advanced Info");
-            advancedInfoWindow.RegisterPermanentSaving(PositionKey);
-
-            var titleSize = advancedInfoWindow.rectTransform.Find("Title") as RectTransform;
-            titleSize.sizeDelta = new Vector2(titleSize.sizeDelta.x, 30);
-
-            advancedInfoWindow.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperLeft, 0, new RectOffset(5, 0, 0, 0));
-
-            advancedInfoWindow.RegisterOnDropListener(advancedInfoWindow.ClampWindow);
-
-            vertical = Builder.CreateContainer(advancedInfoWindow);
-            vertical.CreateLayoutGroup(Type.Vertical, TextAnchor.MiddleLeft, 0);
-
-            horizontal = Builder.CreateContainer(advancedInfoWindow);
-            horizontal.CreateLayoutGroup(Type.Vertical, TextAnchor.MiddleLeft, 10);
-
-            vertical.rectTransform.localScale = new Vector2(1, 0.99f);
-            horizontal.rectTransform.localScale = new Vector2(1, 0.98f);
-
-            advancedInfoWindow.ScaleWindow();
-            advancedInfoWindow.ClampWindow();
-        }
-
         private void OnPlayerChange()
         {
             if (PlayerController.main == null) return;
-            if (WorldManager.currentRocket == null)
-            {
-                windowHolder.SetActive(false);
-                return;
-            }
-
-            if (Config.settings.showAdvanced) windowHolder.SetActive(true);
+            OnToggle();
             ToggleTorque.disableTorque = false;
+        }
+
+        private void OnToggle()
+        {
+            if (PlayerController.main == null) return;
+            bool value = WorldManager.currentRocket != null && Config.settings.showAdvanced;
+            windowHolder.SetActive(value && Config.settings.showAdvancedInSeparateWindow);
+            infoObjects.ForEach(e => e.SetActive(value && !Config.settings.showAdvancedInSeparateWindow));
         }
 
         private void CheckHorizontalToggle()
@@ -119,79 +109,29 @@ namespace VanillaUpgrades
             advancedInfoWindow.ClampWindow();
         }
 
-        private void VerticalGUI()
-        {
-            Builder.CreateSeparator(vertical, 205);
-
-            UIExtensions.AlignedLabel(vertical, 140, 30, "Apoapsis:");
-            apoapsisVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
-
-            Builder.CreateSpace(vertical, 0, 10);
-
-            UIExtensions.AlignedLabel(vertical, 140, 30, "Periapsis:");
-            periapsisVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
-
-            Builder.CreateSpace(vertical, 0, 10);
-
-            UIExtensions.AlignedLabel(vertical, 140, 30, "Eccentricity:");
-            eccentricityVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
-
-            Builder.CreateSpace(vertical, 0, 10);
-
-            angleTitleVertical = UIExtensions.AlignedLabel(vertical, 140, 30, "Angle:");
-            angleVertical = UIExtensions.AlignedLabel(vertical, 175, 30);
-        }
-
-        private void HorizontalGUI()
-        {
-            Builder.CreateSeparator(horizontal, 335);
-            Container apoapsisContainer = Builder.CreateContainer(horizontal);
-            apoapsisContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
-
-            UIExtensions.AlignedLabel(apoapsisContainer, 150, 30, "Apoapsis:");
-            apoapsisHorizontal = UIExtensions.AlignedLabel(apoapsisContainer, 175, 30);
-
-            Container periapsisContainer = Builder.CreateContainer(horizontal);
-            periapsisContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
-
-            UIExtensions.AlignedLabel(periapsisContainer, 150, 30, "Periapsis:");
-            periapsisHorizontal = UIExtensions.AlignedLabel(periapsisContainer, 175, 30);
-
-            Container eccentricityContainer = Builder.CreateContainer(horizontal);
-            eccentricityContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
-
-            UIExtensions.AlignedLabel(eccentricityContainer, 150, 30, "Eccentricity:");
-            eccentricityHorizontal = UIExtensions.AlignedLabel(eccentricityContainer, 175, 30);
-
-            Container angleContainer = Builder.CreateContainer(horizontal);
-            angleContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
-
-            angleTitleHorizontal = UIExtensions.AlignedLabel(angleContainer, 150, 30, "Angle:");
-            angleHorizontal = UIExtensions.AlignedLabel(angleContainer, 175, 30);
-        }
-
-        private static void RefreshLabels(Label apoapsis, Label periapsis, Label eccentricity, Label angleTitle, Label angle)
+        private static void GetValues(out string apoapsis, out string periapsis, out string eccentricity,
+            out string angleTitle, out string angle)
         {
             Rocket rocket = WorldManager.currentRocket;
             if (rocket.physics.GetTrajectory().paths[0] is Orbit orbit)
             {
-                apoapsis.Text = (orbit.apoapsis - rocket.location.planet.Value.Radius)
+                apoapsis = (orbit.apoapsis - rocket.location.planet.Value.Radius)
                     .ToDistanceString();
 
                 double truePeriapsis =
                     orbit.periapsis < rocket.location.planet.Value.Radius
                         ? 0
                         : orbit.periapsis - rocket.location.planet.Value.Radius;
-                periapsis.Text = truePeriapsis.ToDistanceString();
+                periapsis = truePeriapsis.ToDistanceString();
 
-                eccentricity.Text = orbit.ecc.ToString("F3", CultureInfo.InvariantCulture);
+                eccentricity = orbit.ecc.ToString("F3", CultureInfo.InvariantCulture);
                 
             }
             else
             {
-                apoapsis.Text = "0.0m";
-                periapsis.Text = "0.0m";
-                eccentricity.Text = "0.000";
+                apoapsis = "0.0m";
+                periapsis = "0.0m";
+                eccentricity = "0.000";
             }
 
             float globalAngle = rocket.partHolder.transform.eulerAngles.z;
@@ -203,14 +143,67 @@ namespace VanillaUpgrades
             
             if (location.TerrainHeight < location.planet.TimewarpRadius_Ascend - rocket.location.planet.Value.Radius)
             {
-                angle.Text = trueAngle.ToString("F1", CultureInfo.InvariantCulture) + "°";
-                angleTitle.Text = "Local Angle:";
+                angle = trueAngle.ToString("F1", CultureInfo.InvariantCulture) + "°";
+                angleTitle = "Local Angle";
                 return;
             }
-            if (globalAngle > 180) angle.Text = (360 - globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
-            else angle.Text = (-globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
+            if (globalAngle > 180) angle = (360 - globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
+            else angle = (-globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
 
-            angleTitle.Text = "Angle:";
+            angleTitle = "Angle";
+        }
+        private static void RefreshLabels<T>(Dictionary<string, T> texts)
+        {
+            GetValues(out string apo, out string peri, out string ecc, out string angTitle, out string ang);
+
+            if (texts is Dictionary<string, Label> labelDict)
+            {
+                labelDict["apoapsisVertical"].Text = labelDict["apoapsisHorizontal"].Text = apo;
+                labelDict["periapsisVertical"].Text = labelDict["periapsisHorizontal"].Text = peri;
+                labelDict["eccentricityVertical"].Text = labelDict["eccentricityHorizontal"].Text = ecc;
+                labelDict["angleVertical"].Text = labelDict["angleHorizontal"].Text = ang;
+                labelDict["angleTitleVertical"].Text = labelDict["angleTitleHorizontal"].Text = angTitle;
+                return;
+            }
+
+            if (texts is not Dictionary<string, TextAdapter> adapterDict) throw new ArgumentNullException(nameof(adapterDict));
+            adapterDict["Apoapsis"].Text = apo;
+            adapterDict["Periapsis"].Text = peri;
+            adapterDict["Eccentricity"].Text = ecc;
+            adapterDict["Angle"].Text = ang;
+            adapterDict["AngleTitle"].Text = angTitle;
+        }
+
+        private void OnDestroy()
+        {
+            infoObjects.Clear();
+            PlayerController.main.player.OnChange -= OnPlayerChange;
+            Config.settings.horizontalMode.OnChange -= CheckHorizontalToggle;
+            Config.settings.persistentVars.windowScale.OnChange -= () => advancedInfoWindow.ScaleWindow();
+            Config.settings.showAdvanced.OnChange -= OnToggle;
+            Config.settings.showAdvancedInSeparateWindow.OnChange -= OnToggle;
+            
+        infoLabels = new()
+        {
+            {"apopsisHorizontal", null},
+            {"apoapsisVertical", null},
+            {"periapsisHorizontal", null},
+            {"periapsisVertical", null},
+            {"eccentricityHorizontal", null},
+            {"eccentricityVertical", null},
+            {"angleHorizontal", null},
+            {"angleVertical", null},
+            {"angleTitleHorizontal", null},
+            {"angleTitleVertical", null},
+        };
+        newStats = new()
+        { 
+            {"Apoapsis", null},
+            {"Periapsis", null},
+            {"Eccentricity", null},
+            {"Angle", null},
+            {"AngleTitle", null}
+        };
         }
     }
 }

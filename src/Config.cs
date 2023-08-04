@@ -22,6 +22,7 @@ namespace VanillaUpgrades
 
         public Bool_Local showBuildGui = new() { Value = true };
         public Bool_Local showAdvanced = new() { Value = true };
+        public Bool_Local showAdvancedInSeparateWindow = new();
         public Bool_Local horizontalMode = new();
         public Bool_Local showTime = new() { Value = true };
         public Bool_Local showWorldTime = new() { Value = true };

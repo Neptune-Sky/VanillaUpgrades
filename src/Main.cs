@@ -4,6 +4,8 @@ using HarmonyLib;
 using ModLoader;
 using ModLoader.Helpers;
 using SFS.IO;
+using SFS.UI;
+using TMPro;
 using UITools;
 using UnityEngine;
 using Console = ModLoader.IO.Console;
@@ -41,6 +43,7 @@ namespace VanillaUpgrades
         
         public Dictionary<string, FilePath> UpdatableFiles => new() { { "https://github.com/Neptune-Sky/VanillaUpgrades/releases/latest/download/VanillaUpgrades.dll", new FolderPath(ModFolder).ExtendToFile("VanillaUpgrades.dll") } };
 
+        private int modCount = 2;
         public override void Early_Load()
         {
             main = this;
@@ -62,6 +65,13 @@ namespace VanillaUpgrades
             mainObject = new GameObject("ASoDMainObject", typeof(ErrorNotification));
             Object.DontDestroyOnLoad(mainObject);
             mainObject.SetActive(true);
+
+            GameObject version = GameObject.Find("Version");
+            if (!version) return;
+            modCount = Loader.main.GetLoadedMods().Length;
+                
+            version.GetComponent<TextMeshProUGUI>().autoSizeTextContainer = true;
+            version.GetComponent<TextAdapter>().Text += " - Modded\n(" + modCount + " Mods Loaded)";
         }
 
         private static void SubscribeToScenes()
@@ -81,8 +91,8 @@ namespace VanillaUpgrades
 
         private static bool Command(string str)
         {
-            if (!str.StartsWith("vu")) return false;
-            Debug.Log("Hi");
+            if (!str.StartsWith("reset")) return false;
+            ApplicationUtility.Relaunch();
 
             return true;
 

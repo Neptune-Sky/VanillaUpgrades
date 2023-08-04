@@ -6,7 +6,7 @@ namespace VanillaUpgrades
     public class PercentDecimals
     {
         // ReSharper disable once RedundantAssignment
-        static bool Prefix(ref string __result, double a, bool forceDecimals = true)
+        private static bool Prefix(ref string __result, double a, bool forceDecimals = true)
         {
             if (!Config.settings.morePrecisePercentages) return true;
             a *= 100;

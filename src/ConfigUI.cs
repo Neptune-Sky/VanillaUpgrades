@@ -57,6 +57,8 @@ namespace VanillaUpgrades
 
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.showAdvanced,
                 () => Config.settings.showAdvanced.Value ^= true, 0, 0, "Show Advanced Info");
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.showAdvancedInSeparateWindow,
+                () => Config.settings.showAdvancedInSeparateWindow.Value ^= true, 0, 0, "Separate Advanced Info Window");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.horizontalMode,
                 () => Config.settings.horizontalMode.Value ^= true, 0, 0, "Horizontal Mode");
             CreateSeparator(box, elementWidth - 20);
