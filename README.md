@@ -16,8 +16,9 @@ The goal of this mod is to upgrade the vanilla experience with tons of quality o
 
 **New UI:**
 
+- Show how many mods are actively loaded in the main menu. 
 - Toggles for disabling adaptation and snapping in the build grid.
-- New HUD window in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket.
+- New HUD in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket. This can be toggled between an addition to the vanilla UI and its own floating window.
 - World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
 
 **New Unit Displays:**
