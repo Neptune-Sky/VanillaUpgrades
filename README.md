@@ -65,11 +65,5 @@ Tons more will be added in the future.
 2. Use the "Open Mods Folder" button in-game. 
 3. Drag and drop the dll from your downloads into the mods folder, then restart the game.
 
-# Dependencies
-
-You MUST have the following installed or this mod will not work:
-
-[UI Tools](https://jmnet.one/sfs/forum/index.php?threads/ui-tools.10596/) by [Andrey Onischenko](https://github.com/cucumber-sp)
-
 
 **This mod is untested on Mac.** Use at your own risk.
