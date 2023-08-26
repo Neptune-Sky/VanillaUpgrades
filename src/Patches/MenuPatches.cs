@@ -16,7 +16,6 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnOpen))]
     public class ShowSettings
     {
-        [HarmonyPostfix]
         public static void Postfix()
         {
             Main.menuOpen = true;
@@ -108,50 +107,4 @@ namespace VanillaUpgrades
             }, CloseMode.Current));
         }
     }
-    /*
-    [HarmonyPatch(typeof(BuildManager))]
-    public static class ExitToMainMenu_Build
-    {
-        
-        private static IEnumerable<MethodBase> TargetMethods()
-        {
-            return typeof(BuildManager).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
-                .Where(e => e.Name.Contains("ExitToHub"));
-        }
-        private static bool Prefix()
-        {
-            MenuGenerator.OpenMenu(CancelButton.Cancel, CloseMode.Current, ButtonBuilder.CreateButton(null, () => "Space Center", () =>
-            {
-                BuildState.main.UpdatePersistent();
-                Base.sceneLoader.LoadHubScene();
-            }, CloseMode.Current), ButtonBuilder.CreateButton(null, () => "Main Menu", () =>
-            {
-                BuildState.main.UpdatePersistent();
-                Base.sceneLoader.LoadHomeScene(string.Empty);
-            }, CloseMode.Current));
-            
-            return false;
-        }
-    }
-    
-    [HarmonyPatch(typeof(GameManager), nameof(GameManager.ExitToHub))]
-    public static class ExitToMainMenu_World
-    {
-        private static bool Prefix(GameManager __instance)
-        {
-            MenuGenerator.OpenMenu(CancelButton.Cancel, CloseMode.Current, ButtonBuilder.CreateButton(null, () => "Space Center", () =>
-            {
-                Traverse.Create(__instance).Method("UpdatePersistent", true, false, false).GetValue();
-                Base.sceneLoader.LoadHomeScene(string.Empty);
-            }, CloseMode.Current), ButtonBuilder.CreateButton(null, () => "Main Menu", () =>
-            {
-                GameManager.main.ExitToMainMenu();
-            }, CloseMode.Current));
-            
-            return false;
-        }
-    }
-    */
-    
-
 }

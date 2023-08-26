@@ -19,6 +19,7 @@ namespace VanillaUpgrades
             currentRocket = PlayerController.main.player.Value != null
                 ? PlayerController.main.player.Value as Rocket
                 : null;
+            ToggleTorque.disableTorque = false;
         }
 
         public static void Setup()

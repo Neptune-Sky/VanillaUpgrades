@@ -5,10 +5,12 @@ using UnityEngine;
 namespace VanillaUpgrades
 {
 
-    [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
-    public class MoreCameraMove
+    [HarmonyPatch(typeof(PlayerController))]
+    public class LoosenCameraRestrictions
     {
-        private static bool Prefix(ref Vector2 __result, Vector2 newValue)
+        [HarmonyPatch(typeof(PlayerController), "ClampTrackingOffset")]
+        [HarmonyPrefix]
+        private static bool MoreCameraMove(ref Vector2 __result, Vector2 newValue)
         {
             if (!Config.settings.moreCameraMove) return true;
             if (PlayerController.main.player.Value == null) return true;
@@ -16,12 +18,10 @@ namespace VanillaUpgrades
             __result = newValue;
             return false;
         }
-    }
 
-    [HarmonyPatch(typeof(PlayerController), "ClampCameraDistance")]
-    public class MoreCameraZoom
-    {
-        private static bool Prefix(ref float __result, float newValue)
+        [HarmonyPatch("ClampCameraDistance")]
+        [HarmonyPrefix]
+        private static bool MoreCameraZoom(ref float __result, float newValue)
         {
             if (!Config.settings.moreCameraZoom) return true;
             if (PlayerController.main.player.Value == null) return true;

@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using SFS.UI;
 using SFS.UI.ModGUI;
 using SFS.World;
-using TMPro;
-using UITools;
 using UnityEngine;
-using UnityEngine.UI;
 using VanillaUpgrades.Utility;
-using Type = SFS.UI.ModGUI.Type;
 using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
 
 namespace VanillaUpgrades

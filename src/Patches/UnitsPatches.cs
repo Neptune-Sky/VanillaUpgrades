@@ -6,11 +6,12 @@ using SFS.UI;
 
 namespace VanillaUpgrades
 {
-    [HarmonyPatch(typeof(Units), nameof(Units.ToDistanceString))]
-    internal static class DistanceUnits
+    [HarmonyPatch(typeof(Units))]
+    internal class UnitsPatches
     {
+        [HarmonyPatch(nameof(Units.ToDistanceString))]
         [HarmonyPrefix]
-        private static bool Prefix(this double a, ref string __result)
+        private static bool DistanceUnits(double a, ref string __result)
         {
             if (double.IsInfinity(a)) return true;
             switch (a)
@@ -28,13 +29,10 @@ namespace VanillaUpgrades
                     return true;
             }
         }
-    }
-
-    [HarmonyPatch(typeof(Units), nameof(Units.ToVelocityString))]
-    internal static class VelocityUnits
-    {
+        
+        [HarmonyPatch(nameof(Units.ToVelocityString))]
         [HarmonyPrefix]
-        private static bool Prefix(this double a, ref string __result)
+        private static bool VelocityUnits(double a, ref string __result)
         {
             if (double.IsInfinity(a)) return true;
             switch (a)
@@ -49,12 +47,10 @@ namespace VanillaUpgrades
                     return true;
             }
         }
-    }
-
-    [HarmonyPatch(typeof(Units), nameof(Units.ToMassString))]
-    internal static class KtMass
-    {
-        private static bool Prefix(this float a, bool forceDecimal, ref string __result)
+        
+        [HarmonyPatch(nameof(Units.ToMassString))]
+        [HarmonyPrefix]
+        private static bool MassUnits(float a, bool forceDecimal, ref string __result)
         {
             if (float.IsInfinity(a)) return true;
             switch (a)
@@ -69,12 +65,10 @@ namespace VanillaUpgrades
                     return true;
             }
         }
-    }
-
-    [HarmonyPatch(typeof(Units), nameof(Units.ToThrustString))]
-    internal static class KtThrust
-    {
-        private static bool Prefix(this float a, ref string __result)
+        
+        [HarmonyPatch(nameof(Units.ToThrustString))]
+        [HarmonyPrefix]
+        private static bool Prefix(float a, ref string __result)
         {
             if (float.IsInfinity(a)) return true;
             switch (a)
@@ -90,10 +84,45 @@ namespace VanillaUpgrades
             }
         }
     }
+    
+    [HarmonyPatch(typeof(Units), nameof(Units.ToPercentString), typeof(double), typeof(bool))]
+    public class PercentDecimals
+    {
+        // ReSharper disable once RedundantAssignment
+        private static bool Prefix(ref string __result, double a, bool forceDecimals = true)
+        {
+            if (!Config.settings.morePrecisePercentages) return true;
+            a *= 100;
+
+            switch (a)
+            {
+                case >= 100:
+                case 0:
+                    __result = a.ToString(0, false);
+                    break;
+                case >= 10:
+                    __result = a.ToString(1, true);
+                    break;
+                case < 0.01:
+                    a = 0.01;
+                    __result = a.ToString(2, true);
+                    break;
+                
+                default:
+                    __result = a.ToString(2, true);
+                    break;
+            }
+
+            __result += "%";
+            return false;
+        }
+    }
 
     [HarmonyPatch(typeof(BuildStatsDrawer), "Draw")]
     internal static class KtMassThrustBuild
     {
+        // This is required to make mass and thrust units actually work in the build area because they don't
+        // use the existing methods to get their text output, for some reason.
         private static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText, ref TextAdapter ___thrustText)
         {
             if (___mass > 10000 && Config.settings.ktUnits)

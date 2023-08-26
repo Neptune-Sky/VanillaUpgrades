@@ -15,7 +15,7 @@ namespace VanillaUpgrades
 
         public long subtractor;
 
-        private readonly string defaultTime = "000d 00h 00m 00s";
+        private const string defaultTime = "000d 00h 00m 00s";
         private GameObject clockHolder;
         private Window clockWindow;
 

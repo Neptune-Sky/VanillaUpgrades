@@ -17,19 +17,7 @@ namespace VanillaUpgrades
         }
 
         [HarmonyPatch(typeof(BuildManager), "OnZoom")]
-        [HarmonyPrefix]
-        private static bool Build()
-        {
-            return CheckMouseBounds();
-        }
-        
         [HarmonyPatch(typeof(PlayerController), "OnZoom")]
-        [HarmonyPrefix]
-        private static bool World()
-        {
-            return CheckMouseBounds();
-        }
-        
         [HarmonyPatch(typeof(MapView), "OnZoom")]
         [HarmonyPrefix]
         private static bool WorldMap()

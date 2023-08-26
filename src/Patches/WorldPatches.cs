@@ -43,5 +43,41 @@ namespace VanillaUpgrades
             __result = false;
         }
     }
+    
+    [HarmonyPatch(typeof(EffectManager))]
+    public class StopExplosions
+    {
+        [HarmonyPatch("CreateExplosion")]
+        [HarmonyPatch("CreatePartOverheatEffect")]
+        [HarmonyPrefix]
+        private static bool Prefix()
+        {
+            return Config.settings.explosions;
+        }
+    }
+    
+    [HarmonyPatch(typeof(WorldTime))]
+    public class RaiseMaxPhysicsTimewarp
+    {
+        [HarmonyPatch("GetTimewarpSpeed_Physics")]
+        [HarmonyPrefix]
+        public static bool AddMoreIndexes(ref double __result, int timewarpIndex_Physics)
+        {
+            if (!Config.settings.higherPhysicsWarp) return true;
+            __result = new[] { 1, 2, 3, 5, 10, 25 }[timewarpIndex_Physics];
+            return false;
+
+        }
+
+        [HarmonyPatch("MaxPhysicsIndex", MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool AllowUsingIndexes(ref int __result)
+        {
+            if (!Config.settings.higherPhysicsWarp) return true;
+            __result = 5;
+            return false;
+
+        }
+    }
 }
 

@@ -34,29 +34,26 @@
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="src\Build\ReplacePickCategories.cs" />
+        <Compile Include="src\Config\Config.cs" />
+        <Compile Include="src\Config\ConfigUI.cs" />
+        <Compile Include="src\Config\CustomKeys.cs" />
         <Compile Include="src\Patches\BugFixes.cs" />
-        <Compile Include="src\Patches\PercentDecimals.cs" />
+        <Compile Include="src\Patches\BuildPatches.cs" />
+        <Compile Include="src\Patches\LoosenCameraRestrictions.cs" />
+        <Compile Include="src\Patches\WorldPatches.cs" />
         <Compile Include="src\Utility\Extensions.cs" />
         <Compile Include="src\Utility\UIExtensions.cs" />
         <Compile Include="src\World\AdvancedInfoUI.cs" />
         <Compile Include="src\World\ToggleTorque.cs" />
         <Compile Include="src\World\WorldManager.cs" />
         <Compile Include="src\ErrorNotification.cs" />
-        <Compile Include="src\Global\HideGUI.cs" />
         <Compile Include="src\Patches\MenuPatches.cs" />
-        <Compile Include="src\Patches\CustomKeys.cs" />
         <Compile Include="src\Build\BuildSettings.cs" />
         <Compile Include="src\Main.cs" />
-        <Compile Include="src\Global\MoreCameraMove.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="src\Patches\MoreUnits.cs" />
-        <Compile Include="src\Patches\RaisePhysicsMaxWarp.cs" />
-        <Compile Include="src\World\Patches.cs" />
+        <Compile Include="src\Patches\UnitsPatches.cs" />
         <Compile Include="src\World\TimeManipulation.cs" />
-        <Compile Include="src\Patches\AdditionalSettings.cs" />
         <Compile Include="src\World\WorldClockDisplay.cs" />
-        <Compile Include="src\Config.cs" />
-        <Compile Include="src\ConfigUI.cs" />
         <Compile Include="src\World\AdvancedInfo.cs" />
         <Compile Include="src\Build\KeyMethods.cs" />
     </ItemGroup>
