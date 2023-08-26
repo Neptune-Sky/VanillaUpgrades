@@ -12,11 +12,8 @@ namespace VanillaUpgrades
         public static void Toggle()
         {
             if (!PlayerController.main.HasControl(MsgDrawer.main)) return;
-
             disableTorque = !disableTorque;
-            string enabled = disableTorque ? "Disabled" : "Enabled";
-
-            MsgDrawer.main.Log("Torque " + enabled);
+            MsgDrawer.main.Log("Torque " + (disableTorque ? "Disabled" : "Enabled"));
         }
         private static bool Prefix(ref float __result)
         {
