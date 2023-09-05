@@ -122,17 +122,11 @@ namespace VanillaUpgrades
     internal static class KtMassThrustBuild
     {
         // This is required to make mass and thrust units actually work in the build area because they don't
-        // use the existing methods to get their text output, for some reason.
+        // use the existing methods to get their text output by default.
         private static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText, ref TextAdapter ___thrustText)
         {
-            if (___mass > 10000 && Config.settings.ktUnits)
-            {
-                ___massText.Text = (___mass / 1000).ToString("F1") + "kt";
-            }
-            if (___thrust > 10000 && Config.settings.ktUnits)
-            {
-                ___thrustText.Text = (___thrust / 1000).ToString("F") + "kt";
-            }
+            ___massText.Text = ___mass.ToMassString(false, 4).Split(" ")[1];
+            ___thrustText.Text = ___thrust.ToThrustString().Split(" ")[1];
         }
     }
 }
