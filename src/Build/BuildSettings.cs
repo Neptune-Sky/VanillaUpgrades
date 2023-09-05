@@ -8,8 +8,6 @@ namespace VanillaUpgrades
 {
     public static class BuildSettings
     {
-        private const string PositionKey = "VU.BuildSettingsWindow";
-
         private static GameObject[] buttons;
 
         public static bool noSnapping;
