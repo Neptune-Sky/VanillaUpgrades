@@ -10,14 +10,11 @@ namespace VanillaUpgrades
     {
         private const string PositionKey = "VU.BuildSettingsWindow";
 
-        private const int Height = 170;
-
         private static GameObject[] buttons;
 
         public static bool noSnapping;
         public static bool noAdaptation;
         public static bool noAdaptOverride;
-        private static readonly Vector2Int DefaultPos = new (300, Height);
 
         public static void Setup()
         {
