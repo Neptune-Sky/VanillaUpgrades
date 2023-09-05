@@ -1,6 +1,10 @@
-﻿using SFS.UI.ModGUI;
+﻿using System;
+using SFS.UI.ModGUI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Button = SFS.UI.ModGUI.Button;
+using Object = UnityEngine.Object;
 
 namespace VanillaUpgrades.Utility
 {
@@ -62,6 +66,20 @@ namespace VanillaUpgrades.Utility
         {
             input.rectTransform.localScale = new Vector2(Config.settings.persistentVars.windowScale.Value,
                 Config.settings.persistentVars.windowScale.Value);
+        }
+
+        public static Button ButtonForVanillaUI(out GameObject buttonObject, Transform parent, int width, int height, float fontSize, Action onClick = null, string text = "")
+        {
+            Button button = Builder.CreateButton(parent, width, height, 0, 0, onClick, text);
+            buttonObject = button.gameObject;
+            var layoutElement = buttonObject.AddComponent<LayoutElement>();
+            layoutElement.minWidth = width;
+            layoutElement.minHeight = height;
+
+            buttonObject.GetComponentInChildren<TextMeshProUGUI>().fontSizeMax = fontSize;
+            buttonObject.transform.Find("BackOverTint")?.gameObject.SetActive(false);
+
+            return button;
         }
     }
 }

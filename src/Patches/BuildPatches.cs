@@ -43,7 +43,7 @@ namespace VanillaUpgrades
     {
         private static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
         {
-            if (!BuildSettings.snapping)
+            if (!BuildSettings.noSnapping)
                 return true;
             __result = new List<Vector2>();
             return false;

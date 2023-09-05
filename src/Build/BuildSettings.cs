@@ -1,8 +1,7 @@
 using SFS.Builds;
-using SFS.UI.ModGUI;
-using UITools;
+using SFS.UI;
 using UnityEngine;
-using VanillaUpgrades.Utility;
+using Button = SFS.UI.ModGUI.Button;
 using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
 
 namespace VanillaUpgrades
@@ -13,21 +12,20 @@ namespace VanillaUpgrades
 
         private const int Height = 170;
 
-        private static GameObject windowHolder;
+        private static GameObject[] buttons;
 
-        private static Window window;
-
-        public static bool snapping;
+        public static bool noSnapping;
         public static bool noAdaptation;
         public static bool noAdaptOverride;
         private static readonly Vector2Int DefaultPos = new (300, Height);
 
         public static void Setup()
         {
+            noSnapping = false;
+            noAdaptation = false;
             CreateGUI();
             Config.settings.showBuildGui.OnChange += OnToggle;
             Config.settings.showBuildGui.Value &= !Main.buildSettingsPresent;
-            Config.settings.persistentVars.windowScale.OnChange += () => window.ScaleWindow();
             
             if (!Config.settings.moreCameraZoom) return;
             BuildManager.main.buildCamera.maxCameraDistance = 300;
@@ -36,29 +34,34 @@ namespace VanillaUpgrades
 
         private static void OnToggle()
         {
-            windowHolder.SetActive(Config.settings.showBuildGui);
+            buttons.ForEach(e => e.SetActive(Config.settings.showBuildGui.Value));
         }
-
+        
         private static void CreateGUI()
         {
-            windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "Build Settings");
-
-            window = Builder.CreateWindow(windowHolder.transform, 0, 375, Height, DefaultPos.x, DefaultPos.y, true, false,
-                0.95f, "Build Settings");
-            window.RegisterPermanentSaving(PositionKey);
-            window.RegisterOnDropListener(window.ClampWindow);
-
-            window.CreateLayoutGroup(Type.Vertical, padding: new RectOffset(0, 0, 7, 0));
-
-            if (!Main.buildSettingsPresent)
+            Transform topRight = GameObject.Find("Top Right").transform;
+            
+            Button adaptModButton = UIExtensions.ButtonForVanillaUI(out GameObject adaptingButton, topRight, 130, 50, 25, null, "Adapting");
+            adaptingButton.transform.SetAsFirstSibling();
+            adaptModButton.OnClick = () =>
             {
-                Builder.CreateToggleWithLabel(window, 320, 35, () => !snapping, () => snapping ^= true, 0, 0,
-                    "Snap to Parts");
-                Builder.CreateToggleWithLabel(window, 320, 35, () => !noAdaptation, () => noAdaptation ^= true, 0, 0,
-                    "Part Adaptation");
-            }
-
-            window.ScaleWindow();
+                noAdaptation ^= true;
+                MsgDrawer.main.Log("Part Adaptation " + (noAdaptation ? "Disabled" : "Enabled"));
+                adaptModButton.SetSelected(!noAdaptation);
+            };
+            adaptModButton.SetSelected();
+            
+            Button snapModButton = UIExtensions.ButtonForVanillaUI(out GameObject snappingButton, topRight, 130, 50, 25, null, "Snapping");
+            snappingButton.transform.SetAsFirstSibling();
+            snapModButton.OnClick = () =>
+            {
+                noSnapping ^= true;
+                MsgDrawer.main.Log("Part Snapping " + (noSnapping ? "Disabled" : "Enabled"));
+                snapModButton.SetSelected(!noSnapping);
+            };
+            snapModButton.SetSelected();
+            
+            buttons = new [] {adaptingButton, snappingButton};
         }
     }
 }
