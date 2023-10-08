@@ -6,58 +6,24 @@ If you use any of my code for your mods, all I ask is that you give credit for t
 
 # What does this mod do?
 
-The goal of this mod is to upgrade the vanilla experience with tons of quality of life stuff. Current features are:
+The purpose of this mod is to add tons of quality of life features the vanilla game ought to have, or even re-implement features the game used to have that were removed.
 
-**New Functionality:**
 
-- Greatly increased zoom-in/movement limits of the camera in world/build views.
-- Scrollable part picker categories in build mode.
-- Timewarp now stops when entering a planet's SoI.*
+Some notable features include:
 
-**New UI:**
+    Greatly increased zoom-in/movement limits of the camera in world/build views.
+    New cheats for time slowdown/freezing and physics timewarp up to 25x.
+    Scrolling for part picker categories.
+    Advanced info display, real time world clock/timewarp length.
+    ![image](https://github.com/Neptune-Sky/VanillaUpgrades/assets/68938422/59b0514f-1485-49c7-a46a-4011c194a582)
+    ![image](https://github.com/Neptune-Sky/VanillaUpgrades/assets/68938422/c10e96c6-f412-4389-95b9-887e8e9b0ba8)
+    Reimplementation of "Exit to Main Menu" button, because having to press "Exit" twice to get back there is annoying.
+    Tons of new keybinds, including hiding UI, toggling windowed mode, toggling torque for your rockets, and lots of minor QoL stuff.
+    More units to condense the huge numbers certain readouts can have.
+    And lots more! A complete list of features can be found [in the wiki.](https://github.com/Neptune-Sky/VanillaUpgrades/wiki)
 
-- Show how many mods are actively loaded in the main menu. 
-- Toggles for disabling adaptation and snapping in the build grid.
-- New HUD in world view that shows apoapsis, periapsis, eccentricity, and angle of your rocket. This can be toggled between an addition to the vanilla UI and its own floating window.
-- World time view, and reimplementation of 1.35's indicator saying how long you've been timewarping for.
 
-**New Unit Displays:**
-
-- Re-implements megameters (`Mm`) as a distance unit
-- Adds `km/s` as a velocity unit
-- % speed of light (`c`) as a velocity unit
-- Adds `kt` as a mass and thrust unit
-
-**New Cheats:**
-
-- Time slowdown, you can now use decimal timewarps and even freeze time completely.
-- Physics timewarp up to 25x on all difficulties.
-
-**New Keybinds:**
-
-- L to launch and skip warnings in build space
-- Z to toggle symmetry
-- X to toggle interior view
-- Tab to open the part category menu
-- Slash to instantly stop timewarp
-- C to set thrust to 0.1%
-- T to toggle torque
-- F2 to hide the UI
-
-**New Settings:**
-
-- Toggles for explosion shake and effects.
-- Allow the game to run while it isn't focused.
-- Make percentage displays more precise by showing an extra decimal place.
-
-**Vanilla Bug Fixes:**
-- While windowed or using multiple monitors, the game will no longer zoom the camera if you scroll outside of the game window.
-
-Mod features can be individually disabled in the config window in the game's settings menu. 
-
-Tons more will be added in the future.
-
-\*Inconsistent. If I find a better implementation I will use it.
+This mod is made to be extensively customizable, the majority of features can be disabled or tweaked. The only ones that aren't are mainly common sense items that nobody would realistically want to disable, such as scrollable pick categories.
 
 # Installation
 
