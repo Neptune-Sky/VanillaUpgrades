@@ -1,8 +1,10 @@
-﻿using ModLoader;
+﻿using HarmonyLib;
+using ModLoader;
 using ModLoader.Helpers;
 using SFS;
 using SFS.Builds;
 using UnityEngine;
+using UnityEngine.UI;
 using static SFS.Input.KeybindingsPC;
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -24,7 +26,8 @@ namespace VanillaUpgrades
 
         private static void AddStaticKeybindings()
         {
-            AddOnKeyDown(main.Hide_UI, OpacityChanger.HideUI);
+            AddOnKeyDown(main.Hide_UI, CustomKeyExecution.HideUI);
+            AddOnKeyDown(main.Toggle_Windowed, CustomKeyExecution.ToggleWindowed);
         }
 
         private static void OnBuildLoad()
@@ -46,6 +49,7 @@ namespace VanillaUpgrades
         {
             CreateUI_Text("VanillaUpgrades Keybindings");
             CreateUI_Keybinding(Hide_UI, KeyCode.F2, "Hide UI");
+            CreateUI_Keybinding(Toggle_Windowed, KeyCode.F11, "Toggle Windowed Mode");
             CreateUI_Space();
             CreateUI_Text("Build Mode");
             CreateUI_Keybinding(Toggle_Symmetry, KeyCode.Z, "Toggle symmetry mode");
@@ -63,6 +67,8 @@ namespace VanillaUpgrades
         #region Keys
 
         public Key Hide_UI = KeyCode.F2;
+        
+        public Key Toggle_Windowed = KeyCode.F11;
 
         public Key Toggle_Symmetry = KeyCode.Z;
 
@@ -85,7 +91,7 @@ namespace VanillaUpgrades
         #endregion
     }
     
-    public static class OpacityChanger
+    public static class CustomKeyExecution
     {
 
         public static void HideUI()
@@ -103,6 +109,12 @@ namespace VanillaUpgrades
                 ui.GetComponent<Canvas>().enabled = !ui.GetComponent<Canvas>().enabled;
             }
         }
+
+        public static void ToggleWindowed()
+        {
+            VideoSettingsPC.main.windowModeDropdown.value = VideoSettingsPC.main.settings.windowMode is 0 or 2 ? 2 : 1;
+        }
     }
+    
 }
 

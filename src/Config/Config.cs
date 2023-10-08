@@ -9,8 +9,6 @@ namespace VanillaUpgrades
     [Serializable]
     public class PersistentVars
     {
-        public float opacity = 1;
-        public Color windowColor = new(0.007843138f, 0.09019608f, 0.18039216f, 1f);
         public Float_Local windowScale = new() { Value = 1 };
     }
 
@@ -44,9 +42,14 @@ namespace VanillaUpgrades
         public bool moreCameraMove = true;
         public Bool_Local allowBackgroundProcess = new();
 
+        public int smallRevertTime = 3;
+        public int bigRevertTime = 30;
+
         // Cheats
         public Bool_Local allowTimeSlowdown = new();
         public bool higherPhysicsWarp;
+        
+        
     }
 
     public class Config : ModSettings<SettingsData>
