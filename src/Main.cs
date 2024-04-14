@@ -37,7 +37,7 @@ namespace VanillaUpgrades
         public override string Description =>
             "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
 
-        public override Action LoadKeybindings => VU_Keybindings.LoadKeybindings;
+        public override Action LoadKeybindings => VuKeybindings.LoadKeybindings;
 
         public override Dictionary<string, string> Dependencies => new() { { "UITools", "1.0" } };
         

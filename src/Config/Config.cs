@@ -42,9 +42,6 @@ namespace VanillaUpgrades
         public bool moreCameraMove = true;
         public Bool_Local allowBackgroundProcess = new();
 
-        public int smallRevertTime = 3;
-        public int bigRevertTime = 30;
-
         // Cheats
         public Bool_Local allowTimeSlowdown = new();
         public bool higherPhysicsWarp;
