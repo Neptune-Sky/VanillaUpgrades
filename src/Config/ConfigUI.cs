@@ -5,6 +5,7 @@ using UnityEngine;
 using static SFS.UI.ModGUI.Builder;
 using Type = SFS.UI.ModGUI.Type;
 using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
+// ReSharper disable StringLiteralTypo
 
 namespace VanillaUpgrades
 {
@@ -26,19 +27,19 @@ namespace VanillaUpgrades
 
         private static GameObject GetGUISettings(Transform parent, Vector2Int size)
         {
-            Box box = CreateBox(parent, size.x, size.y);
+            var box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
-            int elementWidth = size.x - 60;
+            var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "GUI");
 
-            Container container = CreateContainer(box);
+            var container = CreateContainer(box);
             container.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
             UIExtensions.AlignedLabel(container, elementWidth - 225, ToggleHeight, "Window Scale");
 
-            Container SliderLabel = CreateContainer(container);
+            var SliderLabel = CreateContainer(container);
             SliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
 
             CreateSlider(SliderLabel, 225, Config.settings.persistentVars.windowScale.Value, (0.5f, 1.5f),
@@ -74,10 +75,10 @@ namespace VanillaUpgrades
 
         private static GameObject GetUnitsSettings(Transform parent, Vector2Int size)
         {
-            Box box = CreateBox(parent, size.x, size.y);
+            var box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
-            int elementWidth = size.x - 60;
+            var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "Units");
             
@@ -101,10 +102,10 @@ namespace VanillaUpgrades
 
         private static GameObject GetMiscSettings(Transform parent, Vector2Int size)
         {
-            Box box = CreateBox(parent, size.x, size.y);
+            var box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
-            int elementWidth = size.x - 60;
+            var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "Miscellaneous");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
@@ -130,10 +131,10 @@ namespace VanillaUpgrades
 
         private static GameObject GetCheatsSettings(Transform parent, Vector2Int size)
         {
-            Box box = CreateBox(parent, size.x, size.y);
+            var box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
-            int elementWidth = size.x - 60;
+            var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "Cheats");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.allowTimeSlowdown,

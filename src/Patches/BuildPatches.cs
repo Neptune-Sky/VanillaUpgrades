@@ -3,6 +3,7 @@ using HarmonyLib;
 using SFS.Builds;
 using SFS.Parts.Modules;
 using UnityEngine;
+// ReSharper disable InconsistentNaming
 
 namespace VanillaUpgrades
 {

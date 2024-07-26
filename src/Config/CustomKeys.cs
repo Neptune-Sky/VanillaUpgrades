@@ -5,6 +5,8 @@ using SFS.Builds;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
 // ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable IdentifierTypo
 
 namespace VanillaUpgrades
 {
@@ -76,11 +78,7 @@ namespace VanillaUpgrades
 
         public Key OpenCategories = KeyCode.Tab;
 
-        public Key CalcToggle = KeyCode.C;
-
         public Key StopTimewarp = KeyCode.Slash;
-
-        public Key TimewarpTo = KeyCode.Semicolon;
 
         public Key ToggleTorque = KeyCode.T;
 
@@ -94,8 +92,8 @@ namespace VanillaUpgrades
 
         public static void HideUI()
         {
-            GameObject pickGrid = GameObject.Find("Canvas - PickGrid");
-            GameObject ui = GameObject.Find("--- UI ---");
+            var pickGrid = GameObject.Find("Canvas - PickGrid");
+            var ui = GameObject.Find("--- UI ---");
 
             if (pickGrid != null)
             {
