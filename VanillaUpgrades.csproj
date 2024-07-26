@@ -46,6 +46,7 @@
         <Compile Include="src\Utility\Extensions.cs" />
         <Compile Include="src\Utility\UIExtensions.cs" />
         <Compile Include="src\World\AdvancedInfoUI.cs" />
+        <Compile Include="src\World\AutosaveHandler.cs" />
         <Compile Include="src\World\ToggleTorque.cs" />
         <Compile Include="src\World\WorldManager.cs" />
         <Compile Include="src\ErrorNotification.cs" />

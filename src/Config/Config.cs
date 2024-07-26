@@ -10,6 +10,8 @@ namespace VanillaUpgrades
     public class PersistentVars
     {
         public Float_Local windowScale = new() { Value = 1 };
+        public float minutesUntilAutosave = 10f;
+        public int allowedAutosaveSlots = 5;
     }
 
     [Serializable]

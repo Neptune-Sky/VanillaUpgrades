@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using SFS.UI.ModGUI;
 using UITools;
 using UnityEngine;
@@ -108,6 +109,34 @@ namespace VanillaUpgrades
             var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "Miscellaneous");
+            var autosaveContainer = CreateContainer(box);
+            autosaveContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
+
+            UIExtensions.AlignedLabel(autosaveContainer, elementWidth - 225, ToggleHeight, "Autosave Timer");
+
+            var autosaveSliderLabel = CreateContainer(autosaveContainer);
+            autosaveSliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
+
+            CreateSlider(autosaveSliderLabel, 225, Config.settings.persistentVars.minutesUntilAutosave, (5, 60),
+                true,
+                val => { Config.settings.persistentVars.minutesUntilAutosave = val; },
+                val => val.Round(0).ToString(CultureInfo.InvariantCulture) + " Min");
+            
+            var autosaveSlotsContainer = CreateContainer(box);
+            autosaveSlotsContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
+
+            UIExtensions.AlignedLabel(autosaveSlotsContainer, elementWidth - 225, ToggleHeight, "Allowed Autosaves");
+
+            var autosaveSlotsSliderLabel = CreateContainer(autosaveSlotsContainer);
+            autosaveSlotsSliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
+
+            CreateSlider(autosaveSlotsSliderLabel, 225, Config.settings.persistentVars.allowedAutosaveSlots, (0, 10),
+                true,
+                val => { Config.settings.persistentVars.allowedAutosaveSlots = (int)val; },
+                val => val.Round(0).ToString(CultureInfo.InvariantCulture) + "");
+
+            CreateSeparator(box, elementWidth - 20);
+            
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
                 () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
             CreateSeparator(box, elementWidth - 20);
