@@ -111,6 +111,9 @@ namespace VanillaUpgrades
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
                 () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
             CreateSeparator(box, elementWidth - 20);
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.darkenDebris,
+                () => Config.settings.darkenDebris ^= true, 0, 0, "Darken Debris Map Icons");
+            CreateSeparator(box, elementWidth - 20);
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.morePrecisePercentages,
                 () => Config.settings.morePrecisePercentages ^= true, 0, 0, "More Precise Percentages");
             CreateSeparator(box, elementWidth - 20);

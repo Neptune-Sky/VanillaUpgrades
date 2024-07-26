@@ -39,7 +39,9 @@
         <Compile Include="src\Config\CustomKeys.cs" />
         <Compile Include="src\Patches\BugFixes.cs" />
         <Compile Include="src\Patches\BuildPatches.cs" />
+        <Compile Include="src\Patches\ChangeDebrisColor.cs" />
         <Compile Include="src\Patches\LoosenCameraRestrictions.cs" />
+        <Compile Include="src\Patches\ReplaceClearDebrisMenu.cs" />
         <Compile Include="src\Patches\WorldPatches.cs" />
         <Compile Include="src\Utility\Extensions.cs" />
         <Compile Include="src\Utility\UIExtensions.cs" />

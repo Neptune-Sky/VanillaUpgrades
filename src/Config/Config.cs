@@ -17,7 +17,8 @@ namespace VanillaUpgrades
     {
         // random vars
         public PersistentVars persistentVars = new();
-
+        
+        // UI
         public Bool_Local showBuildGui = new() { Value = true };
         public Bool_Local showAdvanced = new() { Value = true };
         public Bool_Local showAdvancedInSeparateWindow = new();
@@ -37,6 +38,7 @@ namespace VanillaUpgrades
         // Misc
         public bool explosions = true;
         public bool morePrecisePercentages = true;
+        public bool darkenDebris = true;
         public bool stopTimewarpOnEncounter = true;
         public bool moreCameraZoom = true;
         public bool moreCameraMove = true;

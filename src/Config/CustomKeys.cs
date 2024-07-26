@@ -51,13 +51,13 @@ namespace VanillaUpgrades
             CreateUI_Keybinding(HideUI, KeyCode.F2, "Hide UI");
             CreateUI_Keybinding(ToggleWindowed, KeyCode.F11, "Toggle Windowed Mode");
             CreateUI_Space();
-            CreateUI_Text("Build Mode");
+            CreateUI_Text("Build");
             CreateUI_Keybinding(ToggleSymmetry, KeyCode.Z, "Toggle symmetry mode");
             CreateUI_Keybinding(ToggleInterior, KeyCode.X, "Toggle interior view");
             CreateUI_Keybinding(OpenCategories, KeyCode.Tab, "Open Pick Categories");
             CreateUI_Keybinding(Launch, KeyCode.L, "Launch");
             CreateUI_Space();
-            CreateUI_Text("World View");
+            CreateUI_Text("World");
             CreateUI_Keybinding(StopTimewarp, KeyCode.Slash, "Stop Timewarp");
             CreateUI_Keybinding(Throttle01, KeyCode.C, "Throttle To 0.1%");
             CreateUI_Keybinding(ToggleTorque, KeyCode.T, "Toggle torque");
