@@ -9,7 +9,6 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(GameManager), "OpenClearDebrisMenu")]
     internal static class ReplaceClearDebrisMenu
     {
-        private static readonly List<Rocket> Rockets = GameManager.main.rockets;
         // ReSharper disable once UnusedMember.Local
         private static bool Prefix()
         {
@@ -32,8 +31,15 @@ namespace VanillaUpgrades
                 ButtonBuilder.CreateButton(null,
                     () => "Everything", () =>
                     {
-                        ClearDebris(false, true);
-                    }, CloseMode.Stack),
+                        MenuGenerator.OpenConfirmation(CloseMode.None, () => 
+                            "Are you sure you want to delete EVERYTHING in your world? This includes all named rockets and debris.",
+                        () => "Yes", () =>
+                        {
+                            ClearDebris(false, true); 
+                            ScreenManager.main.CloseStack();
+                        },
+                        () => "No", ScreenManager.main.CloseCurrent);
+                    }, CloseMode.None),
                 
                 ButtonBuilder.CreateButton(null,
                     () => "Cancel", null, CloseMode.Current)
@@ -43,12 +49,13 @@ namespace VanillaUpgrades
 
         private static void ClearDebris(bool onlyUnnamed = true, bool destroyControllable = false)
         {
-            for (var num = Rockets.Count - 1; num >= 0; num--)
+            var rockets = GameManager.main.rockets;
+            for (var num = rockets.Count - 1; num >= 0; num--)
             {
-                if (onlyUnnamed && Rockets[num].rocketName != "") continue;
-                if (!destroyControllable && Rockets[num].hasControl.Value) continue;
+                if (onlyUnnamed && rockets[num].rocketName != "") continue;
+                if (!destroyControllable && rockets[num].hasControl.Value) continue;
                 
-                RocketManager.DestroyRocket(Rockets[num], DestructionReason.Intentional);
+                RocketManager.DestroyRocket(rockets[num], DestructionReason.Intentional);
             }
         }
     }
