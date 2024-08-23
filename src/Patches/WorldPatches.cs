@@ -79,5 +79,48 @@ namespace VanillaUpgrades
 
         }
     }
+
+    [HarmonyPatch(typeof(ThrottleDrawer))]
+    public class ManageHoverMode
+    {
+        [HarmonyPatch("ToggleThrottle")]
+        [HarmonyPostfix]
+        public static void ToggleThrottle_Postfix(ref Throttle_Local ___throttle)
+        {
+            if(!___throttle.Value.throttleOn)
+            {
+                // Do this only if throttle has been turned off (keep hover mode on if this was set before throttle is turned on)
+                WorldManager.ExitHoverMode(true);
+            }
+        }
+
+        [HarmonyPatch("AdjustThrottleRaw")]
+        [HarmonyPostfix]
+        public static void AdjustThrottleRaw_Postfix()
+        {
+            WorldManager.ExitHoverMode(true);
+        }
+
+        [HarmonyPatch("SetThrottleRaw")]
+        [HarmonyPostfix]
+        public static void SetThrottleRaw_Postfix()
+        {
+            WorldManager.ExitHoverMode(true);
+        }
+    }
+
+    [HarmonyPatch(typeof(GameManager))]
+    public class UpdateHoverMode
+    {
+        [HarmonyPatch("Update")]
+        [HarmonyPostfix]
+        public static void Update_Postfix()
+        {
+            if(WorldManager.hoverMode)
+            {
+                WorldManager.TwrTo1();
+            }
+        }
+    }
 }
 
