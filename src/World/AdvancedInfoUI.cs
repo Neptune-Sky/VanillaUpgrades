@@ -98,9 +98,9 @@ namespace VanillaUpgrades
             for (var i = 0; i < newStats.Count - 1; i++)
             {
                 string key = newStats.Keys.ToArray()[i];
-                GameObject sep = GameObject.Instantiate(separator, holder.transform, true);
+                GameObject sep = Instantiate(separator, holder.transform, true);
                 infoObjects.Add(sep);
-                GameObject Object = GameObject.Instantiate(thrust, holder.transform, true);
+                GameObject Object = Instantiate(thrust, holder.transform, true);
                 infoObjects.Add(Object);
                 
                 Object.transform.GetChild(0).gameObject.GetComponent<TextAdapter>().Text = key;
