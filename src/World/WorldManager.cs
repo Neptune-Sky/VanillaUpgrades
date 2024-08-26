@@ -1,5 +1,6 @@
 ﻿using SFS;
 using SFS.Parts.Modules;
+using SFS.Sharing;
 using SFS.UI;
 using SFS.World;
 using UnityEngine;
@@ -38,6 +39,7 @@ namespace VanillaUpgrades
         {
             if (WorldTime.main.realtimePhysics.Value)
             {
+                if (hoverMode == enable) return;
                 hoverMode = enable;
                 if (hoverMode) TwrTo1();
                 if (showMsg) MsgDrawer.main.Log(hoverMode ? "Hovering..." : "Exit hover mode");
