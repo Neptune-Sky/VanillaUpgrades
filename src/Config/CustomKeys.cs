@@ -42,7 +42,7 @@ namespace VanillaUpgrades
         {
             AddOnKeyDown_World(_main.StopTimewarp, () => TimeManipulation.StopTimewarp(true));
             AddOnKeyDown_World(_main.Throttle01, WorldManager.Throttle01);
-            AddOnKeyDown_World(_main.HoverMode, WorldManager.EnterHoverMode);
+            AddOnKeyDown_World(_main.HoverMode, WorldManager.ToggleHoverMode);
             AddOnKeyDown_World(_main.ToggleTorque, VanillaUpgrades.ToggleTorque.Toggle);
         }
 

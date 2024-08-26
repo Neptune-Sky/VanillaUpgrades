@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using SFS.UI.ModGUI;
 using UITools;
 using UnityEngine;
 using static SFS.UI.ModGUI.Builder;

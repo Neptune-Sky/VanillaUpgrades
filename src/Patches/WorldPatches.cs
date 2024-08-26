@@ -90,7 +90,7 @@ namespace VanillaUpgrades
             if(!___throttle.Value.throttleOn)
             {
                 // Do this only if throttle has been turned off (keep hover mode on if this was set before throttle is turned on)
-                WorldManager.ExitHoverMode(true);
+                WorldManager.EnableHoverMode(false);
             }
         }
 
@@ -98,14 +98,14 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void AdjustThrottleRaw_Postfix()
         {
-            WorldManager.ExitHoverMode(true);
+            WorldManager.EnableHoverMode(false);
         }
 
         [HarmonyPatch("SetThrottleRaw")]
         [HarmonyPostfix]
         public static void SetThrottleRaw_Postfix()
         {
-            WorldManager.ExitHoverMode(true);
+            WorldManager.EnableHoverMode(false);
         }
     }
 

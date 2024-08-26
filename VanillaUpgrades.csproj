@@ -427,17 +427,11 @@
         <Reference Include="UnityEngine.UIElementsModule">
           <HintPath>References\UnityEngine.UIElementsModule.dll</HintPath>
         </Reference>
-        <Reference Include="UnityEngine.UIElementsNativeModule">
-          <HintPath>References\UnityEngine.UIElementsNativeModule.dll</HintPath>
-        </Reference>
         <Reference Include="UnityEngine.UIModule">
           <HintPath>References\UnityEngine.UIModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UmbraModule">
           <HintPath>References\UnityEngine.UmbraModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UNETModule">
-          <HintPath>References\UnityEngine.UNETModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UnityAnalyticsModule">
           <HintPath>References\UnityEngine.UnityAnalyticsModule.dll</HintPath>

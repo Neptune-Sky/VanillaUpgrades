@@ -5,7 +5,6 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using SFS.World;
 using SFS.World.Maps;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {
