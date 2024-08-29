@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using SFS.Logs;
 using SFS.Translations;
 using SFS.UI;
@@ -79,6 +80,17 @@ namespace VanillaUpgrades
 
         }
     }
+    
+    [HarmonyPatch(typeof(GameManager))]
+    public class UpdateInGame
+    {
+        public static Action execute = () => { };
+        [HarmonyPatch("Update")]
+        public static void Postfix()
+        {
+            execute.Invoke();
+        }
+    }
 
     [HarmonyPatch(typeof(ThrottleDrawer))]
     public class ManageHoverMode
@@ -90,7 +102,7 @@ namespace VanillaUpgrades
             if(!___throttle.Value.throttleOn)
             {
                 // Do this only if throttle has been turned off (keep hover mode on if this was set before throttle is turned on)
-                WorldManager.EnableHoverMode(false);
+                WorldManager.EnableHoverMode(false, false);
             }
         }
 
@@ -98,28 +110,14 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void AdjustThrottleRaw_Postfix()
         {
-            WorldManager.EnableHoverMode(false);
+            WorldManager.EnableHoverMode(false, false);
         }
 
         [HarmonyPatch("SetThrottleRaw")]
         [HarmonyPostfix]
         public static void SetThrottleRaw_Postfix()
         {
-            WorldManager.EnableHoverMode(false);
-        }
-    }
-
-    [HarmonyPatch(typeof(GameManager))]
-    public class UpdateHoverMode
-    {
-        [HarmonyPatch("Update")]
-        [HarmonyPostfix]
-        public static void Update_Postfix()
-        {
-            if(WorldManager.hoverMode)
-            {
-                WorldManager.TwrTo1();
-            }
+            WorldManager.EnableHoverMode(false, false);
         }
     }
 }

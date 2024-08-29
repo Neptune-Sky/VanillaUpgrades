@@ -1,6 +1,5 @@
 ﻿using SFS;
 using SFS.Parts.Modules;
-using SFS.Sharing;
 using SFS.UI;
 using SFS.World;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace VanillaUpgrades
     {
         public static Rocket currentRocket;
 
-        public static bool hoverMode;
+        private static bool hoverMode;
 
         public static void Throttle01()
         {
@@ -25,16 +24,8 @@ namespace VanillaUpgrades
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 
-        public static void ToggleHoverMode()
-        {
-            if (hoverMode)
-            {
-                EnableHoverMode(false);
-                return;
-            }
-            EnableHoverMode();
-        }
-
+        public static void ToggleHoverMode() => EnableHoverMode(!hoverMode);
+        
         public static void EnableHoverMode(bool enable = true, bool showMsg = true)
         {
             if (WorldTime.main.realtimePhysics.Value)
@@ -47,7 +38,8 @@ namespace VanillaUpgrades
             }
             MsgDrawer.main.Log("Cannot hover while timewarping");
         }
-        public static void TwrTo1()
+
+        private static void TwrTo1()
         {
             if (currentRocket == null || !PlayerController.main.HasControl(MsgDrawer.main))
             {
@@ -103,6 +95,10 @@ namespace VanillaUpgrades
             UpdatePlayer();
             PlayerController.main.player.OnChange += UpdatePlayer;
             Config.settings.allowTimeSlowdown.OnChange += TimeManipulation.ToggleChange;
+            UpdateInGame.execute += () =>
+            {
+                if (hoverMode) TwrTo1();
+            };
         }
     }
 }
