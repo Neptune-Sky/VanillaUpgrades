@@ -14,21 +14,12 @@ using UnityEngine.SceneManagement;
 
 namespace VanillaUpgrades
 {
-    [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnOpen))]
-    public class ShowSettings
-    {
-        public static void Postfix()
-        {
-            Main.menuOpen = true;
-        }
-    }
     
     [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnClose))]
-    public class HideSettings
+    public class UpdateConfigOnMenuClose
     {
         public static void Postfix()
         {
-            Main.menuOpen = false;
             Config.Save();
             if (SceneManager.GetActiveScene().name != "Build_PC") return;
             if (Config.settings.moreCameraZoom)

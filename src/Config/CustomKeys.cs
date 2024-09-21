@@ -16,7 +16,7 @@ namespace VanillaUpgrades
 
         public static void LoadKeybindings()
         {
-            _main = SetupKeybindings<VuKeybindings>(Main.main);
+            _main = SetupKeybindings<VuKeybindings>(Main.inst);
 
             SceneHelper.OnBuildSceneLoaded += OnBuildLoad;
             SceneHelper.OnWorldSceneLoaded += OnWorldLoad;

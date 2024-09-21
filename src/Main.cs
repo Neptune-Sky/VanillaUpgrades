@@ -17,9 +17,7 @@ namespace VanillaUpgrades
     public class Main : Mod, IUpdatable
     {
 
-        public static Main main;
-
-        public static bool menuOpen;
+        public static Main inst;
 
         public static bool buildSettingsPresent;
 
@@ -46,7 +44,7 @@ namespace VanillaUpgrades
         private int modCount = 2;
         public override void Early_Load()
         {
-            main = this;
+            inst = this;
             modFolder = new FolderPath(ModFolder);
             patcher = new Harmony("mods.ASoD.VanUp");
             patcher.PatchAll();
