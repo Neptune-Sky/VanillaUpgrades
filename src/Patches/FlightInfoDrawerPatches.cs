@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ namespace VanillaUpgrades
         // This method modifies the way thrust and TWR are displayed on the flight information panel:
         // - Thrust now takes into account engine orientation and stretching - also works with boosters
         // - TWR is now the local Thrust-To-Weight ratio (takes into account the local gravity)
+        [UsedImplicitly]
         private static void Postfix(ref TextAdapter ___thrustText, ref TextAdapter ___thrustToWeightText)
         {
             if (PlayerController.main.player.Value is not Rocket rocket) return;

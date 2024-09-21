@@ -6,6 +6,7 @@ using SFS.UI;
 using SFS.World;
 using SFS.World.Maps;
 using SFS.WorldBase;
+using UnityEngine;
 
 namespace VanillaUpgrades
 {
@@ -110,14 +111,26 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void AdjustThrottleRaw_Postfix()
         {
-            WorldManager.EnableHoverMode(false, false);
+            WorldManager.EnableHoverMode(false);
         }
 
         [HarmonyPatch("SetThrottleRaw")]
         [HarmonyPostfix]
         public static void SetThrottleRaw_Postfix()
         {
-            WorldManager.EnableHoverMode(false, false);
+            WorldManager.EnableHoverMode(false);
+        }
+    }
+
+    [HarmonyPatch(typeof(ThrottleDrawer), "UpdatePercentUI")]
+    class ThrottleFillbarAccuracyFix
+    {
+        static bool Prefix(Throttle_Local ___throttle, FillSlider ___throttleSlider, TextAdapter ___throttlePercentText)
+        {
+            float value = ___throttle.Value.throttlePercent.Value;
+            ___throttlePercentText.Text = value.ToPercentString();
+            ___throttleSlider.SetFillAmount(0.16f + (value * 0.68f), false);
+            return false;
         }
     }
 }
