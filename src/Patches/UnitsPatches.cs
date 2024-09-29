@@ -16,8 +16,8 @@ namespace VanillaUpgrades
             if (double.IsInfinity(a)) return true;
             switch (a)
             {
-                case >= 9460730472580800 when Config.settings.lyUnits:
-                    __result = (a / 946073047258080).ToString("F1", CultureInfo.InvariantCulture) + "ly";
+                case >= 94607304725800440 when Config.settings.lyUnits:
+                    __result = (a / 9460730472580044).ToString("F1", CultureInfo.InvariantCulture) + "ly";
                     return false;
                 case >= 100000000000 when Config.settings.gmUnits:
                     __result = (a / 1000000000).ToString("F1", CultureInfo.InvariantCulture) + "Gm";
