@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SFS.World;
-using UnityEngine;
 using HarmonyLib;
 using SFS;
 using SFS.IO;
 using SFS.Parsers.Json;
+using SFS.World;
+using UnityEngine;
 
 namespace VanillaUpgrades
 {

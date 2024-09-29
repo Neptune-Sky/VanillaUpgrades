@@ -17,9 +17,7 @@ namespace VanillaUpgrades
     public class Main : Mod, IUpdatable
     {
 
-        public static Main main;
-
-        public static bool menuOpen;
+        public static Main inst;
 
         public static bool buildSettingsPresent;
 
@@ -30,12 +28,12 @@ namespace VanillaUpgrades
         public static FolderPath modFolder;
         public override string ModNameID => "VanUp";
         public override string DisplayName => "Vanilla Upgrades";
-        public override string Author => "StarMods";
+        public override string Author => "NeptuneSky";
         public override string MinimumGameVersionNecessary => "1.5.10.2";
-        public override string ModVersion => "v5.1.9";
+        public override string ModVersion => "v5.2";
 
         public override string Description =>
-            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features.";
+            "Upgrades the vanilla experience with quality-of-life features and keybinds. See the GitHub repository for a list of features. Credits can be found in the wiki.";
 
         public override Action LoadKeybindings => VuKeybindings.LoadKeybindings;
 
@@ -46,7 +44,7 @@ namespace VanillaUpgrades
         private int modCount = 2;
         public override void Early_Load()
         {
-            main = this;
+            inst = this;
             modFolder = new FolderPath(ModFolder);
             patcher = new Harmony("mods.ASoD.VanUp");
             patcher.PatchAll();

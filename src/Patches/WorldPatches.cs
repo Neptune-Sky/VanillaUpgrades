@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using SFS.Logs;
 using SFS.Translations;
 using SFS.UI;
@@ -79,5 +80,56 @@ namespace VanillaUpgrades
 
         }
     }
-}
+    
+    [HarmonyPatch(typeof(GameManager))]
+    public class UpdateInGame
+    {
+        public static Action execute = () => { };
+        [HarmonyPatch("Update")]
+        public static void Postfix()
+        {
+            execute.Invoke();
+        }
+    }
 
+    [HarmonyPatch(typeof(ThrottleDrawer))]
+    public class ManageHoverMode
+    {
+        [HarmonyPatch("ToggleThrottle")]
+        [HarmonyPostfix]
+        public static void ToggleThrottle_Postfix(ref Throttle_Local ___throttle)
+        {
+            if(!___throttle.Value.throttleOn)
+            {
+                // Do this only if throttle has been turned off (keep hover mode on if this was set before throttle is turned on)
+                WorldManager.EnableHoverMode(false, false);
+            }
+        }
+
+        [HarmonyPatch("AdjustThrottleRaw")]
+        [HarmonyPostfix]
+        public static void AdjustThrottleRaw_Postfix()
+        {
+            WorldManager.EnableHoverMode(false);
+        }
+
+        [HarmonyPatch("SetThrottleRaw")]
+        [HarmonyPostfix]
+        public static void SetThrottleRaw_Postfix()
+        {
+            WorldManager.EnableHoverMode(false);
+        }
+    }
+
+    [HarmonyPatch(typeof(ThrottleDrawer), "UpdatePercentUI")]
+    class ThrottleFillbarAccuracyFix
+    {
+        static bool Prefix(Throttle_Local ___throttle, FillSlider ___throttleSlider, TextAdapter ___throttlePercentText)
+        {
+            var value = ___throttle.Value.throttlePercent.Value;
+            ___throttlePercentText.Text = value.ToPercentString();
+            ___throttleSlider.SetFillAmount(0.16f + (value * 0.68f), false);
+            return false;
+        }
+    }
+}

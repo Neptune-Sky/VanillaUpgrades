@@ -16,7 +16,7 @@ namespace VanillaUpgrades
 
         public static void LoadKeybindings()
         {
-            _main = SetupKeybindings<VuKeybindings>(Main.main);
+            _main = SetupKeybindings<VuKeybindings>(Main.inst);
 
             SceneHelper.OnBuildSceneLoaded += OnBuildLoad;
             SceneHelper.OnWorldSceneLoaded += OnWorldLoad;
@@ -42,6 +42,7 @@ namespace VanillaUpgrades
         {
             AddOnKeyDown_World(_main.StopTimewarp, () => TimeManipulation.StopTimewarp(true));
             AddOnKeyDown_World(_main.Throttle01, WorldManager.Throttle01);
+            AddOnKeyDown_World(_main.HoverMode, WorldManager.ToggleHoverMode);
             AddOnKeyDown_World(_main.ToggleTorque, VanillaUpgrades.ToggleTorque.Toggle);
         }
 
@@ -60,6 +61,7 @@ namespace VanillaUpgrades
             CreateUI_Text("World");
             CreateUI_Keybinding(StopTimewarp, KeyCode.Slash, "Stop Timewarp");
             CreateUI_Keybinding(Throttle01, KeyCode.C, "Throttle To 0.1%");
+            CreateUI_Keybinding(HoverMode, KeyCode.V, "Hover mode");
             CreateUI_Keybinding(ToggleTorque, KeyCode.T, "Toggle torque");
             CreateUI_Space();
         }
@@ -83,6 +85,8 @@ namespace VanillaUpgrades
         public Key ToggleTorque = KeyCode.T;
 
         public Key Throttle01 = KeyCode.C;
+
+        public Key HoverMode = KeyCode.V;
 
         #endregion
     }
