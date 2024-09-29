@@ -13,7 +13,7 @@ namespace VanillaUpgrades
     {
         private const string PositionKey = "VU.WorldClockWindow";
 
-        public long subtractor;
+        public double subtractor;
 
         private const string defaultTime = "000d 00h 00m 00s";
         private GameObject clockHolder;
@@ -46,14 +46,14 @@ namespace VanillaUpgrades
 
         public void Update()
         {
-            timestamp = TimeSpanConv(new TimeSpan((long)WorldTime.main.worldTime * 10000000));
-            timewarpTime = TimeSpanConv(new TimeSpan((long)WorldTime.main.worldTime * 10000000 - subtractor));
+            timestamp = TimeSpanConv(WorldTime.main.worldTime);
+            timewarpTime = TimeSpanConv(WorldTime.main.worldTime - subtractor);
 
             worldTimeLabel.Text = timestamp;
 
             if (WorldTime.main.timewarpIndex != 0 && Config.settings.showTime)
             {
-                if (subtractor == 0) subtractor = (long)WorldTime.main.worldTime * 10000000;
+                if (subtractor == 0) subtractor = WorldTime.main.worldTime;
                 timewarpTimeLabel.Text = timewarpTime;
             }
             else
@@ -124,18 +124,45 @@ namespace VanillaUpgrades
             else
                 clockWindow.Size = new Vector2(clockWindow.Size.x, 220);
         }
-
-        private static string TimeSpanConv(TimeSpan span)
+        private static string TimeSpanConv(double totalSeconds)
         {
-            double milleniaNum = (double)span.Days / 365 / 1000;
-            double yearNum = (double)span.Days / 365 - milleniaNum * 1000;
+            const double secondsPerMinute = 60;
+            const double secondsPerHour = secondsPerMinute * 60;
+            const double secondsPerDay = secondsPerHour * 24;
+            const double secondsPerYear = secondsPerDay * 365.25; // Account for leap years
+            const double secondsPerMillennium = secondsPerYear * 1000;
+            const double secondsPerMegaannum = secondsPerYear * 1000000;
 
-            string millenia = milleniaNum != 0 ? milleniaNum + "M " : "";
-            string years = yearNum != 0 ? yearNum + "y " : "";
-            string days = (span.Days - (yearNum + milleniaNum * 1000) * 365).ToString("000") + "d ";
+            // Calculate each time unit and ensure fractions are passed down
+            var megaannums = Math.Floor(totalSeconds / secondsPerMegaannum);
+            totalSeconds %= secondsPerMegaannum;
 
-            return millenia + years + days + span.Hours.ToString("00") + "h " + span.Minutes.ToString("00") + "m " +
-                   span.Seconds.ToString("00") + "s";
+            var millennia = Math.Floor(totalSeconds / secondsPerMillennium);
+            totalSeconds %= secondsPerMillennium;
+
+            var years = Math.Floor(totalSeconds / secondsPerYear);
+            totalSeconds %= secondsPerYear;
+
+            var days = Math.Floor(totalSeconds / secondsPerDay);
+            totalSeconds %= secondsPerDay;
+
+            var hours = Math.Floor(totalSeconds / secondsPerHour);
+            totalSeconds %= secondsPerHour;
+
+            var minutes = Math.Floor(totalSeconds / secondsPerMinute);
+            totalSeconds %= secondsPerMinute;
+
+            // Remaining seconds as an integer (no decimals)
+            var seconds = (int)Math.Floor(totalSeconds);
+
+            // Build the output string using the shorter units
+            return $"{(megaannums > 0 ? $"{megaannums}Ma " : "")}" +
+                   $"{(millennia > 0 ? $"{millennia}M " : "")}" +
+                   $"{(years > 0 ? $"{years}y " : "")}" +
+                   $"{days}d " +  // Always show days, even if 0
+                   $"{hours}h " +
+                   $"{minutes}m " +
+                   $"{seconds}s".TrimEnd();
         }
     }
 }
