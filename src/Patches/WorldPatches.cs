@@ -6,7 +6,6 @@ using SFS.UI;
 using SFS.World;
 using SFS.World.Maps;
 using SFS.WorldBase;
-using UnityEngine;
 
 namespace VanillaUpgrades
 {
@@ -127,11 +126,10 @@ namespace VanillaUpgrades
     {
         static bool Prefix(Throttle_Local ___throttle, FillSlider ___throttleSlider, TextAdapter ___throttlePercentText)
         {
-            float value = ___throttle.Value.throttlePercent.Value;
+            var value = ___throttle.Value.throttlePercent.Value;
             ___throttlePercentText.Text = value.ToPercentString();
             ___throttleSlider.SetFillAmount(0.16f + (value * 0.68f), false);
             return false;
         }
     }
 }
-
