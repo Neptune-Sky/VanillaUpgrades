@@ -127,8 +127,8 @@ namespace VanillaUpgrades
 
         private static string TimeSpanConv(TimeSpan span)
         {
-            long milleniaNum = (long)span.Days / 365 / 1000;
-            long yearNum = (long)span.Days / 365 - milleniaNum * 1000;
+            double milleniaNum = (double)span.Days / 365 / 1000;
+            double yearNum = (double)span.Days / 365 - milleniaNum * 1000;
 
             string millenia = milleniaNum != 0 ? milleniaNum + "M " : "";
             string years = yearNum != 0 ? yearNum + "y " : "";
