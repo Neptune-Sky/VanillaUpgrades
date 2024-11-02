@@ -100,6 +100,8 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(Loader), "Initialize_Load")]
     internal class ModCheck
     {
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once UnusedMember.Local
         private static void Postfix(List<Mod> ___loadedMods)
         {
             if (___loadedMods.FindIndex(e => e.ModNameID == "BuildSettings") == -1) return;
