@@ -16,7 +16,6 @@ namespace VanillaUpgrades
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Main : Mod, IUpdatable
     {
-
         public static Main inst;
 
         public static bool buildSettingsPresent;
@@ -26,6 +25,8 @@ namespace VanillaUpgrades
         private static Harmony patcher;
 
         public static FolderPath modFolder;
+
+        private int modCount = 2;
         public override string ModNameID => "VanUp";
         public override string DisplayName => "Vanilla Upgrades";
         public override string Author => "NeptuneSky";
@@ -38,10 +39,15 @@ namespace VanillaUpgrades
         public override Action LoadKeybindings => VuKeybindings.LoadKeybindings;
 
         public override Dictionary<string, string> Dependencies => new() { { "UITools", "1.0" } };
-        
-        public Dictionary<string, FilePath> UpdatableFiles => new() { { "https://github.com/Neptune-Sky/VanillaUpgrades/releases/latest/download/VanillaUpgrades.dll", new FolderPath(ModFolder).ExtendToFile("VanillaUpgrades.dll") } };
 
-        private int modCount = 2;
+        public Dictionary<string, FilePath> UpdatableFiles => new()
+        {
+            {
+                "https://github.com/Neptune-Sky/VanillaUpgrades/releases/latest/download/VanillaUpgrades.dll",
+                new FolderPath(ModFolder).ExtendToFile("VanillaUpgrades.dll")
+            }
+        };
+
         public override void Early_Load()
         {
             inst = this;
@@ -67,7 +73,7 @@ namespace VanillaUpgrades
             GameObject version = GameObject.Find("Version");
             if (!version) return;
             modCount = Loader.main.GetLoadedMods().Length;
-                
+
             version.GetComponent<TextMeshProUGUI>().autoSizeTextContainer = true;
             version.GetComponent<TextAdapter>().Text += " - Modded\n(" + modCount + " Mods Loaded)";
         }
@@ -93,7 +99,6 @@ namespace VanillaUpgrades
             ApplicationUtility.Relaunch();
 
             return true;
-
         }
     }
 
@@ -111,4 +116,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

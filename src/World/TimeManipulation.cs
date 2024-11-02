@@ -17,19 +17,18 @@ namespace VanillaUpgrades
             TimeManipulation.SlowTime();
             return false;
         }
-        
+
         [HarmonyPatch(typeof(WorldTime), nameof(WorldTime.AccelerateTime))]
         [HarmonyPrefix]
         [UsedImplicitly]
         public static bool EndDeceleration()
         {
             if (TimeManipulation.timeDecelIndex <= 0) return true;
-            
+
             WorldTime.main.SetState(1, true, false);
             MsgDrawer.main.Log("Time restored to normal");
             TimeManipulation.timeDecelIndex = 0;
             return false;
-
         }
     }
 
@@ -75,4 +74,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

@@ -1,10 +1,12 @@
 using System;
 using System.Globalization;
+using SFS.UI.ModGUI;
 using UITools;
 using UnityEngine;
 using static SFS.UI.ModGUI.Builder;
 using Type = SFS.UI.ModGUI.Type;
 using UIExtensions = VanillaUpgrades.Utility.UIExtensions;
+
 // ReSharper disable StringLiteralTypo
 
 namespace VanillaUpgrades
@@ -17,29 +19,29 @@ namespace VanillaUpgrades
         {
             ConfigurationMenu.Add("VU", new (string, Func<Transform, GameObject>)[]
             {
-            ("GUI", transform1 => GetGUISettings(transform1, ConfigurationMenu.ContentSize)),
-            ("Units", transform1 => GetUnitsSettings(transform1, ConfigurationMenu.ContentSize)),
-            ("Misc", transform1 => GetMiscSettings(transform1, ConfigurationMenu.ContentSize)),
-            ("Cheats", transform1 => GetCheatsSettings(transform1, ConfigurationMenu.ContentSize))
+                ("GUI", transform1 => GetGUISettings(transform1, ConfigurationMenu.ContentSize)),
+                ("Units", transform1 => GetUnitsSettings(transform1, ConfigurationMenu.ContentSize)),
+                ("Misc", transform1 => GetMiscSettings(transform1, ConfigurationMenu.ContentSize)),
+                ("Cheats", transform1 => GetCheatsSettings(transform1, ConfigurationMenu.ContentSize))
             });
             // ("Windows", transform1 => GetWindowSettings(transform1, ConfigurationMenu.ContentSize))
         }
 
         private static GameObject GetGUISettings(Transform parent, Vector2Int size)
         {
-            var box = CreateBox(parent, size.x, size.y);
+            Box box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
             var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "GUI");
 
-            var container = CreateContainer(box);
+            Container container = CreateContainer(box);
             container.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
             UIExtensions.AlignedLabel(container, elementWidth - 225, ToggleHeight, "Window Scale");
 
-            var SliderLabel = CreateContainer(container);
+            Container SliderLabel = CreateContainer(container);
             SliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
 
             CreateSlider(SliderLabel, 225, Config.settings.persistentVars.windowScale.Value, (0.5f, 1.5f),
@@ -59,7 +61,8 @@ namespace VanillaUpgrades
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.showAdvanced,
                 () => Config.settings.showAdvanced.Value ^= true, 0, 0, "Show Advanced Info");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.showAdvancedInSeparateWindow,
-                () => Config.settings.showAdvancedInSeparateWindow.Value ^= true, 0, 0, "Separate Advanced Info Window");
+                () => Config.settings.showAdvancedInSeparateWindow.Value ^= true, 0, 0,
+                "Separate Advanced Info Window");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.horizontalMode,
                 () => Config.settings.horizontalMode.Value ^= true, 0, 0, "Horizontal Mode");
             CreateSeparator(box, elementWidth - 20);
@@ -75,13 +78,13 @@ namespace VanillaUpgrades
 
         private static GameObject GetUnitsSettings(Transform parent, Vector2Int size)
         {
-            var box = CreateBox(parent, size.x, size.y);
+            Box box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
             var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "Units");
-            
+
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.mmUnits,
                 () => Config.settings.mmUnits ^= true, 0, 0, "Megameters (Mm)");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.gmUnits,
@@ -102,31 +105,31 @@ namespace VanillaUpgrades
 
         private static GameObject GetMiscSettings(Transform parent, Vector2Int size)
         {
-            var box = CreateBox(parent, size.x, size.y);
+            Box box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
             var elementWidth = size.x - 60;
 
             CreateLabel(box, elementWidth, 50, 0, 0, "Miscellaneous");
-            var autosaveContainer = CreateContainer(box);
+            Container autosaveContainer = CreateContainer(box);
             autosaveContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
             UIExtensions.AlignedLabel(autosaveContainer, elementWidth - 225, ToggleHeight, "Autosave Timer");
 
-            var autosaveSliderLabel = CreateContainer(autosaveContainer);
+            Container autosaveSliderLabel = CreateContainer(autosaveContainer);
             autosaveSliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
 
             CreateSlider(autosaveSliderLabel, 225, Config.settings.persistentVars.minutesUntilAutosave, (5, 60),
                 true,
                 val => { Config.settings.persistentVars.minutesUntilAutosave = val; },
                 val => val.Round(0).ToString(CultureInfo.InvariantCulture) + " Min");
-            
-            var autosaveSlotsContainer = CreateContainer(box);
+
+            Container autosaveSlotsContainer = CreateContainer(box);
             autosaveSlotsContainer.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
 
             UIExtensions.AlignedLabel(autosaveSlotsContainer, elementWidth - 225, ToggleHeight, "Allowed Autosaves");
 
-            var autosaveSlotsSliderLabel = CreateContainer(autosaveSlotsContainer);
+            Container autosaveSlotsSliderLabel = CreateContainer(autosaveSlotsContainer);
             autosaveSlotsSliderLabel.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleRight);
 
             CreateSlider(autosaveSlotsSliderLabel, 225, Config.settings.persistentVars.allowedAutosaveSlots, (0, 10),
@@ -135,28 +138,28 @@ namespace VanillaUpgrades
                 val => val.Round(0).ToString(CultureInfo.InvariantCulture) + "");
 
             CreateSeparator(box, elementWidth - 20);
-            
+
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => !Config.settings.allowBackgroundProcess,
                 () => Config.settings.allowBackgroundProcess.Value ^= true, 0, 0, "Pause Game When Focus is Lost");
             CreateSeparator(box, elementWidth - 20);
-            
+
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
                 () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.darkenDebris,
                 () => Config.settings.darkenDebris ^= true, 0, 0, "Darken Debris Map Icons");
             CreateSeparator(box, elementWidth - 20);
-            
+
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.morePrecisePercentages,
                 () => Config.settings.morePrecisePercentages ^= true, 0, 0, "More Precise Percentages");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.hideTopLeftButtonText,
                 () => Config.settings.hideTopLeftButtonText.Value ^= true, 0, 0, "Hide Top Left Button Text In World");
             CreateSeparator(box, elementWidth - 20);
-            
+
             CreateToggleWithLabel(box, elementWidth, ToggleHeight,
                 () => Config.settings.stopTimewarpOnEncounter,
                 () => Config.settings.stopTimewarpOnEncounter ^= true, 0, 0, "Stop Timewarp On Encounter");
             CreateSeparator(box, elementWidth - 20);
-            
+
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.moreCameraZoom,
                 () => Config.settings.moreCameraZoom ^= true, 0, 0, "More Camera Zoom");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.moreCameraMove,
@@ -167,7 +170,7 @@ namespace VanillaUpgrades
 
         private static GameObject GetCheatsSettings(Transform parent, Vector2Int size)
         {
-            var box = CreateBox(parent, size.x, size.y);
+            Box box = CreateBox(parent, size.x, size.y);
             box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
 
             var elementWidth = size.x - 60;
@@ -183,4 +186,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

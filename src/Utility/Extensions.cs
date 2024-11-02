@@ -19,4 +19,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

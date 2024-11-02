@@ -3,6 +3,7 @@ using HarmonyLib;
 using SFS.Builds;
 using SFS.Translations;
 using SFS.UI;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 
@@ -31,7 +32,7 @@ namespace VanillaUpgrades
                     return true;
             }
         }
-        
+
         [HarmonyPatch(nameof(Units.ToVelocityString))]
         [HarmonyPrefix]
         private static bool VelocityUnits(double a, ref string __result)
@@ -49,7 +50,7 @@ namespace VanillaUpgrades
                     return true;
             }
         }
-        
+
         [HarmonyPatch(nameof(Units.ToMassString))]
         [HarmonyPrefix]
         private static bool MassUnits(float a, bool forceDecimal, ref string __result)
@@ -67,7 +68,7 @@ namespace VanillaUpgrades
                     return true;
             }
         }
-        
+
         [HarmonyPatch(nameof(Units.ToThrustString))]
         [HarmonyPrefix]
         private static bool Prefix(float a, ref string __result)
@@ -86,7 +87,7 @@ namespace VanillaUpgrades
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(Units), nameof(Units.ToPercentString), typeof(double), typeof(bool))]
     public class PercentDecimals
     {
@@ -109,7 +110,7 @@ namespace VanillaUpgrades
                     a = 0.01;
                     __result = a.ToString(2, true);
                     break;
-                
+
                 default:
                     __result = a.ToString(2, true);
                     break;
@@ -125,11 +126,11 @@ namespace VanillaUpgrades
     {
         // This is required to make mass and thrust units actually work in the build area because they don't
         // use the existing methods to get their text output by default.
-        private static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText, ref TextAdapter ___thrustText)
+        private static void Postfix(float ___mass, float ___thrust, ref TextAdapter ___massText,
+            ref TextAdapter ___thrustText)
         {
             ___massText.Text = ___mass.ToMassString(false, 4).Split(" ")[1];
             ___thrustText.Text = ___thrust.ToThrustString().Split(" ")[1];
         }
     }
 }
-

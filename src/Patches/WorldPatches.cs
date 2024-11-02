@@ -1,12 +1,12 @@
 ﻿using System;
 using HarmonyLib;
-using JetBrains.Annotations;
 using SFS.Logs;
 using SFS.Translations;
 using SFS.UI;
 using SFS.World;
 using SFS.World.Maps;
 using SFS.WorldBase;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 
@@ -16,14 +16,14 @@ namespace VanillaUpgrades
     public class StopTimewarpOnEncounter
     {
         private static TimewarpTo TimewarpTo;
-        
+
         [HarmonyPatch(typeof(TimewarpTo), "Start")]
         [HarmonyPrefix]
         private static void GetTimewarpTo(TimewarpTo __instance)
         {
             TimewarpTo = __instance;
         }
-        
+
         [HarmonyPatch(typeof(LogsModule), "Log_Planet")]
         [HarmonyPostfix]
         private static void StopTimewarp(Planet planet, Planet planet_Old)
@@ -39,15 +39,15 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(Rocket), "CanTimewarp")]
     internal class PhysicsTimewarpIfTurning
     {
-
         private static void Postfix(ref bool __result)
         {
-            if (WorldManager.currentRocket.arrowkeys.turnAxis == 0) return; 
-            WorldTime.ShowCannotTimewarpMsg(Field.Text("Cannot timewarp faster than %speed%x while turning"), MsgDrawer.main);
+            if (WorldManager.currentRocket.arrowkeys.turnAxis == 0) return;
+            WorldTime.ShowCannotTimewarpMsg(Field.Text("Cannot timewarp faster than %speed%x while turning"),
+                MsgDrawer.main);
             __result = false;
         }
     }
-    
+
     [HarmonyPatch(typeof(EffectManager))]
     public class StopExplosions
     {
@@ -59,7 +59,7 @@ namespace VanillaUpgrades
             return Config.settings.explosions;
         }
     }
-    
+
     [HarmonyPatch(typeof(WorldTime))]
     public class RaiseMaxPhysicsTimewarp
     {
@@ -70,7 +70,6 @@ namespace VanillaUpgrades
             if (!Config.settings.higherPhysicsWarp) return true;
             __result = new[] { 1, 2, 3, 5, 10, 25 }[timewarpIndex_Physics];
             return false;
-
         }
 
         [HarmonyPatch("MaxPhysicsIndex", MethodType.Getter)]
@@ -80,14 +79,14 @@ namespace VanillaUpgrades
             if (!Config.settings.higherPhysicsWarp) return true;
             __result = 5;
             return false;
-
         }
     }
-    
+
     [HarmonyPatch(typeof(GameManager))]
     public class UpdateInGame
     {
         public static Action execute = () => { };
+
         [HarmonyPatch("Update")]
         public static void Postfix()
         {
@@ -102,11 +101,9 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void ToggleThrottle_Postfix(ref Throttle_Local ___throttle)
         {
-            if(!___throttle.Value.throttleOn)
-            {
+            if (!___throttle.Value.throttleOn)
                 // Do this only if throttle has been turned off (keep hover mode on if this was set before throttle is turned on)
                 HoverHandler.EnableHoverMode(false, false);
-            }
         }
 
         [HarmonyPatch("AdjustThrottleRaw")]
@@ -123,7 +120,7 @@ namespace VanillaUpgrades
             HoverHandler.EnableHoverMode(false);
         }
     }
-    
+
     [HarmonyPatch(typeof(FlightInfoDrawer), "Update")]
     internal class LimitDecimalsOfTimewarpText
     {
@@ -132,7 +129,7 @@ namespace VanillaUpgrades
             ___timewarpText.Text = WorldTime.main.timewarpSpeed.Round(2) + "x";
         }
     }
-    
+
     [HarmonyPatch(typeof(Rocket), "GetTorque")]
     public static class ToggleTorque
     {
@@ -142,12 +139,14 @@ namespace VanillaUpgrades
         {
             disableTorque = setting;
         }
+
         public static void Toggle()
         {
             if (!PlayerController.main.HasControl(MsgDrawer.main)) return;
             Set(!disableTorque);
             MsgDrawer.main.Log("Torque " + (disableTorque ? "Disabled" : "Enabled"));
         }
+
         private static bool Prefix(ref float __result)
         {
             if (!disableTorque) return true;

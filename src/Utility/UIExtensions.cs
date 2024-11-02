@@ -68,7 +68,8 @@ namespace VanillaUpgrades.Utility
                 Config.settings.persistentVars.windowScale.Value);
         }
 
-        public static Button ButtonForVanillaUI(out GameObject buttonObject, Transform parent, int width, int height, float fontSize, Action onClick = null, string text = "")
+        public static Button ButtonForVanillaUI(out GameObject buttonObject, Transform parent, int width, int height,
+            float fontSize, Action onClick = null, string text = "")
         {
             Button button = Builder.CreateButton(parent, width, height, 0, 0, onClick, text);
             buttonObject = button.gameObject;
@@ -83,4 +84,3 @@ namespace VanillaUpgrades.Utility
         }
     }
 }
-

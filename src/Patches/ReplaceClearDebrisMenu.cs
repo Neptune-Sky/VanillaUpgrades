@@ -11,38 +11,28 @@ namespace VanillaUpgrades
         // ReSharper disable once UnusedMember.Local
         private static bool Prefix()
         {
-            MenuGenerator.ShowChoices(() => "What objects would you like to clear?", 
+            MenuGenerator.ShowChoices(() => "What objects would you like to clear?",
                 ButtonBuilder.CreateButton(null,
-                    () => "All Unnamed Debris", () =>
-                    {
-                        ClearDebris();
-                    }, CloseMode.Stack),
+                    () => "All Unnamed Debris", () => { ClearDebris(); }, CloseMode.Stack),
                 ButtonBuilder.CreateButton(null,
-                    () => "All Debris", () =>
-                    {
-                        ClearDebris(false);
-                    }, CloseMode.Stack),
+                    () => "All Debris", () => { ClearDebris(false); }, CloseMode.Stack),
                 ButtonBuilder.CreateButton(null,
-                    () => "All Unnamed Rockets", () =>
-                    {
-                        ClearDebris(true, true);
-                    }, CloseMode.Stack),
+                    () => "All Unnamed Rockets", () => { ClearDebris(true, true); }, CloseMode.Stack),
                 ButtonBuilder.CreateButton(null,
                     () => "Everything", () =>
                     {
-                        MenuGenerator.OpenConfirmation(CloseMode.None, () => 
-                            "Are you sure you want to delete EVERYTHING in your world? This includes all named rockets and debris.",
-                        () => "Yes", () =>
-                        {
-                            ClearDebris(false, true); 
-                            ScreenManager.main.CloseStack();
-                        },
-                        () => "No", ScreenManager.main.CloseCurrent);
+                        MenuGenerator.OpenConfirmation(CloseMode.None, () =>
+                                "Are you sure you want to delete EVERYTHING in your world? This includes all named rockets and debris.",
+                            () => "Yes", () =>
+                            {
+                                ClearDebris(false, true);
+                                ScreenManager.main.CloseStack();
+                            },
+                            () => "No", ScreenManager.main.CloseCurrent);
                     }, CloseMode.None),
-                
                 ButtonBuilder.CreateButton(null,
                     () => "Cancel", null, CloseMode.Current)
-                );
+            );
             return false;
         }
 
@@ -53,7 +43,7 @@ namespace VanillaUpgrades
             {
                 if (onlyUnnamed && rockets[num].rocketName != "") continue;
                 if (!destroyControllable && rockets[num].hasControl.Value) continue;
-                
+
                 RocketManager.DestroyRocket(rockets[num], DestructionReason.Intentional);
             }
         }

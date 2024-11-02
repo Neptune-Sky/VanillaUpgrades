@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using SFS.World;
 using SFS.World.Maps;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnusedMember.Global
@@ -15,20 +16,20 @@ namespace VanillaUpgrades
     internal static class Alpha
     {
         private static MapIcon _obj;
+
         private static void Prefix(MapIcon __instance)
         {
             _obj = __instance;
         }
+
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
 
             for (var i = 0; i < codes.Count; i++)
-            {
                 if (codes[i].opcode == OpCodes.Ldc_R4 && codes[i].OperandIs(1f))
-                    codes[i] = new CodeInstruction(OpCodes.Call, typeof(Alpha).GetMethod("CheckForControl", 
+                    codes[i] = new CodeInstruction(OpCodes.Call, typeof(Alpha).GetMethod("CheckForControl",
                         BindingFlags.Static | BindingFlags.Public));
-            }
 
             return codes.AsEnumerable();
         }
@@ -40,6 +41,7 @@ namespace VanillaUpgrades
             return rocket.hasControl ? 1f : 0.5f;
         }
     }
+
     [HarmonyPatch(typeof(RocketManager), "CreateRocket")]
     internal static class ChildRocketsGetColored
     {
@@ -48,6 +50,7 @@ namespace VanillaUpgrades
             Traverse.Create(__result.mapIcon).Method("UpdateAlpha").GetValue();
         }
     }
+
     [HarmonyPatch(typeof(Staging), "OnSplit")]
     internal static class NewRocketsGetColored
     {
@@ -57,6 +60,7 @@ namespace VanillaUpgrades
             Traverse.Create(childRocket.mapIcon).Method("UpdateAlpha").GetValue();
         }
     }
+
     [HarmonyPatch(typeof(RocketManager), "MergeRockets")]
     internal static class DockedRocketsGetColored
     {

@@ -14,45 +14,47 @@ namespace VanillaUpgrades
     {
         private const string PositionKey = "VU.AdvancedInfoWindow";
 
+        private static Dictionary<string, TextAdapter> newStats = new()
+        {
+            { "Apoapsis", null },
+            { "Periapsis", null },
+            { "Eccentricity", null },
+            { "Angle", null },
+            { "AngleTitle", null }
+        };
+
+        private static readonly List<GameObject> infoObjects = new();
+
         public GameObject windowHolder;
         private Window advancedInfoWindow;
+        private Container horizontal;
 
         private Dictionary<string, Label> infoLabels = new()
         {
-            {"apopsisHorizontal", null},
-            {"apoapsisVertical", null},
-            {"periapsisHorizontal", null},
-            {"periapsisVertical", null},
-            {"eccentricityHorizontal", null},
-            {"eccentricityVertical", null},
-            {"angleHorizontal", null},
-            {"angleVertical", null},
-            {"angleTitleHorizontal", null},
-            {"angleTitleVertical", null},
+            { "apopsisHorizontal", null },
+            { "apoapsisVertical", null },
+            { "periapsisHorizontal", null },
+            { "periapsisVertical", null },
+            { "eccentricityHorizontal", null },
+            { "eccentricityVertical", null },
+            { "angleHorizontal", null },
+            { "angleVertical", null },
+            { "angleTitleHorizontal", null },
+            { "angleTitleVertical", null }
         };
-        private static Dictionary<string, TextAdapter> newStats = new()
-        { 
-            {"Apoapsis", null},
-            {"Periapsis", null},
-            {"Eccentricity", null},
-            {"Angle", null},
-            {"AngleTitle", null}
-        };
-        private static readonly List<GameObject> infoObjects = new();
 
         private Container vertical;
-        private Container horizontal;
 
         private void Awake()
         {
             windowHolder = UIExtensions.ZeroedHolder(Builder.SceneToAttach.CurrentScene, "AdvancedInfoHolder");
-            
+
             AddToVanillaGUI();
             CreateWindow();
             VerticalGUI();
             HorizontalGUI();
             CheckHorizontalToggle();
-            
+
 
             PlayerController.main.player.OnChange += OnPlayerChange;
             Config.settings.horizontalMode.OnChange += CheckHorizontalToggle;
@@ -68,9 +70,41 @@ namespace VanillaUpgrades
             if (WorldManager.currentRocket == null) return;
             if (Config.settings.showAdvancedInSeparateWindow)
                 RefreshLabels(infoLabels);
-            else RefreshLabels(newStats) ;
-            
+            else RefreshLabels(newStats);
         }
+
+        private void OnDestroy()
+        {
+            infoObjects.Clear();
+            PlayerController.main.player.OnChange -= OnPlayerChange;
+            Config.settings.horizontalMode.OnChange -= CheckHorizontalToggle;
+            Config.settings.persistentVars.windowScale.OnChange -= () => advancedInfoWindow.ScaleWindow();
+            Config.settings.showAdvanced.OnChange -= OnToggle;
+            Config.settings.showAdvancedInSeparateWindow.OnChange -= OnToggle;
+
+            infoLabels = new Dictionary<string, Label>
+            {
+                { "apopsisHorizontal", null },
+                { "apoapsisVertical", null },
+                { "periapsisHorizontal", null },
+                { "periapsisVertical", null },
+                { "eccentricityHorizontal", null },
+                { "eccentricityVertical", null },
+                { "angleHorizontal", null },
+                { "angleVertical", null },
+                { "angleTitleHorizontal", null },
+                { "angleTitleVertical", null }
+            };
+            newStats = new Dictionary<string, TextAdapter>
+            {
+                { "Apoapsis", null },
+                { "Periapsis", null },
+                { "Eccentricity", null },
+                { "Angle", null },
+                { "AngleTitle", null }
+            };
+        }
+
         private void OnPlayerChange()
         {
             if (PlayerController.main == null) return;
@@ -120,7 +154,6 @@ namespace VanillaUpgrades
                 periapsis = truePeriapsis.ToDistanceString();
 
                 eccentricity = orbit.ecc.ToString("F3", CultureInfo.InvariantCulture);
-                
             }
             else
             {
@@ -131,22 +164,26 @@ namespace VanillaUpgrades
 
             var globalAngle = rocket.partHolder.transform.eulerAngles.z;
             Location location = rocket.location.Value;
-            
-            Vector2 orbitAngleVector = new Vector2(Mathf.Cos((float)location.position.AngleRadians), Mathf.Sin((float)location.position.AngleRadians)).Rotate_Radians(270 * Mathf.Deg2Rad);
+
+            Vector2 orbitAngleVector =
+                new Vector2(Mathf.Cos((float)location.position.AngleRadians),
+                    Mathf.Sin((float)location.position.AngleRadians)).Rotate_Radians(270 * Mathf.Deg2Rad);
             var facing = new Vector2(Mathf.Cos(globalAngle * Mathf.Deg2Rad), Mathf.Sin(globalAngle * Mathf.Deg2Rad));
             var trueAngle = Vector2.SignedAngle(facing, orbitAngleVector);
-            
+
             if (location.TerrainHeight < location.planet.TimewarpRadius_Ascend - rocket.location.planet.Value.Radius)
             {
                 angle = trueAngle.ToString("F1", CultureInfo.InvariantCulture) + "°";
                 angleTitle = "Local Angle";
                 return;
             }
+
             if (globalAngle > 180) angle = (360 - globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
             else angle = (-globalAngle).ToString("F1", CultureInfo.InvariantCulture) + "°";
 
             angleTitle = "Angle";
         }
+
         private static void RefreshLabels<T>(Dictionary<string, T> texts)
         {
             GetValues(out var apo, out var peri, out var ecc, out var angTitle, out var ang);
@@ -161,45 +198,13 @@ namespace VanillaUpgrades
                 return;
             }
 
-            if (texts is not Dictionary<string, TextAdapter> adapterDict) throw new ArgumentNullException(nameof(adapterDict));
+            if (texts is not Dictionary<string, TextAdapter> adapterDict)
+                throw new ArgumentNullException(nameof(adapterDict));
             adapterDict["Apoapsis"].Text = apo;
             adapterDict["Periapsis"].Text = peri;
             adapterDict["Eccentricity"].Text = ecc;
             adapterDict["Angle"].Text = ang;
             adapterDict["AngleTitle"].Text = angTitle;
         }
-
-        private void OnDestroy()
-        {
-            infoObjects.Clear();
-            PlayerController.main.player.OnChange -= OnPlayerChange;
-            Config.settings.horizontalMode.OnChange -= CheckHorizontalToggle;
-            Config.settings.persistentVars.windowScale.OnChange -= () => advancedInfoWindow.ScaleWindow();
-            Config.settings.showAdvanced.OnChange -= OnToggle;
-            Config.settings.showAdvancedInSeparateWindow.OnChange -= OnToggle;
-            
-        infoLabels = new()
-        {
-            {"apopsisHorizontal", null},
-            {"apoapsisVertical", null},
-            {"periapsisHorizontal", null},
-            {"periapsisVertical", null},
-            {"eccentricityHorizontal", null},
-            {"eccentricityVertical", null},
-            {"angleHorizontal", null},
-            {"angleVertical", null},
-            {"angleTitleHorizontal", null},
-            {"angleTitleVertical", null},
-        };
-        newStats = new()
-        { 
-            {"Apoapsis", null},
-            {"Periapsis", null},
-            {"Eccentricity", null},
-            {"Angle", null},
-            {"AngleTitle", null}
-        };
-        }
     }
 }
-

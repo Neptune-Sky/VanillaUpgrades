@@ -9,13 +9,13 @@ using SFS.Translations;
 using SFS.UI;
 using SFS.World;
 using UnityEngine.SceneManagement;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnusedMember.Global
 
 namespace VanillaUpgrades
 {
-    
     [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnClose))]
     internal class UpdateConfigOnMenuClose
     {
@@ -37,7 +37,7 @@ namespace VanillaUpgrades
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(BuildManager), nameof(BuildManager.OpenMenu))]
     internal static class BuildManager_OpenMenu
     {
@@ -46,7 +46,8 @@ namespace VanillaUpgrades
         {
             MethodInfo method =
                 typeof(BuildManager_OpenMenu).GetMethod(nameof(DoStuff), BindingFlags.Public | BindingFlags.Static);
-            MethodInfo toArray = typeof(List<MenuElement>).GetMethod(nameof(List<MenuElement>.ToArray), BindingFlags.Public | BindingFlags.Instance);
+            MethodInfo toArray = typeof(List<MenuElement>).GetMethod(nameof(List<MenuElement>.ToArray),
+                BindingFlags.Public | BindingFlags.Instance);
             foreach (CodeInstruction instruction in code)
             {
                 if (instruction.Calls(toArray))
@@ -55,7 +56,7 @@ namespace VanillaUpgrades
                     yield return new CodeInstruction(OpCodes.Ldloca_S, 2);
                     yield return new CodeInstruction(OpCodes.Call, method);
                 }
-                
+
                 yield return instruction;
             }
         }
@@ -69,7 +70,7 @@ namespace VanillaUpgrades
             }, CloseMode.Current));
         }
     }
-    
+
     [HarmonyPatch(typeof(GameManager), nameof(GameManager.OpenMenu))]
     internal static class GameManager_OpenMenu
     {
@@ -77,7 +78,8 @@ namespace VanillaUpgrades
         {
             MethodInfo method =
                 typeof(GameManager_OpenMenu).GetMethod(nameof(DoStuff), BindingFlags.Public | BindingFlags.Static);
-            MethodInfo toArray = typeof(List<MenuElement>).GetMethod(nameof(List<MenuElement>.ToArray), BindingFlags.Public | BindingFlags.Instance);
+            MethodInfo toArray = typeof(List<MenuElement>).GetMethod(nameof(List<MenuElement>.ToArray),
+                BindingFlags.Public | BindingFlags.Instance);
             foreach (CodeInstruction instruction in code)
             {
                 if (instruction.Calls(toArray))
@@ -86,11 +88,11 @@ namespace VanillaUpgrades
                     yield return new CodeInstruction(OpCodes.Ldloca_S, 2);
                     yield return new CodeInstruction(OpCodes.Call, method);
                 }
-                
+
                 yield return instruction;
             }
         }
-        
+
         public static void DoStuff(ref List<MenuElement> elements, ref SizeSyncerBuilder.Carrier carrier2)
         {
             elements.Add(ButtonBuilder.CreateButton(carrier2, () => Loc.main.Exit_To_Main_Menu, () =>

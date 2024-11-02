@@ -1,5 +1,4 @@
-﻿using SFS.UI;
-using SFS.World;
+﻿using SFS.World;
 using static VanillaUpgrades.HoverHandler;
 
 namespace VanillaUpgrades
@@ -31,4 +30,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

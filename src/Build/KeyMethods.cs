@@ -13,6 +13,7 @@ namespace VanillaUpgrades
         {
             pickCategoriesMenu = __instance;
         }
+
         public static void Launch()
         {
             BuildState.main.UpdatePersistent();

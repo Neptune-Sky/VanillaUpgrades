@@ -19,7 +19,7 @@ namespace VanillaUpgrades
     {
         // random vars
         public PersistentVars persistentVars = new();
-        
+
         // UI
         public Bool_Local showBuildGui = new() { Value = true };
         public Bool_Local showAdvanced = new() { Value = true };
@@ -50,8 +50,6 @@ namespace VanillaUpgrades
         // Cheats
         public Bool_Local allowTimeSlowdown = new();
         public bool higherPhysicsWarp;
-        
-        
     }
 
     public class Config : ModSettings<SettingsData>
@@ -80,4 +78,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

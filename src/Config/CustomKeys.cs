@@ -4,6 +4,7 @@ using SFS;
 using SFS.Builds;
 using UnityEngine;
 using static SFS.Input.KeybindingsPC;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable IdentifierTypo
@@ -69,7 +70,7 @@ namespace VanillaUpgrades
         #region Keys
 
         public Key HideUI = KeyCode.F2;
-        
+
         public Key ToggleWindowed = KeyCode.F11;
 
         public Key ToggleSymmetry = KeyCode.Z;
@@ -90,24 +91,17 @@ namespace VanillaUpgrades
 
         #endregion
     }
-    
+
     public static class CustomKeyExecution
     {
-
         public static void HideUI()
         {
-            var pickGrid = GameObject.Find("Canvas - PickGrid");
-            var ui = GameObject.Find("--- UI ---");
+            GameObject pickGrid = GameObject.Find("Canvas - PickGrid");
+            GameObject ui = GameObject.Find("--- UI ---");
 
-            if (pickGrid != null)
-            {
-                pickGrid.GetComponent<Canvas>().enabled = !pickGrid.GetComponent<Canvas>().enabled;
-            }
+            if (pickGrid != null) pickGrid.GetComponent<Canvas>().enabled = !pickGrid.GetComponent<Canvas>().enabled;
 
-            if (ui != null)
-            {
-                ui.GetComponent<Canvas>().enabled = !ui.GetComponent<Canvas>().enabled;
-            }
+            if (ui != null) ui.GetComponent<Canvas>().enabled = !ui.GetComponent<Canvas>().enabled;
         }
 
         public static void ToggleWindowed()
@@ -115,6 +109,4 @@ namespace VanillaUpgrades
             VideoSettingsPC.main.windowModeDropdown.value = VideoSettingsPC.main.settings.windowMode is 0 or 2 ? 2 : 1;
         }
     }
-    
 }
-

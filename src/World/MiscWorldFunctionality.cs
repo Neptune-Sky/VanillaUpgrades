@@ -15,6 +15,7 @@ namespace VanillaUpgrades
                 MsgDrawer.main.Log("Cannot throttle while timewarping");
                 return;
             }
+
             EnableHoverMode(false);
             currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
@@ -22,10 +23,8 @@ namespace VanillaUpgrades
         private static void HideTopLeftButtonText()
         {
             GameObject TopLeftPanel = GameObject.Find("Top Left Panel");
-            foreach (var textAdapter in TopLeftPanel.gameObject.GetComponentsInChildren<TextAdapter>(true))
-            {
+            foreach (TextAdapter textAdapter in TopLeftPanel.gameObject.GetComponentsInChildren<TextAdapter>(true))
                 textAdapter.gameObject.SetActive(!Config.settings.hideTopLeftButtonText);
-            }
         }
     }
 }

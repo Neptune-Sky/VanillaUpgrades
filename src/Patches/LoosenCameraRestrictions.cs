@@ -1,12 +1,12 @@
 ﻿using HarmonyLib;
 using SFS.World;
 using UnityEngine;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 
 namespace VanillaUpgrades
 {
-
     [HarmonyPatch(typeof(PlayerController))]
     internal class LoosenCameraRestrictions
     {
@@ -32,4 +32,3 @@ namespace VanillaUpgrades
         }
     }
 }
-

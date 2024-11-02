@@ -38,7 +38,7 @@ namespace VanillaUpgrades
             advancedInfoWindow.ScaleWindow();
             advancedInfoWindow.ClampWindow();
         }
-        
+
         private void VerticalGUI()
         {
             Builder.CreateSeparator(vertical, 205);
@@ -89,7 +89,7 @@ namespace VanillaUpgrades
             infoLabels["angleTitleHorizontal"] = UIExtensions.AlignedLabel(angleContainer, 150, 30, "Angle:");
             infoLabels["angleHorizontal"] = UIExtensions.AlignedLabel(angleContainer, 175, 30);
         }
-        
+
         private static void AddToVanillaGUI()
         {
             GameObject thrust = GameObject.Find("Thrust (1)");
@@ -98,17 +98,16 @@ namespace VanillaUpgrades
             for (var i = 0; i < newStats.Count - 1; i++)
             {
                 var key = newStats.Keys.ToArray()[i];
-                GameObject sep = GameObject.Instantiate(separator, holder.transform, true);
+                GameObject sep = Instantiate(separator, holder.transform, true);
                 infoObjects.Add(sep);
-                GameObject Object = GameObject.Instantiate(thrust, holder.transform, true);
+                GameObject Object = Instantiate(thrust, holder.transform, true);
                 infoObjects.Add(Object);
-                
+
                 Object.transform.GetChild(0).gameObject.GetComponent<TextAdapter>().Text = key;
                 newStats[key] = Object.transform.GetChild(1).gameObject.GetComponent<TextAdapter>();
 
                 if (i < 2)
                 {
-
                     var rect = Object.transform.GetChild(0).GetComponent<RectTransform>();
                     Object.GetComponent<VerticalLayoutGroup>().childControlWidth = false;
                     rect.sizeDelta = new Vector2(150, rect.sizeDelta.y);
@@ -118,8 +117,9 @@ namespace VanillaUpgrades
                 {
                     newStats["AngleTitle"] = Object.transform.GetChild(0).gameObject.GetComponent<TextAdapter>();
                 }
+            }
 
-            };
+            ;
         }
     }
 }

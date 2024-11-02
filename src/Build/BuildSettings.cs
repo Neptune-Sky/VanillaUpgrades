@@ -21,7 +21,7 @@ namespace VanillaUpgrades
             CreateGUI();
             Config.settings.showBuildGui.OnChange += OnToggle;
             Config.settings.showBuildGui.Value &= !Main.buildSettingsPresent;
-            
+
             if (!Config.settings.moreCameraZoom) return;
             BuildManager.main.buildCamera.maxCameraDistance = 300;
             BuildManager.main.buildCamera.minCameraDistance = 0.1f;
@@ -31,12 +31,13 @@ namespace VanillaUpgrades
         {
             buttons.ForEach(e => e.SetActive(Config.settings.showBuildGui.Value));
         }
-        
+
         private static void CreateGUI()
         {
             Transform topRight = GameObject.Find("Top Right").transform;
-            
-            Button adaptModButton = UIExtensions.ButtonForVanillaUI(out GameObject adaptingButton, topRight, 130, 50, 25, null, "Adapting");
+
+            Button adaptModButton = UIExtensions.ButtonForVanillaUI(out GameObject adaptingButton, topRight, 130, 50,
+                25, null, "Adapting");
             adaptingButton.transform.SetAsFirstSibling();
             adaptModButton.OnClick = () =>
             {
@@ -45,8 +46,9 @@ namespace VanillaUpgrades
                 adaptModButton.SetSelected(!noAdaptation);
             };
             adaptModButton.SetSelected();
-            
-            Button snapModButton = UIExtensions.ButtonForVanillaUI(out GameObject snappingButton, topRight, 130, 50, 25, null, "Snapping");
+
+            Button snapModButton = UIExtensions.ButtonForVanillaUI(out GameObject snappingButton, topRight, 130, 50, 25,
+                null, "Snapping");
             snappingButton.transform.SetAsFirstSibling();
             snapModButton.OnClick = () =>
             {
@@ -55,8 +57,8 @@ namespace VanillaUpgrades
                 snapModButton.SetSelected(!noSnapping);
             };
             snapModButton.SetSelected();
-            
-            buttons = new [] {adaptingButton, snappingButton};
+
+            buttons = new[] { adaptingButton, snappingButton };
         }
     }
 }

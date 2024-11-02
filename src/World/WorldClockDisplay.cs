@@ -13,9 +13,9 @@ namespace VanillaUpgrades
     {
         private const string PositionKey = "VU.WorldClockWindow";
 
-        public double subtractor;
-
         private const string defaultTime = "000d 00h 00m 00s";
+
+        public double subtractor;
         private GameObject clockHolder;
         private Window clockWindow;
 
@@ -65,7 +65,7 @@ namespace VanillaUpgrades
 
         private void ShowGUI()
         {
-            Vector2Int pos = new ((int) UIExtensions.CanvasPixelSize.x, (int)UIExtensions.CanvasPixelSize.y - 70);
+            Vector2Int pos = new((int)UIExtensions.CanvasPixelSize.x, (int)UIExtensions.CanvasPixelSize.y - 70);
 
             clockWindow = Builder.CreateWindow(clockHolder.gameObject.transform, 0, 300, 220, pos.x, pos.y,
                 true, false, 1, "World Clock");
@@ -124,6 +124,7 @@ namespace VanillaUpgrades
             else
                 clockWindow.Size = new Vector2(clockWindow.Size.x, 220);
         }
+
         private static string TimeSpanConv(double totalSeconds)
         {
             const double secondsPerMinute = 60;
@@ -159,11 +160,10 @@ namespace VanillaUpgrades
             return $"{(megaannums > 0 ? $"{megaannums}Ma " : "")}" +
                    $"{(millennia > 0 ? $"{millennia}M " : "")}" +
                    $"{(years > 0 ? $"{years}y " : "")}" +
-                   $"{days}d " +  // Always show days, even if 0
+                   $"{days}d " + // Always show days, even if 0
                    $"{hours}h " +
                    $"{minutes}m " +
                    $"{seconds}s".TrimEnd();
         }
     }
 }
-
