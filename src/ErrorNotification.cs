@@ -3,23 +3,22 @@ using System.Text;
 using SFS.UI;
 using UnityEngine;
 
-namespace VanillaUpgrades
+namespace VanillaUpgrades;
+
+public class ErrorNotification : MonoBehaviour
 {
-    public class ErrorNotification : MonoBehaviour
+    private static readonly StringBuilder errors = new();
+
+    private void Start()
     {
-        private static readonly StringBuilder errors = new();
+        if (errors.Length == 0) return;
+        errors.Insert(0,
+            "An error occured while loading VanillaUpgrades." + Environment.NewLine + Environment.NewLine);
+        Menu.read.ShowReport(errors, () => errors.Clear());
+    }
 
-        private void Start()
-        {
-            if (errors.Length == 0) return;
-            errors.Insert(0,
-                "An error occured while loading VanillaUpgrades." + Environment.NewLine + Environment.NewLine);
-            Menu.read.ShowReport(errors, () => errors.Clear());
-        }
-
-        public static void Error(string error)
-        {
-            errors.AppendLine($"- {error}");
-        }
+    public static void Error(string error)
+    {
+        errors.AppendLine($"- {error}");
     }
 }
