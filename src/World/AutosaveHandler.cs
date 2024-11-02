@@ -15,7 +15,7 @@ namespace VanillaUpgrades
     internal static class AutosaveHandler
     {
         [Serializable]
-        class AutosaveFile
+        private class AutosaveFile
         {
             public List<string> fileNames = new();
         }
