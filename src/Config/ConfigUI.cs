@@ -136,26 +136,31 @@ namespace VanillaUpgrades
 
             CreateSeparator(box, elementWidth - 20);
             
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => !Config.settings.allowBackgroundProcess,
+                () => Config.settings.allowBackgroundProcess.Value ^= true, 0, 0, "Pause Game When Focus is Lost");
+            CreateSeparator(box, elementWidth - 20);
+            
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
                 () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
-            CreateSeparator(box, elementWidth - 20);
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.darkenDebris,
                 () => Config.settings.darkenDebris ^= true, 0, 0, "Darken Debris Map Icons");
             CreateSeparator(box, elementWidth - 20);
+            
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.morePrecisePercentages,
                 () => Config.settings.morePrecisePercentages ^= true, 0, 0, "More Precise Percentages");
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.hideTopLeftButtonText,
+                () => Config.settings.hideTopLeftButtonText.Value ^= true, 0, 0, "Hide Top Left Button Text In World");
             CreateSeparator(box, elementWidth - 20);
+            
             CreateToggleWithLabel(box, elementWidth, ToggleHeight,
                 () => Config.settings.stopTimewarpOnEncounter,
                 () => Config.settings.stopTimewarpOnEncounter ^= true, 0, 0, "Stop Timewarp On Encounter");
             CreateSeparator(box, elementWidth - 20);
+            
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.moreCameraZoom,
                 () => Config.settings.moreCameraZoom ^= true, 0, 0, "More Camera Zoom");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.moreCameraMove,
                 () => Config.settings.moreCameraMove ^= true, 0, 0, "More Camera Movement");
-            CreateSeparator(box, elementWidth - 20);
-            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => !Config.settings.allowBackgroundProcess,
-                () => Config.settings.allowBackgroundProcess.Value ^= true, 0, 0, "Pause Game When Focus is Lost");
 
             return box.gameObject;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using JetBrains.Annotations;
 using SFS.Logs;
 using SFS.Translations;
 using SFS.UI;
@@ -102,7 +103,7 @@ namespace VanillaUpgrades
             if(!___throttle.Value.throttleOn)
             {
                 // Do this only if throttle has been turned off (keep hover mode on if this was set before throttle is turned on)
-                WorldManager.EnableHoverMode(false, false);
+                HoverHandler.EnableHoverMode(false, false);
             }
         }
 
@@ -110,20 +111,21 @@ namespace VanillaUpgrades
         [HarmonyPostfix]
         public static void AdjustThrottleRaw_Postfix()
         {
-            WorldManager.EnableHoverMode(false);
+            HoverHandler.EnableHoverMode(false);
         }
 
         [HarmonyPatch("SetThrottleRaw")]
         [HarmonyPostfix]
         public static void SetThrottleRaw_Postfix()
         {
-            WorldManager.EnableHoverMode(false);
+            HoverHandler.EnableHoverMode(false);
         }
     }
 
     [HarmonyPatch(typeof(ThrottleDrawer), "UpdatePercentUI")]
     class ThrottleFillbarAccuracyFix
     {
+        [UsedImplicitly]
         static bool Prefix(Throttle_Local ___throttle, FillSlider ___throttleSlider, TextAdapter ___throttlePercentText)
         {
             var value = ___throttle.Value.throttlePercent.Value;

@@ -40,6 +40,7 @@ namespace VanillaUpgrades
         // Misc
         public bool explosions = true;
         public bool morePrecisePercentages = true;
+        public Bool_Local hideTopLeftButtonText = new() { Value = true };
         public bool darkenDebris = true;
         public bool stopTimewarpOnEncounter = true;
         public bool moreCameraZoom = true;
