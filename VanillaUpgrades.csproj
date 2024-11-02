@@ -33,7 +33,6 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="src\Build\ReplacePickCategories.cs"/>
         <Compile Include="src\Config\Config.cs"/>
         <Compile Include="src\Config\ConfigUI.cs"/>
         <Compile Include="src\Config\CustomKeys.cs"/>
