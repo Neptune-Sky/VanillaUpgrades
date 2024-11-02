@@ -75,7 +75,7 @@ namespace VanillaUpgrades
         {
             if (PlayerController.main == null) return;
             OnToggle();
-            ToggleTorque.disableTorque = false;
+            ToggleTorque.Set(false);
         }
 
         private void OnToggle()
