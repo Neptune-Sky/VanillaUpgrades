@@ -10,7 +10,7 @@ namespace VanillaUpgrades
         public static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key,
             TValue defaultValue)
         {
-            return dictionary.TryGetValue(key, out TValue value) ? value : defaultValue;
+            return CollectionExtensions.GetValueOrDefault(dictionary, key, defaultValue);
         }
 
         public static void SetSelected(this Button button, bool selected = true)
