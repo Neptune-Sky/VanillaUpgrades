@@ -3,6 +3,8 @@ using HarmonyLib;
 using SFS.Builds;
 using SFS.Translations;
 using SFS.UI;
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
 
 namespace VanillaUpgrades
 {

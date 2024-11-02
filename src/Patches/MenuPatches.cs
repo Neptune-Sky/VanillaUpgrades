@@ -9,14 +9,15 @@ using SFS.Translations;
 using SFS.UI;
 using SFS.World;
 using UnityEngine.SceneManagement;
-
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
 // ReSharper disable UnusedMember.Global
 
 namespace VanillaUpgrades
 {
     
     [HarmonyPatch(typeof(BasicMenu), nameof(BasicMenu.OnClose))]
-    public class UpdateConfigOnMenuClose
+    internal class UpdateConfigOnMenuClose
     {
         public static void Postfix()
         {
@@ -38,7 +39,7 @@ namespace VanillaUpgrades
     }
     
     [HarmonyPatch(typeof(BuildManager), nameof(BuildManager.OpenMenu))]
-    public static class BuildManager_OpenMenu
+    internal static class BuildManager_OpenMenu
     {
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> code)
@@ -70,7 +71,7 @@ namespace VanillaUpgrades
     }
     
     [HarmonyPatch(typeof(GameManager), nameof(GameManager.OpenMenu))]
-    public static class GameManager_OpenMenu
+    internal static class GameManager_OpenMenu
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> code)
         {

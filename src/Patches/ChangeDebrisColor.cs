@@ -5,6 +5,9 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using SFS.World;
 using SFS.World.Maps;
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedMember.Global
 
 namespace VanillaUpgrades
 {
@@ -12,7 +15,6 @@ namespace VanillaUpgrades
     internal static class Alpha
     {
         private static MapIcon _obj;
-        // ReSharper disable once UnusedMember.Local
         private static void Prefix(MapIcon __instance)
         {
             _obj = __instance;

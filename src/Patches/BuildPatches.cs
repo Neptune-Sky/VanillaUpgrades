@@ -8,6 +8,7 @@ using SFS.WorldBase;
 using UnityEngine;
 
 // ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
 
 namespace VanillaUpgrades
 {
@@ -44,7 +45,7 @@ namespace VanillaUpgrades
     }
 
     [HarmonyPatch(typeof(MagnetModule), nameof(MagnetModule.GetAllSnapOffsets))]
-    public class KillMagnet
+    internal class KillMagnet
     {
         private static bool Prefix(MagnetModule A, MagnetModule B, float snapDistance, ref List<Vector2> __result)
         {
@@ -58,7 +59,7 @@ namespace VanillaUpgrades
     [HarmonyPatch(typeof(BuildStatsDrawer), "Draw")]
     internal class DisplayCorrectTWR
     {
-        static void Postfix(float ___mass, float ___thrust, TextAdapter ___thrustToWeightText)
+        private static void Postfix(float ___mass, float ___thrust, TextAdapter ___thrustToWeightText)
         {
             var spaceCenter = Base.planetLoader.spaceCenter;
             var gravityAtLaunchpad = spaceCenter.address.GetPlanet().GetGravity(spaceCenter.LaunchPadLocation.position.magnitude);

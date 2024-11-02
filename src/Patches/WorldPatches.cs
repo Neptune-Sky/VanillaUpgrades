@@ -7,6 +7,8 @@ using SFS.UI;
 using SFS.World;
 using SFS.World.Maps;
 using SFS.WorldBase;
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
 
 namespace VanillaUpgrades
 {
@@ -121,22 +123,9 @@ namespace VanillaUpgrades
             HoverHandler.EnableHoverMode(false);
         }
     }
-
-    [HarmonyPatch(typeof(ThrottleDrawer), "UpdatePercentUI")]
-    class ThrottleFillbarAccuracyFix
-    {
-        [UsedImplicitly]
-        static bool Prefix(Throttle_Local ___throttle, FillSlider ___throttleSlider, TextAdapter ___throttlePercentText)
-        {
-            var value = ___throttle.Value.throttlePercent.Value;
-            ___throttlePercentText.Text = value.ToPercentString();
-            ___throttleSlider.SetFillAmount(0.16f + (value * 0.68f), false);
-            return false;
-        }
-    }
     
     [HarmonyPatch(typeof(FlightInfoDrawer), "Update")]
-    class LimitDecimalsOfTimewarpText
+    internal class LimitDecimalsOfTimewarpText
     {
         private static void Postfix(TextAdapter ___timewarpText)
         {

@@ -1,8 +1,11 @@
 using HarmonyLib;
 using SFS.Builds;
+using SFS.UI;
 using SFS.World;
 using SFS.World.Maps;
 using UnityEngine;
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
 
 namespace VanillaUpgrades
 {
@@ -23,6 +26,19 @@ namespace VanillaUpgrades
         private static bool WorldMap()
         {
             return CheckMouseBounds();
+        }
+    }
+    
+    // Fixes throttle fill bar being offset from actual value
+    [HarmonyPatch(typeof(ThrottleDrawer), "UpdatePercentUI")]
+    internal class ThrottleFillBarAccuracyFix
+    {
+        private static bool Prefix(Throttle_Local ___throttle, FillSlider ___throttleSlider, TextAdapter ___throttlePercentText)
+        {
+            var value = ___throttle.Value.throttlePercent.Value;
+            ___throttlePercentText.Text = value.ToPercentString();
+            ___throttleSlider.SetFillAmount(0.16f + (value * 0.68f), false);
+            return false;
         }
     }
 }
