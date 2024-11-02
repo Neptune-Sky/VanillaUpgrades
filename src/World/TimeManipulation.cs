@@ -44,7 +44,7 @@ namespace VanillaUpgrades
             if (timeDecelIndex >= decelSpeeds.Length) return;
             timeDecelIndex++;
             var defaultMessage = true;
-            double speed = decelSpeeds[timeDecelIndex - 1];
+            var speed = decelSpeeds[timeDecelIndex - 1];
             if (speed == 0)
             {
                 defaultMessage = false;

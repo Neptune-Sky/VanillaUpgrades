@@ -34,7 +34,7 @@ namespace VanillaUpgrades
             if (categories <= 24) return true;
             List<Button> buttons = new();
             GameObject gameObject = inst.gameObject;
-            int rows = Math.Clamp(picklists.Count, 1, 24);
+            var rows = Math.Clamp(picklists.Count, 1, 24);
             window = CreateWindow(gameObject.transform, GetRandomID(), 240, 57 * rows, opacity: 0f);
             
             window.gameObject.transform.Find("Back (Game)").gameObject.SetActive(false);

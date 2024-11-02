@@ -81,7 +81,7 @@ namespace VanillaUpgrades
         private void OnToggle()
         {
             if (PlayerController.main == null) return;
-            bool value = WorldManager.currentRocket != null && Config.settings.showAdvanced;
+            var value = WorldManager.currentRocket != null && Config.settings.showAdvanced;
             windowHolder.SetActive(value && Config.settings.showAdvancedInSeparateWindow);
             infoObjects.ForEach(e => e.SetActive(value && !Config.settings.showAdvancedInSeparateWindow));
         }
@@ -113,7 +113,7 @@ namespace VanillaUpgrades
                 apoapsis = (orbit.apoapsis - rocket.location.planet.Value.Radius)
                     .ToDistanceString();
 
-                double truePeriapsis =
+                var truePeriapsis =
                     orbit.periapsis < rocket.location.planet.Value.Radius
                         ? 0
                         : orbit.periapsis - rocket.location.planet.Value.Radius;
@@ -129,12 +129,12 @@ namespace VanillaUpgrades
                 eccentricity = "0.000";
             }
 
-            float globalAngle = rocket.partHolder.transform.eulerAngles.z;
+            var globalAngle = rocket.partHolder.transform.eulerAngles.z;
             Location location = rocket.location.Value;
             
             Vector2 orbitAngleVector = new Vector2(Mathf.Cos((float)location.position.AngleRadians), Mathf.Sin((float)location.position.AngleRadians)).Rotate_Radians(270 * Mathf.Deg2Rad);
             var facing = new Vector2(Mathf.Cos(globalAngle * Mathf.Deg2Rad), Mathf.Sin(globalAngle * Mathf.Deg2Rad));
-            float trueAngle = Vector2.SignedAngle(facing, orbitAngleVector);
+            var trueAngle = Vector2.SignedAngle(facing, orbitAngleVector);
             
             if (location.TerrainHeight < location.planet.TimewarpRadius_Ascend - rocket.location.planet.Value.Radius)
             {
@@ -149,7 +149,7 @@ namespace VanillaUpgrades
         }
         private static void RefreshLabels<T>(Dictionary<string, T> texts)
         {
-            GetValues(out string apo, out string peri, out string ecc, out string angTitle, out string ang);
+            GetValues(out var apo, out var peri, out var ecc, out var angTitle, out var ang);
 
             if (texts is Dictionary<string, Label> labelDict)
             {

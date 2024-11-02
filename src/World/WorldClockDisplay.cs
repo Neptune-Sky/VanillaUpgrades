@@ -99,7 +99,7 @@ namespace VanillaUpgrades
         private void OnTimewarpButton()
         {
             if (Config.settings.alwaysShowTime || !Config.settings.showTime) return;
-            int timewarpIndex = WorldTime.main.timewarpIndex;
+            var timewarpIndex = WorldTime.main.timewarpIndex;
             if (timewarpIndex != 0)
             {
                 if (!clockHolder.gameObject.activeSelf) clockHolder.gameObject.SetActive(true);

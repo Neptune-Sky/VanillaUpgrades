@@ -97,7 +97,7 @@ namespace VanillaUpgrades
             GameObject holder = thrust.transform.parent.gameObject;
             for (var i = 0; i < newStats.Count - 1; i++)
             {
-                string key = newStats.Keys.ToArray()[i];
+                var key = newStats.Keys.ToArray()[i];
                 GameObject sep = GameObject.Instantiate(separator, holder.transform, true);
                 infoObjects.Add(sep);
                 GameObject Object = GameObject.Instantiate(thrust, holder.transform, true);
