@@ -20,7 +20,7 @@ namespace VanillaUpgrades
         // random vars
         public PersistentVars persistentVars = new();
 
-        // UI
+        // Display
         public Bool_Local showBuildGui = new() { Value = true };
         public Bool_Local showAdvanced = new() { Value = true };
         public Bool_Local showAdvancedInSeparateWindow = new();
@@ -28,6 +28,10 @@ namespace VanillaUpgrades
         public Bool_Local showTime = new() { Value = true };
         public Bool_Local showWorldTime = new() { Value = true };
         public Bool_Local alwaysShowTime = new();
+        public bool explosions = true;
+        public bool morePrecisePercentages = true;
+        public Bool_Local hideTopLeftButtonText = new() { Value = true };
+        public bool darkenDebris = true;
 
         // Units
         public bool lyUnits = true;
@@ -38,16 +42,10 @@ namespace VanillaUpgrades
         public bool ktUnits = true;
 
         // Misc
-        public bool explosions = true;
-        public bool morePrecisePercentages = true;
-        public Bool_Local hideTopLeftButtonText = new() { Value = true };
-        public bool darkenDebris = true;
         public bool stopTimewarpOnEncounter = true;
         public bool moreCameraZoom = true;
         public bool moreCameraMove = true;
         public Bool_Local allowBackgroundProcess = new();
-
-        // Cheats
         public Bool_Local allowTimeSlowdown = new();
         public bool higherPhysicsWarp;
     }

@@ -19,10 +19,9 @@ namespace VanillaUpgrades
         {
             ConfigurationMenu.Add("VU", new (string, Func<Transform, GameObject>)[]
             {
-                ("GUI", transform1 => GetGUISettings(transform1, ConfigurationMenu.ContentSize)),
+                ("Display", transform1 => GetGUISettings(transform1, ConfigurationMenu.ContentSize)),
                 ("Units", transform1 => GetUnitsSettings(transform1, ConfigurationMenu.ContentSize)),
                 ("Misc", transform1 => GetMiscSettings(transform1, ConfigurationMenu.ContentSize)),
-                ("Cheats", transform1 => GetCheatsSettings(transform1, ConfigurationMenu.ContentSize))
             });
             // ("Windows", transform1 => GetWindowSettings(transform1, ConfigurationMenu.ContentSize))
         }
@@ -34,7 +33,7 @@ namespace VanillaUpgrades
 
             var elementWidth = size.x - 60;
 
-            CreateLabel(box, elementWidth, 50, 0, 0, "GUI");
+            CreateLabel(box, elementWidth, 50, 0, 0, "Display");
 
             Container container = CreateContainer(box);
             container.CreateLayoutGroup(Type.Horizontal, TextAnchor.MiddleLeft, 0);
@@ -72,6 +71,17 @@ namespace VanillaUpgrades
                 () => Config.settings.showWorldTime.Value ^= true, 0, 0, "Show World Time in Clock");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.alwaysShowTime,
                 () => Config.settings.alwaysShowTime.Value ^= true, 0, 0, "Always Show World Clock");
+            CreateSeparator(box, elementWidth - 20);
+
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
+                () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.darkenDebris,
+                () => Config.settings.darkenDebris ^= true, 0, 0, "Darken Debris Map Icons");
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.morePrecisePercentages,
+                () => Config.settings.morePrecisePercentages ^= true, 0, 0, "More Precise Percentages");
+            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.hideTopLeftButtonText,
+                () => Config.settings.hideTopLeftButtonText.Value ^= true, 0, 0, "Hide Top Left Button Text In World");
+
 
             return box.gameObject;
         }
@@ -143,18 +153,6 @@ namespace VanillaUpgrades
                 () => Config.settings.allowBackgroundProcess.Value ^= true, 0, 0, "Pause Game When Focus is Lost");
             CreateSeparator(box, elementWidth - 20);
 
-            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.explosions,
-                () => Config.settings.explosions ^= true, 0, 0, "Explosion Effects");
-            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.darkenDebris,
-                () => Config.settings.darkenDebris ^= true, 0, 0, "Darken Debris Map Icons");
-            CreateSeparator(box, elementWidth - 20);
-
-            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.morePrecisePercentages,
-                () => Config.settings.morePrecisePercentages ^= true, 0, 0, "More Precise Percentages");
-            CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.hideTopLeftButtonText,
-                () => Config.settings.hideTopLeftButtonText.Value ^= true, 0, 0, "Hide Top Left Button Text In World");
-            CreateSeparator(box, elementWidth - 20);
-
             CreateToggleWithLabel(box, elementWidth, ToggleHeight,
                 () => Config.settings.stopTimewarpOnEncounter,
                 () => Config.settings.stopTimewarpOnEncounter ^= true, 0, 0, "Stop Timewarp On Encounter");
@@ -164,21 +162,10 @@ namespace VanillaUpgrades
                 () => Config.settings.moreCameraZoom ^= true, 0, 0, "More Camera Zoom");
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.moreCameraMove,
                 () => Config.settings.moreCameraMove ^= true, 0, 0, "More Camera Movement");
-
-            return box.gameObject;
-        }
-
-        private static GameObject GetCheatsSettings(Transform parent, Vector2Int size)
-        {
-            Box box = CreateBox(parent, size.x, size.y);
-            box.CreateLayoutGroup(Type.Vertical, TextAnchor.UpperCenter, 35, new RectOffset(15, 15, 15, 15));
-
-            var elementWidth = size.x - 60;
-
-            CreateLabel(box, elementWidth, 50, 0, 0, "Cheats");
+            CreateSeparator(box, elementWidth - 20);
+            
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.allowTimeSlowdown,
                 () => Config.settings.allowTimeSlowdown.Value ^= true, 0, 0, "Allow Time Slowdown");
-            CreateSeparator(box, elementWidth - 20);
             CreateToggleWithLabel(box, elementWidth, ToggleHeight, () => Config.settings.higherPhysicsWarp,
                 () => Config.settings.higherPhysicsWarp ^= true, 0, 0, "Higher Physics Timewarps");
 
