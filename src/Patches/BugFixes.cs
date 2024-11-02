@@ -30,7 +30,7 @@ namespace VanillaUpgrades
         }
     }
 
-    // Fixes throttle fill bar being offset from actual value
+// Fixes throttle fill bar being offset from actual value
     [HarmonyPatch(typeof(ThrottleDrawer), "UpdatePercentUI")]
     internal class ThrottleFillBarAccuracyFix
     {

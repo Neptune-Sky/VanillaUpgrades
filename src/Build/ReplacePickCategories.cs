@@ -1,1 +1,3 @@
-namespace VanillaUpgrades;
+namespace VanillaUpgrades
+{
+}

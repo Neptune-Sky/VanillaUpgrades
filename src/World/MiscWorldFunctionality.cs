@@ -3,27 +3,28 @@ using SFS.World;
 using UnityEngine;
 using static VanillaUpgrades.HoverHandler;
 
-namespace VanillaUpgrades;
-
-internal static partial class WorldManager
+namespace VanillaUpgrades
 {
-    public static void Throttle01()
+    internal static partial class WorldManager
     {
-        if (currentRocket == null || !PlayerController.main.HasControl(MsgDrawer.main)) return;
-        if (!WorldTime.main.realtimePhysics.Value)
+        public static void Throttle01()
         {
-            MsgDrawer.main.Log("Cannot throttle while timewarping");
-            return;
+            if (currentRocket == null || !PlayerController.main.HasControl(MsgDrawer.main)) return;
+            if (!WorldTime.main.realtimePhysics.Value)
+            {
+                MsgDrawer.main.Log("Cannot throttle while timewarping");
+                return;
+            }
+
+            EnableHoverMode(false);
+            currentRocket.throttle.throttlePercent.Value = 0.0005f;
         }
 
-        EnableHoverMode(false);
-        currentRocket.throttle.throttlePercent.Value = 0.0005f;
-    }
-
-    private static void HideTopLeftButtonText()
-    {
-        GameObject TopLeftPanel = GameObject.Find("Top Left Panel");
-        foreach (TextAdapter textAdapter in TopLeftPanel.gameObject.GetComponentsInChildren<TextAdapter>(true))
-            textAdapter.gameObject.SetActive(!Config.settings.hideTopLeftButtonText);
+        private static void HideTopLeftButtonText()
+        {
+            GameObject TopLeftPanel = GameObject.Find("Top Left Panel");
+            foreach (TextAdapter textAdapter in TopLeftPanel.gameObject.GetComponentsInChildren<TextAdapter>(true))
+                textAdapter.gameObject.SetActive(!Config.settings.hideTopLeftButtonText);
+        }
     }
 }
