@@ -132,4 +132,13 @@ namespace VanillaUpgrades
             return false;
         }
     }
+    
+    [HarmonyPatch(typeof(FlightInfoDrawer), "Update")]
+    class LimitDecimalsOfTimewarpText
+    {
+        private static void Postfix(TextAdapter ___timewarpText)
+        {
+            ___timewarpText.Text = WorldTime.main.timewarpSpeed.Round(2) + "x";
+        }
+    }
 }
