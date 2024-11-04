@@ -47,7 +47,7 @@ namespace VanillaUpgrades
             }
 
             var toSave = Traverse.Create(GameManager.main).Method("CreateWorldSave").GetValue() as WorldSave;
-            var name = "Autosave " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var name = "Autosave " + DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss");
             FolderPath where = new(quicksavesPath + name);
 
             WorldSave.Save(where, true, toSave, Base.worldBase.IsCareer);
