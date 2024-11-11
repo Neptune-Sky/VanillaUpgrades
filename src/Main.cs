@@ -84,6 +84,7 @@ namespace VanillaUpgrades
             SceneHelper.OnWorldSceneLoaded += () =>
             {
                 WorldManager.Setup();
+                MissionLogButton.Create();
                 new GameObject("ASoDWorldObject", typeof(AdvancedInfo), typeof(WorldClockDisplay));
             };
         }

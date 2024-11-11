@@ -49,6 +49,7 @@
         <Compile Include="src\World\AutosaveHandler.cs"/>
         <Compile Include="src\World\HoverHandler.cs"/>
         <Compile Include="src\World\MiscWorldFunctionality.cs"/>
+        <Compile Include="src\World\MissionLogButton.cs" />
         <Compile Include="src\World\WorldManager.cs"/>
         <Compile Include="src\ErrorNotification.cs"/>
         <Compile Include="src\Patches\MenuPatches.cs"/>
