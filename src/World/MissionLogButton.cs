@@ -1,4 +1,10 @@
+using System.Collections.Generic;
+using System.Reflection;
+using HarmonyLib;
+using ModLoader.IO;
 using SFS.Audio;
+using SFS.Logs;
+using SFS.Stats;
 using SFS.UI;
 using SFS.World;
 using SFS.World.Maps;
@@ -22,7 +28,9 @@ namespace VanillaUpgrades
             missionLog.Show = false;
             GameSelector.main.selected.OnChange += selected =>
             {
-                if (selected is MapPlayer)
+                var endMissionButton = GameObject.Find("End Mission Button");
+                bool endMissionActive = endMissionButton != null && endMissionButton.activeSelf;
+                if (selected is MapPlayer && ! endMissionActive)
                 {
                     missionLog.Show = true;
                     return;
@@ -34,10 +42,18 @@ namespace VanillaUpgrades
 
         private static void Clicked()
         {
-            MapRocket mapObject = GameSelector.main.selected.Value != null ? GameSelector.main.selected.Value as MapRocket: Map.view.view.target.Value as MapRocket;
+            var mapRocket = GameSelector.main.selected.Value as MapRocket;
+            if (mapRocket == null) return;
+            Rocket rocket = mapRocket.rocket;
+            MethodInfo logsMethod = EndMissionMenu.main.GetType()
+                .GetMethod("ReplayMission", BindingFlags.NonPublic | BindingFlags.Static);
             
-            mapObject.rocket.stats.branch
-            
+            var logs = (List<(string, double, LogId)>)logsMethod.Invoke(EndMissionMenu.main, new object[]  {rocket.stats.branch, rocket.location.Value, null, null, null});
+               
+            foreach (var log in logs)
+            {
+                Debug.Log(log); 
+            }
         }
     }
 }
