@@ -77,6 +77,8 @@ namespace VanillaUpgrades
                     Utility.UIExtensions.AlignedLabel(scroll, 1170, 35, "- " + line.Item1, TextAlignmentOptions.Left,
                         false, 30);
                 }
+
+                Builder.CreateSpace(scroll, 1, 100);
                 
                 scroll.gameObject.GetComponentInChildren<RectMask2D>().padding = new Vector4(0, 70, 0, 0);
                 Container okayButton =
