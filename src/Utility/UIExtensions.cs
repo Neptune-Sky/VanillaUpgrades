@@ -22,10 +22,12 @@ namespace VanillaUpgrades.Utility
         }
 
         public static Label AlignedLabel(Transform parent, int width, int height, string labelText = "",
-            TextAlignmentOptions textAlignment = TextAlignmentOptions.MidlineLeft)
+            TextAlignmentOptions textAlignment = TextAlignmentOptions.MidlineLeft,  bool autoFontResize = true, float fontSize = 30f)
         {
             Label label = Builder.CreateLabel(parent, width, height, text: labelText);
             label.TextAlignment = textAlignment;
+            label.FontSize = fontSize;
+            label.AutoFontResize = autoFontResize;
             return label;
         }
 
