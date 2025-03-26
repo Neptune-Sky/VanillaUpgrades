@@ -43,7 +43,7 @@ namespace VanillaUpgrades
         public Dictionary<string, FilePath> UpdatableFiles => new()
         {
             {
-                "https://github.com/Neptune-Sky/VanillaUpgrades/releases/latest/download/VanillaUpgrades.dll",
+                "https://github.com/Neptune-Sky/SFSVanillaUpgrades/releases/latest/download/VanillaUpgrades.dll",
                 new FolderPath(ModFolder).ExtendToFile("VanillaUpgrades.dll")
             }
         };
