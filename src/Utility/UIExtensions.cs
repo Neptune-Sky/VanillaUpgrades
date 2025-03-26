@@ -21,6 +21,16 @@ namespace VanillaUpgrades.Utility
             }
         }
 
+        public static Vector2 ActualCanvasSize
+        {
+            get
+            {
+                canvas ??= GetCanvasRect();
+                return new Vector2(canvas.rect.width * canvas.lossyScale.x, canvas.rect.height * canvas.lossyScale.y);
+            }
+            
+        }
+
         public static Label AlignedLabel(Transform parent, int width, int height, string labelText = "",
             TextAlignmentOptions textAlignment = TextAlignmentOptions.MidlineLeft,  bool autoFontResize = true, float fontSize = 30f)
         {
@@ -42,7 +52,7 @@ namespace VanillaUpgrades.Utility
             return holder;
         }
 
-        private static RectTransform GetCanvasRect()
+        public static RectTransform GetCanvasRect()
         {
             GameObject temp = Builder.CreateHolder(Builder.SceneToAttach.BaseScene, "TEMP");
             var result = temp.transform.parent as RectTransform;
