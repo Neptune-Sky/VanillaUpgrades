@@ -70,10 +70,11 @@ namespace VanillaUpgrades
                 rectTransform.sizeDelta = new Vector2(0, 0);
 
                 Vector2 canvasSize = UIExtensions.ActualCanvasSize;
-                Window scroll = Builder.CreateWindow(rectTransform, Builder.GetRandomID(), (int)(canvasSize.x * 0.7f),
-                    (int)canvasSize.y - 200, 0, 0, false, false,
+                Vector2Int windowSize = Vector2Int.Min(new ((int)(canvasSize.x * 0.7f),
+                    (int)canvasSize.y - 200), new(1200, 1000));
+                
+                Window scroll = Builder.CreateWindow(rectTransform, Builder.GetRandomID(), windowSize.x, windowSize.y, 0, windowSize.y / 2, false, false,
                     1, "Mission Log");
-                scroll.Position = new Vector2(0, scroll.Size.y / 2);
 
                 // Populate the window with the mission entries.
                 scroll.CreateLayoutGroup(Type.Vertical, TextAnchor.MiddleCenter, 5, null, false);
@@ -83,7 +84,7 @@ namespace VanillaUpgrades
                 foreach ((string, double, LogId) line in missions)
                     UIExtensions.AlignedLabel(scroll, (int)scroll.Size.x - 30, 35,
                         "- " + line.Item1, TextAlignmentOptions.Left,
-                        false, 50 * UIExtensions.GetCanvasRect().lossyScale.x);
+                        false, Mathf.Clamp(50 * UIExtensions.GetCanvasRect().lossyScale.x, 10, 30));
 
                 Builder.CreateLabel(scroll, 1, (int)(scroll.Size.y / 50), text: " ");
 
