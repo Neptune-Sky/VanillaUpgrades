@@ -72,7 +72,7 @@ namespace VanillaUpgrades
             SpaceCenterData spaceCenter = Base.planetLoader.spaceCenter;
             var gravityAtLaunchpad = spaceCenter.address.GetPlanet()
                 .GetGravity(spaceCenter.LaunchPadLocation.position.magnitude);
-            var TWR = ___thrust * 9.8 / (___mass * gravityAtLaunchpad);
+            var TWR = ___mass != 0 ? ___thrust * 9.8 / (___mass * gravityAtLaunchpad) : 0;
             ___thrustToWeightText.Text = TWR.ToString(2, true);
         }
     }

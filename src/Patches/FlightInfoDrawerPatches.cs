@@ -60,7 +60,7 @@ namespace VanillaUpgrades
             var thrustVal = thrust.magnitude;
 
             ___thrustText.Text = thrustVal.ToThrustString().Split(':')[1];
-            ___thrustToWeightText.Text = (thrustVal / mass * 9.8f / localGravity).ToTwrString().Split(':')[1];
+            ___thrustToWeightText.Text = (mass != 0 ? thrustVal / mass * 9.8f / localGravity : 0).ToTwrString().Split(':')[1];
         }
     }
 }
